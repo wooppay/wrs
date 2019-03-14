@@ -1,0 +1,32 @@
+App\Entity\User:
+    type: entity
+    repositoryClass: App\Repository\UserRepository
+    table: "`user`"
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        email:
+            type: string
+            length: 180
+            nullable: false
+            unique: true
+        password:
+            type: string
+            nullable: false
+            unique: false
+    manyToMany:
+        roles:
+            targetEntity: App\Entity\Role
+            inversedBy: users
+            cascade: [ persist ]
+            joinTable:
+                name: user_role
+                joinColumns:
+                    user_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    role_id:
+                        referencedColumnName: id

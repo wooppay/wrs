@@ -1,0 +1,19 @@
+App\Entity\Role:
+    type: entity
+    repositoryClass: App\Repository\RoleRepository
+    table: role
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+    manyToMany:
+        users:
+            targetEntity: App\Entity\User
+            mappedBy: roles
