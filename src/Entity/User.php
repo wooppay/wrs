@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -25,7 +27,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(name="user_role")
      */
     private $roles = [];
@@ -79,12 +81,10 @@ class User implements UserInterface
             $roles[] = $role->getName();
         }
         
-        $roles[] = 'ROLE_USER';
-        
         return $roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(ArrayCollection $roles): self
     {
         $this->roles = $roles;
 
