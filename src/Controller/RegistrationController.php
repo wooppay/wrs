@@ -36,10 +36,18 @@ class RegistrationController extends AbstractController
             ->findOneByName('ROLE_USER');
             
             $entityManager = $this->getDoctrine()->getManager();
+            
+            $entityManager->getConnection()->beginTransaction();
+            
             $entityManager->persist($user);
             $entityManager->flush();
             
-            $security->setRoleToUser($user, $role);
+            if (!$security->setRoleToUser($user, $role)) {
+                $entityManager->getConnection()->rollBack();
+                throw new \Exception();
+            }
+            
+            $entityManager->getConnection()->commit();
 
             // do anything else you need here, like send an email
 
