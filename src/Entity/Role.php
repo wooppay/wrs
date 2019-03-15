@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\Collection;
 
 class Role
 {
-
     private $id;
 
     private $name;

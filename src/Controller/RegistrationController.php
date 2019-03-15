@@ -10,11 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Role;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\RoleRepository;
+use App\Service\SecurityService;
 
 class RegistrationController extends AbstractController
 {
 
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, SecurityService $security): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -29,15 +31,15 @@ class RegistrationController extends AbstractController
                 )
             );
             
-            $role = new Role();
-            $role->setName('ROLE_USER');
-            $collection = new ArrayCollection();
-            $collection->add($role);
-            $user->setRoles($collection);
-
+            $role = $this->getDoctrine()
+            ->getRepository(Role::class)
+            ->findOneByName('ROLE_USER');
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            
+            $security->setRoleToUser($user, $role);
 
             // do anything else you need here, like send an email
 
