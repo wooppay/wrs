@@ -5,6 +5,7 @@ namespace App\Entity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Enum\UserEnum;
 
 class User implements UserInterface
 {
@@ -15,6 +16,8 @@ class User implements UserInterface
     private $roles = [];
 
     private $password;
+    
+    private $status = UserEnum::NOT_APPROVED;
     
     public function __construct()
     {
@@ -81,6 +84,18 @@ class User implements UserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+    
+    public function getStatus() : int
+    {
+        return (int) $this->status;
+    }
+    
+    public function setStatus(int $status) : self
+    {
+        $this->status = $status;
+        
         return $this;
     }
 

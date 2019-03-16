@@ -17,6 +17,14 @@ App\Entity\User:
             type: string
             nullable: false
             unique: false
+        status:
+            type: integer
+            length: 25
+            nullable: false
+            unique: false
+            options:
+                default: 0
+                comment: user's status 
     manyToMany:
         roles:
             targetEntity: App\Entity\Role

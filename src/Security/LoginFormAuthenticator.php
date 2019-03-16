@@ -18,6 +18,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Enum\UserEnum;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -69,6 +70,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
+        }
+        
+        if (!$user->getStatus(UserEnum::NOT_APPROVED)) {
+            throw new CustomUserMessageAuthenticationException('User has not approved yet.');
         }
 
         return $user;
