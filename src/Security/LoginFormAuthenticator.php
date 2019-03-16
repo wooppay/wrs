@@ -72,7 +72,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
         
-        if (!$user->getStatus(UserEnum::NOT_APPROVED)) {
+        if ($user->getStatus() === UserEnum::NOT_APPROVED) {
             throw new CustomUserMessageAuthenticationException('User has not approved yet.');
         }
 
