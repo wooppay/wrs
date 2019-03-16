@@ -6,3 +6,5 @@ App\Entity\User:
     properties:
         email:
             - NotBlank: ~
+            - Email:
+                  message: The email "{{ value }}" is not a valid email.
