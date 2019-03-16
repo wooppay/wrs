@@ -12,6 +12,7 @@ use App\Entity\Role;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\RoleRepository;
 use App\Service\SecurityService;
+use App\Enum\RoleEnum;
 
 class RegistrationController extends AbstractController
 {
@@ -33,7 +34,7 @@ class RegistrationController extends AbstractController
             
             $role = $this->getDoctrine()
             ->getRepository(Role::class)
-            ->findOneByName('ROLE_USER');
+            ->findOneByName(RoleEnum::USER);
             
             $entityManager = $this->getDoctrine()->getManager();
             
