@@ -24,33 +24,8 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            
-            $role = $this->getDoctrine()
-            ->getRepository(Role::class)
-            ->findOneByName(RoleEnum::USER);
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            
-            $entityManager->getConnection()->beginTransaction();
-            
-            $entityManager->persist($user);
-            $entityManager->flush();
-            
-            if (!$security->setRoleToUser($user, $role)) {
-                $entityManager->getConnection()->rollBack();
-                throw new \Exception();
-            }
-            
-            $entityManager->getConnection()->commit();
 
-            // do anything else you need here, like send an email
+            $security->register($user, $form->get('plainPassword')->getData());
 
             return $this->redirectToRoute('index');
         }
