@@ -3,12 +3,28 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <br>
+    <br>
+    
+    <div class="row">
+        <div class="col col-sm-3"></div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
+        <div class="col col-md-6">
+        
+            <div class="card text-center">
+                <h5 class="card-header">Register</h5>
+                <div class="card-body">
+                    {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword) }}
+    
+                        <button class="btn btn-primary">Register</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        
+        </div>
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        <div class="col col-sm-3"></div>
+    </div>
 {% endblock %}
