@@ -8,3 +8,12 @@ App\Entity\User:
             - NotBlank: ~
             - Email:
                   message: The email "{{ value }}" is not a valid email.
+
+App\Entity\Role:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: 'There is already a role with this name'
+    properties:
+        name:
+            - NotBlank: ~

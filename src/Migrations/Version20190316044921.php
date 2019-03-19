@@ -24,6 +24,8 @@ final class Version20190316044921 extends AbstractMigration
 
         $this->addSql('ALTER TABLE "user" ADD status INT DEFAULT 0 NOT NULL');
         $this->addSql('COMMENT ON COLUMN "user".status IS \'user\'\'s status\'');
+
+        $this->addSql('UPDATE "user" SET status=1 WHERE email=\'admin@example.com\'');
     }
 
     public function down(Schema $schema) : void

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel{% endblock %}
+{% block head_title %}
+    <h2>Admin Panel</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Admin Panel</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col col-sm-12">
+            <div class="list-group">
+                <a href="{{ path('app_admin_role') }}" class="list-group-item list-group-item-action">Управление ролями</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -35,3 +35,4 @@ security:
     access_control:
         - { path: ^/login, allow_if: "not is_authenticated()" }
         - { path: ^/register, allow_if: "not is_authenticated()" }
+        - { path: ^/admin, roles: ROLE_ADMIN }

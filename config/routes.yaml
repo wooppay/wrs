@@ -13,3 +13,15 @@ app_login:
 app_logout:
     path: /logout
     methods: GET
+
+app_admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+app_admin_role:
+    path: /admin/roles
+    controller: App\Controller\AdminController::role
+
+app_admin_role_create:
+    path: /admin/roles/create
+    controller: App\Controller\AdminController::createRole
