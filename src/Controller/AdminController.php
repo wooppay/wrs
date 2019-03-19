@@ -15,7 +15,13 @@ class AdminController extends AbstractController
     
     public function role()
     {
-        return $this->render('admin/role.html.twig');
+        $roles = $this->getDoctrine()
+        ->getRepository(Role::class)
+        ->findAll();
+        
+        return $this->render('admin/role.html.twig', [
+            'roles' => $roles,
+        ]);
     }
     
     public function createRole(Request $request)

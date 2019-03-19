@@ -22,5 +22,22 @@
             <a href="{{ path('app_admin_role_create') }}" class="btn btn-primary">Create role</a>
         </div>
     </div>
+    
+    <br>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+              <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in roles %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
