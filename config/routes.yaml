@@ -29,3 +29,11 @@ app_admin_security_role:
 app_admin_security_role_create:
     path: /admin/security/roles/create
     controller: App\Controller\AdminController::createRole
+
+app_admin_security_permission:
+    path: /admin/security/permissions
+    controller: App\Controller\AdminController::permission
+
+app_admin_security_permission_create:
+    path: /admin/security/permissions/create
+    controller: App\Controller\AdminController::createPermission

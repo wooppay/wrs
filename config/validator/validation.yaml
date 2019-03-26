@@ -17,3 +17,12 @@ App\Entity\Role:
     properties:
         name:
             - NotBlank: ~
+
+App\Entity\Permission:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: 'There is already a permission with this name'
+    properties:
+        name:
+            - NotBlank: ~

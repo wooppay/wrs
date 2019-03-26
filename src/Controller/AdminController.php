@@ -6,6 +6,8 @@ use App\Entity\Role;
 use App\Form\RoleFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Enum\PermissionEnum;
+use App\Entity\Permission;
+use App\Form\PermissionFormType;
 
 class AdminController extends AbstractController
 {
@@ -47,6 +49,36 @@ class AdminController extends AbstractController
         }
         
         return $this->render('admin/create_role.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    public function permission()
+    {
+        $permissions = $this->getDoctrine()
+        ->getRepository(Permission::class)
+        ->findAll();
+        
+        return $this->render('admin/permission.html.twig', [
+            'permissions' => $permissions,
+        ]);
+    }
+    
+    public function createPermission(Request $request)
+    {
+        $permission = new Permission();
+        $form = $this->createForm(PermissionFormType::class, $permission);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($permission);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('app_admin_security_permission');
+        }
+        
+        return $this->render('admin/create_permission.html.twig', [
             'form' => $form->createView(),
         ]);
     }
