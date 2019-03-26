@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Enum\RoleEnum;
+use App\Entity\Permission;
 
 class SecurityService
 {
@@ -31,6 +32,17 @@ class SecurityService
         ])->setParameters([
             ':user_id' => $user->getId(),
             ':role_id' => $role->getId(),
+        ])->execute() > 0;
+    }
+    
+    public function setPermissionToRole(Role $role, Permission $permission) : bool
+    {
+        return $this->queryBuilder->insert('role_permission')->values([
+            'role_id' => ':role_id',
+            'permission_id' => ':permission_id',
+        ])->setParameters([
+            ':role_id' => $role->getId(),
+            ':permission_id' => $permission->getId(),
         ])->execute() > 0;
     }
     

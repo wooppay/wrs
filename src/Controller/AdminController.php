@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Enum\PermissionEnum;
 use App\Entity\Permission;
 use App\Form\PermissionFormType;
+use App\Form\PermissionAttachType;
+use App\Service\SecurityService;
 
 class AdminController extends AbstractController
 {
@@ -79,6 +81,44 @@ class AdminController extends AbstractController
         }
         
         return $this->render('admin/create_permission.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    public function roleManage(Request $request)
+    {
+        $role = $this->getDoctrine()
+        ->getRepository(Role::class)
+        ->find($request->get('id'));
+        
+        return $this->render('admin/role_manage.html.twig', [
+            'role' => $role,
+        ]);
+    }
+    
+    public function permissionAttach(Request $request, SecurityService $security)
+    {
+        $role = $this->getDoctrine()
+        ->getRepository(Role::class)
+        ->find($request->get('id'));
+        
+        $form = $this->createForm(PermissionAttachType::class);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            $permission = $this->getDoctrine()->getRepository(Permission::class)->find(
+                $request->request->get('permission_attach')['permission_id']
+            );
+            
+            if (!$security->setPermissionToRole($role, $permission)) {
+                throw new \Exception();
+            }
+            
+            return $this->redirectToRoute('app_admin_security_role_manage', ['id' => $role->getId()]);
+        }
+        
+        return $this->render('admin/role_manage_permission_attach.html.twig', [
+            'role' => $role,
             'form' => $form->createView(),
         ]);
     }

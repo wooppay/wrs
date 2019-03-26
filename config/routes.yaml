@@ -37,3 +37,11 @@ app_admin_security_permission:
 app_admin_security_permission_create:
     path: /admin/security/permissions/create
     controller: App\Controller\AdminController::createPermission
+
+app_admin_security_role_manage:
+    path: /admin/security/roles/{id}/manage
+    controller: App\Controller\AdminController::roleManage
+
+app_admin_security_role_manage_attach_permission:
+    path: /admin/security/roles/{id}/manage/attach-permissions
+    controller: App\Controller\AdminController::permissionAttach

@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin Panel | Roles{% endblock %}
+{% block title %}Admin Panel | Manage Role{% endblock %}
 {% block head_title %}
-    <h2>Roles</h2>
+    <h2>{{ role.name }}</h2>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -11,7 +11,8 @@
         <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_admin_security') }}">Security</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Roles</li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security_role') }}">Roles</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ role.name }}</li>
       </ol>
     </nav>
 {% endblock %}
@@ -20,7 +21,7 @@
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ path('app_admin_security_role_create') }}" class="btn btn-primary">Create role</a>
+            <a href="{{ path('app_admin_security_role_manage_attach_permission', {'id': role.id}) }}" class="btn btn-primary">Attach permission</a>
         </div>
     </div>
     
@@ -30,16 +31,12 @@
         <thead>
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Tools</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in roles %}
+            {% for item in role.permissions %}
                 <tr>
                     <td>{{ item.name }}</td>
-                    <td>
-                        <a href="{{ path('app_admin_security_role_manage', {'id': item.id}) }}"><i class="fas fa-tools"></i></a>
-                    </td>
                 </tr>
             {% endfor %}
         </tbody>
