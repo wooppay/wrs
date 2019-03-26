@@ -18,10 +18,14 @@ app_admin:
     path: /admin
     controller: App\Controller\AdminController::index
 
-app_admin_role:
-    path: /admin/roles
+app_admin_security:
+    path: /admin/security
+    controller: App\Controller\AdminController::security
+
+app_admin_security_role:
+    path: /admin/security/roles
     controller: App\Controller\AdminController::role
 
-app_admin_role_create:
-    path: /admin/roles/create
+app_admin_security_role_create:
+    path: /admin/security/roles/create
     controller: App\Controller\AdminController::createRole

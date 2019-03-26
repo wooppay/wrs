@@ -13,6 +13,11 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/index.html.twig');
     }
+
+    public function security()
+    {
+        return $this->render('admin/security.html.twig');
+    }
     
     public function role()
     {
@@ -38,7 +43,7 @@ class AdminController extends AbstractController
             $entityManager->persist($role);
             $entityManager->flush();
             
-            return $this->redirectToRoute('app_admin_role');
+            return $this->redirectToRoute('app_admin_security_role');
         }
         
         return $this->render('admin/create_role.html.twig', [
