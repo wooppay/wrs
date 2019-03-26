@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Role;
 use App\Form\RoleFormType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Enum\PermissionEnum;
 
 class AdminController extends AbstractController
 {
@@ -26,6 +27,8 @@ class AdminController extends AbstractController
     
     public function createRole(Request $request)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_ROLE, $this->getUser());
+        
         $role = new Role();
         $form = $this->createForm(RoleFormType::class, $role);
         $form->handleRequest($request);

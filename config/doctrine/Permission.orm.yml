@@ -1,0 +1,19 @@
+App\Entity\Permission:
+    type: entity
+    repositoryClass: App\Repository\PermissionRepository
+    table: permission
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+    manyToMany:
+        roles:
+            targetEntity: App\Entity\Role
+            mappedBy: roles

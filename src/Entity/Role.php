@@ -12,10 +12,13 @@ class Role
     private $name;
 
     private $users;
+    
+    private $permissions;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,6 +61,29 @@ class Role
             $this->users->removeElement($user);
         }
 
+        return $this;
+    }
+    
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+    
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+        }
+        
+        return $this;
+    }
+    
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
+        }
+        
         return $this;
     }
 }

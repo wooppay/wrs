@@ -17,3 +17,15 @@ App\Entity\Role:
         users:
             targetEntity: App\Entity\User
             mappedBy: roles
+        permissions:
+            targetEntity: App\Entity\Permission
+            inversedBy: roles
+            cascade: [ persist ]
+            joinTable:
+                name: role_permission
+                joinColumns:
+                    role_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    permission_id:
+                        referencedColumnName: id
