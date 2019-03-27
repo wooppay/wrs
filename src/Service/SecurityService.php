@@ -82,5 +82,17 @@ class SecurityService
         
         return true;
     }
+    
+    public function deleteRolePermission(Role $role, Permission $permission) : bool
+    {
+        return $this->queryBuilder
+        ->delete('role_permission', 'rp')
+        ->where('rp.role_id = :role_id AND rp.permission_id = :permission_id')
+        ->setParameters([
+            ':role_id' => $role->getId(),
+            ':permission_id' => $permission->getId(),
+        ])
+        ->execute() > 0;
+    }
 }
 

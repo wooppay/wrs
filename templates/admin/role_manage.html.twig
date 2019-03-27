@@ -31,12 +31,18 @@
         <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Tools</th>
             </tr>
         </thead>
         <tbody>
             {% for item in role.permissions %}
                 <tr>
                     <td>{{ item.name }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_security_role_manage_detach_permission', {'role_id': role.id, 'permission_id': item.id}) }}">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

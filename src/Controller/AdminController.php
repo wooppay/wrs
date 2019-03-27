@@ -129,5 +129,22 @@ class AdminController extends AbstractController
         
         return $this->redirectToRoute('app_admin_security_permission');
     }
+    
+    public function detachPermission(Request $request, SecurityService $security)
+    {
+        $role = $this->getDoctrine()
+        ->getRepository(Role::class)
+        ->find($request->get('role_id'));
+        
+        $permission = $this->getDoctrine()
+        ->getRepository(Permission::class)
+        ->find($request->get('permission_id'));
+        
+        if (!$security->deleteRolePermission($role, $permission)) {
+            throw new \Exception();
+        }
+        
+        return $this->redirectToRoute('app_admin_security_role_manage', ['id' => $role->getId()]);
+    }
 }
 
