@@ -70,5 +70,17 @@ class SecurityService
         
         return true;
     }
+    
+    public function deletePermissionById(int $id) : bool
+    {
+        $permission = $this->entityManager
+        ->getRepository(Permission::class)
+        ->find($id);
+        
+        $this->entityManager->remove($permission);
+        $this->entityManager->flush();
+        
+        return true;
+    }
 }
 

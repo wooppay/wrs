@@ -13,7 +13,3 @@ App\Entity\Permission:
             length: 255
             nullable: false
             unique: true
-    manyToMany:
-        roles:
-            targetEntity: App\Entity\Role
-            mappedBy: roles

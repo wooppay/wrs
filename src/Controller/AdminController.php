@@ -122,5 +122,12 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    public function deletePermission(Request $request, SecurityService $security)
+    {
+        $security->deletePermissionById($request->get('id'));
+        
+        return $this->redirectToRoute('app_admin_security_permission');
+    }
 }
 

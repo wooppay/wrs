@@ -38,6 +38,10 @@ app_admin_security_permission_create:
     path: /admin/security/permissions/create
     controller: App\Controller\AdminController::createPermission
 
+app_admin_security_permission_delete:
+    path: /admin/security/permissions/{id}/delete
+    controller: App\Controller\AdminController::deletePermission
+
 app_admin_security_role_manage:
     path: /admin/security/roles/{id}/manage
     controller: App\Controller\AdminController::roleManage
