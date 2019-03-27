@@ -1,0 +1,42 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.13
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./:/usr/share/nginx/wrs
+    networks:
+      - mynetwork
+    depends_on:
+      - web_wrs
+
+  web_wrs:
+    build: ./docker/php/
+    ports:
+      - "9002:9000"
+    volumes:
+      - ./:/usr/share/nginx/wrs
+      - ./docker/php/composer.phar:/usr/local/bin/composer
+    working_dir: /usr/share/nginx/wrs
+    environment:
+      # CHANGE IT IF YOU WANT TO USE XDEBUG
+      - "XDEBUG_CONFIG=remote_host=ip remote_port=port"
+    networks:
+      - mynetwork
+
+  db_wrs:
+    image: postgres:11.2
+    restart: always
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=wrs"
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
