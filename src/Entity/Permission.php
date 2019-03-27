@@ -11,6 +11,8 @@ class Permission
     
     private $name;
     
+    private $roles;
+    
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -31,5 +33,28 @@ class Permission
     public function getName(): ?string
     {
         return $this->name;
+    }
+    
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+    
+    public function addRoles(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+        }
+        
+        return $this;
+    }
+    
+    public function removeRole(Role $role): self
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+        }
+        
+        return $this;
     }
 }
