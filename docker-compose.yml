@@ -10,12 +10,10 @@ services:
     networks:
       - mynetwork
     depends_on:
-      - web_wrs
+      - web
 
-  web_wrs:
+  web:
     build: ./docker/php/
-    ports:
-      - "9002:9000"
     volumes:
       - ./:/usr/share/nginx/wrs
       - ./docker/php/composer.phar:/usr/local/bin/composer
@@ -26,14 +24,12 @@ services:
     networks:
       - mynetwork
 
-  db_wrs:
+  db:
     image: postgres:11.2
     restart: always
     environment:
       - "POSTGRES_PASSWORD=postgres"
       - "POSTGRES_DB=wrs"
-    ports:
-      - "5432:5432"
     networks:
       - mynetwork
 
