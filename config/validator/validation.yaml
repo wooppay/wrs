@@ -26,3 +26,10 @@ App\Entity\Permission:
     properties:
         name:
             - NotBlank: ~
+
+App\Entity\Team:
+    properties:
+        name:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~

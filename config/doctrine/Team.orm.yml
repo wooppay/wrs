@@ -1,0 +1,20 @@
+App\Entity\Team:
+    type: entity
+    repositoryClass: App\Repository\TeamRepository
+    table: team
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: false
+        description:
+            type: string
+            length: 255
+            nullable: false
+            unique: false
