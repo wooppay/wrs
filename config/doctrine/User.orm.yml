@@ -38,3 +38,15 @@ App\Entity\User:
                 inverseJoinColumns:
                     role_id:
                         referencedColumnName: id
+        teams:
+            targetEntity: App\Entity\Team
+            inversedBy: members
+            cascade: [ persist ]
+            joinTable:
+                name: member_team
+                joinColumns:
+                    member_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    team_id:
+                        referencedColumnName: id

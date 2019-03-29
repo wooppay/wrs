@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class Team
 {
     private $id;
@@ -9,6 +12,13 @@ class Team
     private $name;
     
     private $description;
+    
+    private $members;
+    
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -37,5 +47,28 @@ class Team
     public function getDescription() : ?string
     {
         return $this->description;
+    }
+    
+    public function getMembers() : Collection
+    {
+        return $this->members;
+    }
+    
+    public function addMember(User $user): self
+    {
+        if (!$this->members->contains($user)) {
+            $this->members[] = $user;
+        }
+        
+        return $this;
+    }
+    
+    public function removeMember(User $user): self
+    {
+        if ($this->members->contains($user)) {
+            $this->members->removeElement($user);
+        }
+        
+        return $this;
     }
 }

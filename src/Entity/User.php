@@ -19,9 +19,12 @@ class User implements UserInterface
     
     private $status = UserEnum::NOT_APPROVED;
     
+    private $teams;
+    
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,5 +117,10 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+    
+    public function getTeams(): array
+    {
+        return $this->teams;
     }
 }

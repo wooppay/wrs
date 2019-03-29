@@ -65,3 +65,11 @@ app_product_panel_team:
 app_product_panel_team_create:
     path: /product-panel/teams/create
     controller: App\Controller\ProductController::createTeam
+
+app_product_panel_team_manage:
+    path: /product-panel/teams/{id}/manage
+    controller: App\Controller\ProductController::manage
+
+app_product_panel_team_manage_add_member:
+    path: /product-panel/teams/{id}/manage/add-member
+    controller: App\Controller\ProductController::addMember

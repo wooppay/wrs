@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product Panel | Teams{% endblock %}
+{% block title %}Product Panel | Manage Team{% endblock %}
 {% block head_title %}
-    <h2>Teams</h2>
+    <h2>{{ team.name }}</h2>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -10,7 +10,8 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_product_panel') }}">Product Panel</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Teams</li>
+        <li class="breadcrumb-item"><a href="{{ path('app_product_panel_team') }}">Teams</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
       </ol>
     </nav>
 {% endblock %}
@@ -19,7 +20,7 @@
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ path('app_product_panel_team_create') }}" class="btn btn-primary">Create team</a>
+            <a href="{{ path('app_product_panel_team_manage_add_member', {'id': team.id}) }}" class="btn btn-primary">Add Member</a>
         </div>
     </div>
     
@@ -29,16 +30,12 @@
         <thead>
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Tools</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in teams %}
+            {% for item in team.members %}
                 <tr>
-                    <td>{{ item.name }}</td>
-                    <td>
-                        <a href="{{ path('app_product_panel_team_manage', {'id': item.id}) }}"><i class="fas fa-tools"></i></a>
-                    </td>
+                    <td>{{ item.email }}</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,15 +1,16 @@
 <?php
+
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Entity\Permission;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Enum\UserEnum;
 
-class PermissionAttachType extends AbstractType
+class MemberType extends AbstractType
 {
     private $entityManager;
     
@@ -18,23 +19,22 @@ class PermissionAttachType extends AbstractType
         $this->entityManager = $manager;
     }
     
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $permissions = $this->entityManager
-        ->getRepository(Permission::class)
+        $members = $this->entityManager
+        ->getRepository(User::class)
         ->findBy([
             'status' => UserEnum::APPROVED,
         ]);
         
         $builder
-        ->add('permission_id', ChoiceType::class, [
-            'choices' => $permissions,
-            'choice_label' => function($permission) {
-                return $permission->getName();
+        ->add('member_id', ChoiceType::class, [
+            'choices' => $members,
+            'choice_label' => function($members) {
+                return $members->getEmail();
             },
             'choice_value' => 'id',
         ])
         ->add('save', SubmitType::class);
     }
 }
-

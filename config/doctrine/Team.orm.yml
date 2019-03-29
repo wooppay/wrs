@@ -18,3 +18,7 @@ App\Entity\Team:
             length: 255
             nullable: false
             unique: false
+    manyToMany:
+        members:
+            targetEntity: App\Entity\User
+            mappedBy: teams
