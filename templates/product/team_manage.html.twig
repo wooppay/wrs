@@ -30,12 +30,16 @@
         <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Tools</th>
             </tr>
         </thead>
         <tbody>
             {% for item in team.members %}
                 <tr>
                     <td>{{ item.email }}</td>
+                    <td>
+                        <a href="{{ path('app_product_panel_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}"><i class="far fa-trash-alt"></i></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

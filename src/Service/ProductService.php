@@ -24,5 +24,17 @@ class ProductService
             ':team_id' => $team->getId(),
         ])->execute() > 0;
     }
+
+    public function deleteTeamMember(Team $team, User $member) : bool
+    {
+        return $this->queryBuilder
+            ->delete('member_team')
+            ->where('member_id = :member_id AND team_id = :team_id')
+            ->setParameters([
+                ':member_id' => $member->getId(),
+                ':team_id' => $team->getId(),
+            ])
+            ->execute() > 0;
+    }
 }
 

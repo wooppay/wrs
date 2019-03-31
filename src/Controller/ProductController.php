@@ -83,5 +83,24 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    public function deleteTeamMember(Request $request, ProductService $product)
+    {
+        $team = $this->getDoctrine()->getRepository(Team::class)->find(
+            $request->get('team_id')
+        );
+        
+        $member = $this->getDoctrine()->getRepository(User::class)->find(
+            $request->get('member_id')
+        );
+
+        if (!$product->deleteTeamMember($team, $member)) {
+            throw new \Exception();
+        }
+
+        return $this->redirectToRoute('app_product_panel_team_manage', [
+            'id' => $team->getId(),
+        ]);
+    }
 }
 
