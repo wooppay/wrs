@@ -36,4 +36,4 @@ security:
         - { path: ^/login, allow_if: "not is_authenticated()" }
         - { path: ^/register, allow_if: "not is_authenticated()" }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/product-panel, allow_if: "is_granted('can_see_product_panel')" }
+        - { path: ^/product-panel, allow_if: "is_granted('can_see_product_panel', user)" }

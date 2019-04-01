@@ -38,6 +38,10 @@ app_admin_security_user_manage_deactivate:
     path: /admin/security/users/{id}/manage/deactivate
     controller: App\Controller\AdminController::userDeactivate
 
+app_admin_security_user_manage_attach_role:
+    path: /admin/security/users/{id}/manage/attach-role
+    controller: App\Controller\AdminController::attachRole
+
 app_admin_security_role:
     path: /admin/security/roles
     controller: App\Controller\AdminController::role

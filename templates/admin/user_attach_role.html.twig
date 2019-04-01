@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel | Attach Role{% endblock %}
+{% block head_title %}
+    <h2>Attach Role</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security') }}">Security</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security_user') }}">Users</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security_user_manage', {'id': user.id}) }}">{{ user.email }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Attach role</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    {{ form(form) }}
+
+{% endblock %}

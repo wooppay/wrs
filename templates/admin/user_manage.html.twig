@@ -18,6 +18,15 @@
 {% endblock %}
 
 {% block body %}
+
+<div class="card">
+    <div class="card-body">
+        <a href="{{ path('app_admin_security_user_manage_attach_role', {'id': user.id}) }}" class="btn btn-primary">Attach role</a>
+    </div>
+</div>
+
+<br>
+
 <div class="card">
     <div class="card-body">
         <ul class="list-group list-group-flush">

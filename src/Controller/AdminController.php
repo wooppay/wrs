@@ -12,6 +12,7 @@ use App\Form\PermissionAttachType;
 use App\Service\SecurityService;
 use App\Entity\User;
 use App\Enum\UserEnum;
+use App\Form\RoleAttachType;
 
 class AdminController extends AbstractController
 {
@@ -202,6 +203,33 @@ class AdminController extends AbstractController
         
         return $this->redirectToRoute('app_admin_security_user_manage', [
             'id' => $user->getId(),
+        ]);
+    }
+    
+    public function attachRole(Request $request, SecurityService $security)
+    {
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($request->get('id'));
+        
+        $form = $this->createForm(RoleAttachType::class);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            $role = $this->getDoctrine()->getRepository(Role::class)->find(
+                $request->request->get('role_attach')['role_id']
+            );
+            
+            if (!$security->setRoleToUser($user, $role)) {
+                throw new \Exception();
+            }
+            
+            return $this->redirectToRoute('app_admin_security_user_manage', ['id' => $user->getId()]);
+        }
+        
+        return $this->render('admin/user_attach_role.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
         ]);
     }
 }
