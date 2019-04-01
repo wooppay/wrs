@@ -30,8 +30,10 @@ final class Version20190326044946 extends AbstractMigration
         $this->addSql('ALTER TABLE role_permission ADD CONSTRAINT FK_6F7DF886D60322AC FOREIGN KEY (role_id) REFERENCES role (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE role_permission ADD CONSTRAINT FK_6F7DF886FED90CCA FOREIGN KEY (permission_id) REFERENCES permission (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         
-        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_role\')');
-        $this->addSql('INSERT INTO role_permission (role_id, permission_id) VALUES (1, 1)');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_see_product_panel\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_team\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_add_member_to_team\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_delete_member_from_team\')');
     }
 
     public function down(Schema $schema) : void

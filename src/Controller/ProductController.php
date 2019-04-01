@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\MemberType;
 use App\Entity\User;
 use App\Service\ProductService;
+use App\Enum\PermissionEnum;
 
 class ProductController extends AbstractController
 {
@@ -29,6 +30,8 @@ class ProductController extends AbstractController
     
     public function createTeam(Request $request)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TEAM, $this->getUser());
+        
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
@@ -59,6 +62,8 @@ class ProductController extends AbstractController
     
     public function addMember(Request $request, ProductService $service)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_ADD_MEMBER_TO_TEAM, $this->getUser());
+        
         $team = $this->getDoctrine()
         ->getRepository(Team::class)
         ->find($request->get('id'));
@@ -86,6 +91,8 @@ class ProductController extends AbstractController
 
     public function deleteTeamMember(Request $request, ProductService $product)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_MEMBER_FROM_TEAM, $this->getUser());
+        
         $team = $this->getDoctrine()->getRepository(Team::class)->find(
             $request->get('team_id')
         );

@@ -22,9 +22,7 @@ class PermissionAttachType extends AbstractType
     {
         $permissions = $this->entityManager
         ->getRepository(Permission::class)
-        ->findBy([
-            'status' => UserEnum::APPROVED,
-        ]);
+        ->findAll();
         
         $builder
         ->add('permission_id', ChoiceType::class, [

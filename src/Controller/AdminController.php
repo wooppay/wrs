@@ -36,8 +36,6 @@ class AdminController extends AbstractController
     
     public function createRole(Request $request)
     {
-        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_ROLE, $this->getUser());
-        
         $role = new Role();
         $form = $this->createForm(RoleFormType::class, $role);
         $form->handleRequest($request);
