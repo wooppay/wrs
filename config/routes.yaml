@@ -21,6 +21,22 @@ app_admin:
 app_admin_security:
     path: /admin/security
     controller: App\Controller\AdminController::security
+    
+app_admin_security_user:
+    path: /admin/security/users
+    controller: App\Controller\AdminController::userList
+
+app_admin_security_user_manage:
+    path: /admin/security/users/{id}/manage
+    controller: App\Controller\AdminController::userManage
+    
+app_admin_security_user_manage_activate:
+    path: /admin/security/users/{id}/manage/activate
+    controller: App\Controller\AdminController::userActivate
+
+app_admin_security_user_manage_deactivate:
+    path: /admin/security/users/{id}/manage/deactivate
+    controller: App\Controller\AdminController::userDeactivate
 
 app_admin_security_role:
     path: /admin/security/roles

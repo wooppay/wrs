@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel | User Manage{% endblock %}
+{% block head_title %}
+    <h2>{{ user.email }}</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security') }}">Security</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security_user') }}">User Manage</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ user.email }}</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Email: {{ user.email }}</li>
+            <li class="list-group-item">Status: {{ user.status }}</li>
+        </ul>
+        
+        <br>
+
+        {% if user.status == 1 %}
+            <a href="{{ path('app_admin_security_user_manage_deactivate', {'id': user.id}) }}" class="btn btn-danger">Deactivate</a>
+        {% else %}
+            <a href="{{ path('app_admin_security_user_manage_activate', {'id': user.id}) }}" class="btn btn-success">Activate</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

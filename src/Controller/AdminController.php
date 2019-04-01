@@ -10,6 +10,8 @@ use App\Entity\Permission;
 use App\Form\PermissionFormType;
 use App\Form\PermissionAttachType;
 use App\Service\SecurityService;
+use App\Entity\User;
+use App\Enum\UserEnum;
 
 class AdminController extends AbstractController
 {
@@ -143,6 +145,64 @@ class AdminController extends AbstractController
         }
         
         return $this->redirectToRoute('app_admin_security_role_manage', ['id' => $role->getId()]);
+    }
+    
+    public function userList()
+    {
+        $users = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->findAll();
+        
+        return $this->render('admin/user_list.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    
+    public function userManage(Request $request)
+    {
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($request->get('id'));
+        
+        return $this->render('admin/user_manage.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    
+    public function userActivate(Request $request)
+    {
+        // todo move to service
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $user = $entityManager
+        ->getRepository(User::class)
+        ->find($request->get('id'));
+        
+        $user->setStatus(UserEnum::APPROVED);
+        
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_admin_security_user_manage', [
+            'id' => $user->getId(),
+        ]);
+    }
+    
+    public function userDeactivate(Request $request)
+    {
+        // todo move to service
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $user = $entityManager
+        ->getRepository(User::class)
+        ->find($request->get('id'));
+        
+        $user->setStatus(UserEnum::NOT_APPROVED);
+        
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_admin_security_user_manage', [
+            'id' => $user->getId(),
+        ]);
     }
 }
 

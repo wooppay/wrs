@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel | User Manage{% endblock %}
+{% block head_title %}
+    <h2>User Manage</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_security') }}">Security</a></li>
+        <li class="breadcrumb-item active" aria-current="page">User Manage</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+              <th scope="col">Email</th>
+              <th scope="col">Tools</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in users %}
+                <tr>
+                    <td>{{ item.email }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_security_user_manage', {'id': item.id}) }}"><i class="fas fa-tools"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
