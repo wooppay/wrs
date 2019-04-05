@@ -9,6 +9,9 @@ use App\Form\MemberType;
 use App\Entity\User;
 use App\Service\ProductService;
 use App\Enum\PermissionEnum;
+use App\Service\SecurityService;
+use App\Entity\Role;
+use App\Enum\RoleEnum;
 
 class ProductController extends AbstractController
 {
@@ -60,7 +63,7 @@ class ProductController extends AbstractController
         ]);
     }
     
-    public function addMember(Request $request, ProductService $service)
+    public function addMember(Request $request, ProductService $service, SecurityService $security)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_ADD_MEMBER_TO_TEAM, $this->getUser());
         
@@ -68,16 +71,32 @@ class ProductController extends AbstractController
         ->getRepository(Team::class)
         ->find($request->get('id'));
         
-        $form = $this->createForm(MemberType::class);
+        $form = $this->createForm(MemberType::class, null, [
+            'team' => $team,
+            'is_checked' => $request->get('member')['is_leader'] ?? false,
+        ]);
+        
         $form->handleRequest($request);
         
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getDoctrine()->getRepository(User::class)->find(
                 $request->request->get('member')['member_id']
             );
             
+            // todo transaction
+            
             if (!$service->addMemberToTeam($user, $team)) {
                 throw new \Exception();
+            }
+            
+            if ($form->getData()['is_leader'] == 'true') {
+                $role = $this->getDoctrine()->getRepository(Role::class)->findOneBy([
+                    'name' => RoleEnum::TEAM_LEAD,
+                ]);
+                
+                if (!$security->setRoleToUser($user, $role)) {
+                    throw new \Exception();
+                }
             }
             
             return $this->redirectToRoute('app_product_panel_team_manage', ['id' => $team->getId()]);

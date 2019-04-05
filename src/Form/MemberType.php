@@ -9,6 +9,9 @@ use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Enum\UserEnum;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Validator\Constraints\ContainsLeaderInTeam;
 
 class MemberType extends AbstractType
 {
@@ -35,6 +38,24 @@ class MemberType extends AbstractType
             },
             'choice_value' => 'id',
         ])
+        ->add('is_leader', CheckboxType::class, [
+            'value' => 'Is leader?',
+            'required' => false,
+            'constraints' => [
+                new ContainsLeaderInTeam([
+                    'team' => $options['team'],
+                    'is_checked' => $options['is_checked'],
+                ])
+            ],
+        ])
         ->add('save', SubmitType::class);
+    }
+    
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'team' => null,
+            'is_checked' => false,
+        ]);
     }
 }
