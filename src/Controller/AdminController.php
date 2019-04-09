@@ -13,6 +13,9 @@ use App\Service\SecurityService;
 use App\Entity\User;
 use App\Enum\UserEnum;
 use App\Form\RoleAttachType;
+use App\Service\RoleService;
+use App\Service\PermissionService;
+use App\Service\UserService;
 
 class AdminController extends AbstractController
 {
@@ -26,27 +29,23 @@ class AdminController extends AbstractController
         return $this->render('admin/security.html.twig');
     }
     
-    public function role()
+    public function role(RoleService $roleService)
     {
-        $roles = $this->getDoctrine()
-        ->getRepository(Role::class)
-        ->findAll();
+        $roles = $roleService->all();
         
         return $this->render('admin/role.html.twig', [
             'roles' => $roles,
         ]);
     }
     
-    public function createRole(Request $request)
+    public function createRole(Request $request, RoleService $roleService)
     {
         $role = new Role();
         $form = $this->createForm(RoleFormType::class, $role);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($role);
-            $entityManager->flush();
+            $roleService->create($role);
             
             return $this->redirectToRoute('app_admin_security_role');
         }
@@ -56,27 +55,23 @@ class AdminController extends AbstractController
         ]);
     }
     
-    public function permission()
+    public function permission(PermissionService $permissionService)
     {
-        $permissions = $this->getDoctrine()
-        ->getRepository(Permission::class)
-        ->findAll();
+        $permissions = $permissionService->all();
         
         return $this->render('admin/permission.html.twig', [
             'permissions' => $permissions,
         ]);
     }
     
-    public function createPermission(Request $request)
+    public function createPermission(Request $request, PermissionService $permissionService)
     {
         $permission = new Permission();
         $form = $this->createForm(PermissionFormType::class, $permission);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($permission);
-            $entityManager->flush();
+            $permissionService->create($permission);
             
             return $this->redirectToRoute('app_admin_security_permission');
         }
@@ -86,29 +81,25 @@ class AdminController extends AbstractController
         ]);
     }
     
-    public function roleManage(Request $request)
+    public function roleManage(Request $request, RoleService $roleService)
     {
-        $role = $this->getDoctrine()
-        ->getRepository(Role::class)
-        ->find($request->get('id'));
+        $role = $roleService->byId((int) $request->get('id'));
         
         return $this->render('admin/role_manage.html.twig', [
             'role' => $role,
         ]);
     }
     
-    public function permissionAttach(Request $request, SecurityService $security)
+    public function permissionAttach(Request $request, SecurityService $security, PermissionService $permissionService, RoleService $roleService)
     {
-        $role = $this->getDoctrine()
-        ->getRepository(Role::class)
-        ->find($request->get('id'));
+        $role = $roleService->byId((int) $request->get('id'));
         
         $form = $this->createForm(PermissionAttachType::class);
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
-            $permission = $this->getDoctrine()->getRepository(Permission::class)->find(
-                $request->request->get('permission_attach')['permission_id']
+            $permission = $permissionService->byId(
+                (int) $request->request->get('permission_attach')['permission_id']
             );
             
             if (!$security->setPermissionToRole($role, $permission)) {
@@ -126,20 +117,16 @@ class AdminController extends AbstractController
     
     public function deletePermission(Request $request, SecurityService $security)
     {
-        $security->deletePermissionById($request->get('id'));
+        $security->deletePermissionById((int) $request->get('id'));
         
         return $this->redirectToRoute('app_admin_security_permission');
     }
     
-    public function detachPermission(Request $request, SecurityService $security)
+    public function detachPermission(Request $request, SecurityService $security, RoleService $roleService, PermissionService $permissionService)
     {
-        $role = $this->getDoctrine()
-        ->getRepository(Role::class)
-        ->find($request->get('role_id'));
-        
-        $permission = $this->getDoctrine()
-        ->getRepository(Permission::class)
-        ->find($request->get('permission_id'));
+        $role = $roleService->byId((int) $request->get('role_id'));
+
+        $permission = $permissionService->byId((int) $request->get('permission_id'));
         
         if (!$security->deleteRolePermission($role, $permission)) {
             throw new \Exception();
@@ -148,75 +135,53 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin_security_role_manage', ['id' => $role->getId()]);
     }
     
-    public function userList()
+    public function userList(UserService $userService)
     {
-        $users = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->findAll();
+        $users = $userService->all();
         
         return $this->render('admin/user_list.html.twig', [
             'users' => $users,
         ]);
     }
     
-    public function userManage(Request $request)
+    public function userManage(Request $request, UserService $userService)
     {
-        $user = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->find($request->get('id'));
+        $user = $userService->byId((int) $request->get('id'));
         
         return $this->render('admin/user_manage.html.twig', [
             'user' => $user,
         ]);
     }
     
-    public function userActivate(Request $request)
+    public function userActivate(Request $request, UserService $userService)
     {
-        // todo move to service
-        $entityManager = $this->getDoctrine()->getManager();
-        
-        $user = $entityManager
-        ->getRepository(User::class)
-        ->find($request->get('id'));
-        
-        $user->setStatus(UserEnum::APPROVED);
-        
-        $entityManager->flush();
+        $user = $userService->byId((int) $request->get('id'));
+        $userService->approve($user);
         
         return $this->redirectToRoute('app_admin_security_user_manage', [
             'id' => $user->getId(),
         ]);
     }
     
-    public function userDeactivate(Request $request)
+    public function userDeactivate(Request $request, UserService $userService)
     {
-        // todo move to service
-        $entityManager = $this->getDoctrine()->getManager();
-        
-        $user = $entityManager
-        ->getRepository(User::class)
-        ->find($request->get('id'));
-        
-        $user->setStatus(UserEnum::NOT_APPROVED);
-        
-        $entityManager->flush();
+        $user = $userService->byId((int) $request->get('id'));
+        $userService->deactivate($user);
         
         return $this->redirectToRoute('app_admin_security_user_manage', [
             'id' => $user->getId(),
         ]);
     }
     
-    public function attachRole(Request $request, SecurityService $security)
+    public function attachRole(Request $request, SecurityService $security, UserService $userService, RoleService $roleService)
     {
-        $user = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->find($request->get('id'));
+        $user = $userService->byId((int) $request->get('id'));
         
         $form = $this->createForm(RoleAttachType::class);
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
-            $role = $this->getDoctrine()->getRepository(Role::class)->find(
+            $role = $roleService->byId(
                 $request->request->get('role_attach')['role_id']
             );
             
