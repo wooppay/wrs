@@ -15,9 +15,12 @@ class Team
     
     private $members;
     
+    private $projects;
+    
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,5 +73,10 @@ class Team
         }
         
         return $this;
+    }
+    
+    public function getProjects() : Collection
+    {
+        return $this->projects;
     }
 }

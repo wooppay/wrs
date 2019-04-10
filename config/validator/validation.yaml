@@ -33,3 +33,12 @@ App\Entity\Team:
             - NotBlank: ~
         description:
             - NotBlank: ~
+
+App\Entity\Project:
+    properties:
+        name:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+        team:
+            - NotBlank: ~

@@ -97,3 +97,11 @@ app_product_panel_team_manage_add_member:
 app_product_panel_team_manage_delete_member:
     path: /product-panel/teams/{team_id}/manage/delete-member/{member_id}
     controller: App\Controller\ProductController::deleteTeamMember
+
+app_product_panel_project:
+    path: /product-panel/projects
+    controller: App\Controller\ProductController::project
+
+app_product_panel_project_create:
+    path: /product-panel/projects/create
+    controller: App\Controller\ProductController::createProject

@@ -10,5 +10,7 @@ class PermissionEnum
     public const CAN_ADD_MEMBER_TO_TEAM = 'can_add_member_to_team';
 
     public const CAN_DELETE_MEMBER_FROM_TEAM = 'can_delete_member_from_team';
+    
+    public const CAN_CREATE_PROJECT = 'can_create_project';
 }
 

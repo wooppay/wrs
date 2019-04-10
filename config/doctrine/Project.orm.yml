@@ -1,7 +1,7 @@
-App\Entity\Team:
+App\Entity\Project:
     type: entity
-    repositoryClass: App\Repository\TeamRepository
-    table: team
+    repositoryClass: App\Repository\ProjectRepository
+    table: project
     id:
         id:
             type: integer
@@ -18,11 +18,10 @@ App\Entity\Team:
             length: 255
             nullable: false
             unique: false
-    manyToMany:
-        members:
-            targetEntity: App\Entity\User
-            mappedBy: teams
-    oneToMany:
-        projects:
-            targetEntity: App\Entity\Project
-            mappedBy: team
+    manyToOne:
+        team:
+            targetEntity: App\Entity\Team
+            inversedBy: projects
+            joinColumn:
+                name: team_id
+                referencedColumnName: id

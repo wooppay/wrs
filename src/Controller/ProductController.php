@@ -12,6 +12,10 @@ use App\Enum\PermissionEnum;
 use App\Service\SecurityService;
 use App\Entity\Role;
 use App\Enum\RoleEnum;
+use App\Service\ProjectService;
+use App\Entity\Project;
+use App\Form\ProjectType;
+use App\Service\TeamService;
 
 class ProductController extends AbstractController
 {
@@ -126,6 +130,38 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product_panel_team_manage', [
             'id' => $team->getId(),
+        ]);
+    }
+    
+    public function project(Request $request, ProjectService $projectService)
+    {
+        $projects = $projectService->all();
+        
+        return $this->render('product/project.html.twig', [
+            'projects' => $projects,
+        ]);
+    }
+    
+    public function createProject(Request $request, TeamService $teamService, ProjectService $projectService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_PROJECT, $this->getUser());
+        
+        $teams = $teamService->all();
+        
+        $project = new Project();
+        $form = $this->createForm(ProjectType::class, $project, [
+            'teams' => $teams,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $projectService->create($project);
+            
+            return $this->redirectToRoute('app_product_panel_project');
+        }
+        
+        return $this->render('product/create_project.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
