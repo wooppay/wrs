@@ -9,9 +9,12 @@ class UserService
 {
     private $entityManager;
     
-    public function __construct(EntityManagerInterface $manager)
+    private $role;
+    
+    public function __construct(EntityManagerInterface $manager, RoleService $roleService)
     {
         $this->entityManager = $manager;
+        $this->role = $roleService;
     }
     
     public function all() : array
@@ -42,6 +45,12 @@ class UserService
         
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+    }
+    
+    public function allByRoleName(string $name) : array
+    {
+        $role = $this->role->byName($name);
+        return $role->getUsers()->toArray();
     }
 }
 

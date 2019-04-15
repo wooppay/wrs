@@ -42,3 +42,5 @@ App\Entity\Project:
             - NotBlank: ~
         team:
             - NotBlank: ~
+        customer:
+            - NotBlank: ~

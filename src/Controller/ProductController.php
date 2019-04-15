@@ -11,11 +11,12 @@ use App\Service\ProductService;
 use App\Enum\PermissionEnum;
 use App\Service\SecurityService;
 use App\Entity\Role;
-use App\Enum\RoleEnum;
 use App\Service\ProjectService;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Service\TeamService;
+use App\Service\UserService;
+use App\Enum\RoleEnum;
 
 class ProductController extends AbstractController
 {
@@ -142,15 +143,17 @@ class ProductController extends AbstractController
         ]);
     }
     
-    public function createProject(Request $request, TeamService $teamService, ProjectService $projectService)
+    public function createProject(Request $request, TeamService $teamService, ProjectService $projectService, UserService $userService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_PROJECT, $this->getUser());
         
         $teams = $teamService->all();
+        $customers = $userService->allByRoleName(RoleEnum::CUSTOMER);
         
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project, [
             'teams' => $teams,
+            'customers' => $customers,
         ]);
         $form->handleRequest($request);
         

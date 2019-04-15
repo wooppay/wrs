@@ -23,5 +23,14 @@ App\Entity\Project:
             targetEntity: App\Entity\Team
             inversedBy: projects
             joinColumn:
+                nullable: false
                 name: team_id
+                referencedColumnName: id
+        customer:
+            targetEntity: App\Entity\User
+            inversedBy: projects
+            joinColumn:
+                unique: true
+                nullable: false
+                name: customer_id
                 referencedColumnName: id

@@ -36,6 +36,7 @@ final class Version20190314113854 extends AbstractMigration
         $this->addSql('INSERT INTO role (name) VALUES (\'ROLE_ADMIN\')');
         $this->addSql('INSERT INTO role (name) VALUES (\'ROLE_USER\')');
         $this->addSql('INSERT INTO role (name) VALUES (\'ROLE_TM\')');
+        $this->addSql('INSERT INTO role (name) VALUES (\'ROLE_CUSTOMER\')');
         $this->addSql('INSERT INTO user_role (user_id, role_id) VALUES (1, 1)');
     }
 

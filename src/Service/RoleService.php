@@ -34,5 +34,14 @@ class RoleService
         ->getRepository(Role::class)
         ->find($id);
     }
+
+    public function byName(string $name) : Role
+    {
+        return $this->entityManager
+        ->getRepository(Role::class)
+        ->findOneBy([
+            'name' => $name,
+        ]);
+    }
 }
 

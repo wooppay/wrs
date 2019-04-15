@@ -11,6 +11,8 @@ class Project
     private $description;
     
     private $team;
+    
+    private $customer;
 
     public function getName() : ?string
     {
@@ -51,5 +53,17 @@ class Project
         $this->team = $team;
         
         return $this;
+    }
+    
+    public function setCustomer(User $customer) : self
+    {
+        $this->customer = $customer;
+        
+        return $this;
+    }
+    
+    public function getCustomer() : ?User
+    {
+        return $this->customer;
     }
 }

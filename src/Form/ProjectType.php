@@ -22,6 +22,13 @@ class ProjectType extends AbstractType
             },
             'choice_value' => 'id',
         ])
+        ->add('customer', ChoiceType::class, [
+            'choices' => $options['customers'],
+            'choice_label' => function($customer) {
+                return $customer->getEmail();
+            },
+            'choice_value' => 'id',
+        ])
         ->add('description', TextareaType::class)
         ->add('save', SubmitType::class)
         ;
@@ -31,6 +38,7 @@ class ProjectType extends AbstractType
     {
         $resolver->setDefaults([
             'teams' => [],
+            'customers' => [],
         ]);
     }
 }
