@@ -105,3 +105,23 @@ app_product_panel_project:
 app_product_panel_project_create:
     path: /product-panel/projects/create
     controller: App\Controller\ProductController::createProject
+    
+app_product_panel_skill:
+    path: /product-panel/skills
+    controller: App\Controller\ProductController::skill
+
+app_product_panel_skill_soft:
+    path: /product-panel/skills/soft
+    controller: App\Controller\ProductController::skillSoft
+
+app_product_panel_skill_technical:
+    path: /product-panel/skills/technical
+    controller: App\Controller\ProductController::skillTechnical
+
+app_product_panel_skill_soft_create:
+    path: /product-panel/skills/soft/create
+    controller: App\Controller\ProductController::skillSoftCreate
+
+app_product_panel_skill_technical_create:
+    path: /product-panel/skills/technical/create
+    controller: App\Controller\ProductController::skillTechnicalCreate

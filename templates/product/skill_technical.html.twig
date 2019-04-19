@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Panel | Technical Skills{% endblock %}
+{% block head_title %}
+    <h2>Technical Skills</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_product_panel') }}">Product Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_product_panel_skill') }}">Skills</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Technical Skills</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            <a href="{{ path('app_product_panel_skill_technical_create') }}" class="btn btn-primary">Create skill</a>
+        </div>
+    </div>
+    
+    <br>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in skills %}
+                <tr>
+                    <td>{{ item.content }}</td>
+                    <td>{{ item.role.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

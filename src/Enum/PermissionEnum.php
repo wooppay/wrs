@@ -12,5 +12,13 @@ class PermissionEnum
     public const CAN_DELETE_MEMBER_FROM_TEAM = 'can_delete_member_from_team';
     
     public const CAN_CREATE_PROJECT = 'can_create_project';
+
+    public const CAN_CREATE_SOFT_SKILL = 'can_create_soft_skill';
+    
+    public const CAN_DELETE_SOFT_SKILL = 'can_delete_soft_skill';
+    
+    public const CAN_CREATE_TECHNICAL_SKILL = 'can_create_technical_skill';
+    
+    public const CAN_DELETE_TECHNICAL_SKILL = 'can_delete_technical_skill';
 }
 

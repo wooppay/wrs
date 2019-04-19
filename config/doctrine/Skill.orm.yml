@@ -1,0 +1,28 @@
+App\Entity\Skill:
+    type: entity
+    repositoryClass: App\Repository\SkillRepository
+    table: skill
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        content:
+            type: string
+            length: 255
+            nullable: false
+            unique: false
+        type:
+            type: string
+            length: 20
+            nullable: false
+            unique: false
+    manyToOne:
+        role:
+            targetEntity: App\Entity\Role
+            inversedBy: skills
+            joinColumn:
+                nullable: false
+                name: role_id
+                referencedColumnName: id

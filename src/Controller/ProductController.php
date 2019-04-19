@@ -17,6 +17,10 @@ use App\Form\ProjectType;
 use App\Service\TeamService;
 use App\Service\UserService;
 use App\Enum\RoleEnum;
+use App\Service\SkillService;
+use App\Service\RoleService;
+use App\Form\SkillType;
+use App\Entity\Skill;
 
 class ProductController extends AbstractController
 {
@@ -164,6 +168,75 @@ class ProductController extends AbstractController
         }
         
         return $this->render('product/create_project.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    public function skill()
+    {
+        return $this->render('product/skill.html.twig');
+    }
+    
+    public function skillSoft(SkillService $skillService)
+    {
+        $skills = $skillService->allSoft();
+        
+        return $this->render('product/skill_soft.html.twig', [
+            'skills' => $skills,
+        ]);
+    }
+    
+    public function skillTechnical(SkillService $skillService)
+    {
+        $skills = $skillService->allTechnical();
+        
+        return $this->render('product/skill_technical.html.twig', [
+            'skills' => $skills,
+        ]);
+    }
+    
+    public function skillSoftCreate(Request $request, RoleService $roleService, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_SOFT_SKILL, $this->getUser());
+        
+        $roles = $roleService->all();
+        $skill = new Skill();
+        
+        $form = $this->createForm(SkillType::class, $skill, [
+            'roles' => $roles,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $skillService->createSoft($skill);
+            
+            return $this->redirectToRoute('app_product_panel_skill_soft');
+        }
+        
+        return $this->render('product/skill_soft_create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    public function skillTechnicalCreate(Request $request, RoleService $roleService, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TECHNICAL_SKILL, $this->getUser());
+        
+        $roles = $roleService->all();
+        $skill = new Skill();
+        
+        $form = $this->createForm(SkillType::class, $skill, [
+            'roles' => $roles,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $skillService->createTechnical($skill);
+            
+            return $this->redirectToRoute('app_product_panel_skill_technical');
+        }
+        
+        return $this->render('product/skill_technical_create.html.twig', [
             'form' => $form->createView(),
         ]);
     }

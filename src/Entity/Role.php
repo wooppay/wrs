@@ -14,11 +14,14 @@ class Role
     private $users;
     
     private $permissions;
+    
+    private $skills;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,5 +88,10 @@ class Role
         }
         
         return $this;
+    }
+    
+    public function getSkills() : ArrayCollection
+    {
+        return $this->skills;
     }
 }

@@ -35,6 +35,10 @@ final class Version20190326044946 extends AbstractMigration
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_add_member_to_team\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_delete_member_from_team\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_project\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_soft_skill\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_delete_soft_skill\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_technical_skill\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_delete_technical_skill\')');
     }
 
     public function down(Schema $schema) : void

@@ -29,3 +29,7 @@ App\Entity\Role:
                 inverseJoinColumns:
                     permission_id:
                         referencedColumnName: id
+    oneToMany:
+        skills:
+            targetEntity: App\Entity\Skill
+            mappedBy: role
