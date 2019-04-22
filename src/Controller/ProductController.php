@@ -240,5 +240,31 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    public function skillTechnicalDelete(Request $request, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_TECHNICAL_SKILL, $this->getUser());
+        
+        $skill = $this->getDoctrine()->getRepository(Skill::class)->find(
+            $request->get('id')
+        );
+        
+        $skillService->deleteSkill($skill);
+        
+        return $this->redirectToRoute('app_product_panel_skill_technical');
+    }
+
+    public function skillSoftDelete(Request $request, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_SOFT_SKILL, $this->getUser());
+        
+        $skill = $this->getDoctrine()->getRepository(Skill::class)->find(
+            $request->get('id')
+        );
+        
+        $skillService->deleteSkill($skill);
+        
+        return $this->redirectToRoute('app_product_panel_skill_soft');
+    }
 }
 

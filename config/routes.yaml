@@ -125,3 +125,11 @@ app_product_panel_skill_soft_create:
 app_product_panel_skill_technical_create:
     path: /product-panel/skills/technical/create
     controller: App\Controller\ProductController::skillTechnicalCreate
+
+app_product_panel_skill_technical_delete:
+    path: /product-panel/skills/technical/{id}/delete
+    controller: App\Controller\ProductController::skillTechnicalDelete
+
+app_product_panel_skill_soft_delete:
+    path: /product-panel/skills/soft/{id}/delete
+    controller: App\Controller\ProductController::skillSoftDelete

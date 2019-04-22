@@ -60,5 +60,13 @@ class SkillService
         
         return $skill;
     }
+    
+    public function deleteSkill(Skill $skill) : bool
+    {
+        $this->entityManager->remove($skill);
+        $this->entityManager->flush();
+        
+        return true;
+    }
 }
 
