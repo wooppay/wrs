@@ -30,12 +30,32 @@ class SkillService
         ]);
     }
     
+    public function allSoftNotDeleted() : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->findBy([
+            'type' => SkillEnum::TYPE_SOFT,
+            'status' => SkillEnum::STATUS_ACTIVE,
+        ]);
+    }
+    
     public function allTechnical() : array
     {
         return $this->entityManager
         ->getRepository(Skill::class)
         ->findBy([
             'type' => SkillEnum::TYPE_TECHNICAL
+        ]);
+    }
+    
+    public function allTechnicalNotDeleted() : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->findBy([
+            'type' => SkillEnum::TYPE_TECHNICAL,
+            'status' => SkillEnum::STATUS_ACTIVE,
         ]);
     }
     
@@ -63,7 +83,9 @@ class SkillService
     
     public function deleteSkill(Skill $skill) : bool
     {
-        $this->entityManager->remove($skill);
+        $skill->setStatus(SkillEnum::STATUS_DELETED);
+        
+        $this->entityManager->persist($skill);
         $this->entityManager->flush();
         
         return true;

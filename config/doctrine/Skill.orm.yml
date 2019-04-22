@@ -18,6 +18,12 @@ App\Entity\Skill:
             length: 20
             nullable: false
             unique: false
+        status:
+            type: integer
+            length: 20
+            nullable: false
+            options:
+                default: 1
     manyToOne:
         role:
             targetEntity: App\Entity\Role

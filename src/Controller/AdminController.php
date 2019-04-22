@@ -208,7 +208,7 @@ class AdminController extends AbstractController
     
     public function skillSoft(SkillService $skillService)
     {
-        $skills = $skillService->allSoft();
+        $skills = $skillService->allSoftNotDeleted();
         
         return $this->render('admin/skill_soft.html.twig', [
             'skills' => $skills,
@@ -217,7 +217,7 @@ class AdminController extends AbstractController
     
     public function skillTechnical(SkillService $skillService)
     {
-        $skills = $skillService->allTechnical();
+        $skills = $skillService->allTechnicalNotDeleted();
         
         return $this->render('admin/skill_technical.html.twig', [
             'skills' => $skills,

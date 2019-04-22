@@ -11,6 +11,8 @@ class Skill
     private $role;
     
     private $type;
+    
+    private $status = 1;
 
     public function getId(): ?int
     {
@@ -51,5 +53,17 @@ class Skill
         $this->type = $type;
         
         return $this;
+    }
+    
+    public function setStatus(int $status) : self
+    {
+        $this->status = $status;
+        
+        return $this;
+    }
+    
+    public function getStatus() : ?int
+    {
+        return $this->status;
     }
 }
