@@ -106,30 +106,30 @@ app_product_panel_project_create:
     path: /product-panel/projects/create
     controller: App\Controller\ProductController::createProject
     
-app_product_panel_skill:
-    path: /product-panel/skills
-    controller: App\Controller\ProductController::skill
+app_admin_skill:
+    path: /admin/skills
+    controller: App\Controller\AdminController::skill
 
-app_product_panel_skill_soft:
-    path: /product-panel/skills/soft
-    controller: App\Controller\ProductController::skillSoft
+app_admin_skill_soft:
+    path: /admin/skills/soft
+    controller: App\Controller\AdminController::skillSoft
 
-app_product_panel_skill_technical:
-    path: /product-panel/skills/technical
-    controller: App\Controller\ProductController::skillTechnical
+app_admin_skill_technical:
+    path: /admin/skills/technical
+    controller: App\Controller\AdminController::skillTechnical
 
-app_product_panel_skill_soft_create:
-    path: /product-panel/skills/soft/create
-    controller: App\Controller\ProductController::skillSoftCreate
+app_admin_skill_soft_create:
+    path: /admin/skills/soft/create
+    controller: App\Controller\AdminController::skillSoftCreate
 
-app_product_panel_skill_technical_create:
-    path: /product-panel/skills/technical/create
-    controller: App\Controller\ProductController::skillTechnicalCreate
+app_admin_skill_technical_create:
+    path: /admin/skills/technical/create
+    controller: App\Controller\AdminController::skillTechnicalCreate
 
-app_product_panel_skill_technical_delete:
-    path: /product-panel/skills/technical/{id}/delete
-    controller: App\Controller\ProductController::skillTechnicalDelete
+app_admin_skill_technical_delete:
+    path: /admin/skills/technical/{id}/delete
+    controller: App\Controller\AdminController::skillTechnicalDelete
 
-app_product_panel_skill_soft_delete:
-    path: /product-panel/skills/soft/{id}/delete
-    controller: App\Controller\ProductController::skillSoftDelete
+app_admin_skill_soft_delete:
+    path: /admin/skills/soft/{id}/delete
+    controller: App\Controller\AdminController::skillSoftDelete

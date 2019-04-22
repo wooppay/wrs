@@ -16,6 +16,9 @@ use App\Form\RoleAttachType;
 use App\Service\RoleService;
 use App\Service\PermissionService;
 use App\Service\UserService;
+use App\Service\SkillService;
+use App\Entity\Skill;
+use App\Form\SkillType;
 
 class AdminController extends AbstractController
 {
@@ -196,6 +199,101 @@ class AdminController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+    
+    public function skill()
+    {
+        return $this->render('admin/skill.html.twig');
+    }
+    
+    public function skillSoft(SkillService $skillService)
+    {
+        $skills = $skillService->allSoft();
+        
+        return $this->render('admin/skill_soft.html.twig', [
+            'skills' => $skills,
+        ]);
+    }
+    
+    public function skillTechnical(SkillService $skillService)
+    {
+        $skills = $skillService->allTechnical();
+        
+        return $this->render('admin/skill_technical.html.twig', [
+            'skills' => $skills,
+        ]);
+    }
+    
+    public function skillSoftCreate(Request $request, RoleService $roleService, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_SOFT_SKILL, $this->getUser());
+        
+        $roles = $roleService->all();
+        $skill = new Skill();
+        
+        $form = $this->createForm(SkillType::class, $skill, [
+            'roles' => $roles,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $skillService->createSoft($skill);
+            
+            return $this->redirectToRoute('app_admin_skill_soft');
+        }
+        
+        return $this->render('admin/skill_soft_create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    public function skillTechnicalCreate(Request $request, RoleService $roleService, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TECHNICAL_SKILL, $this->getUser());
+        
+        $roles = $roleService->all();
+        $skill = new Skill();
+        
+        $form = $this->createForm(SkillType::class, $skill, [
+            'roles' => $roles,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $skillService->createTechnical($skill);
+            
+            return $this->redirectToRoute('app_admin_skill_technical');
+        }
+        
+        return $this->render('admin/skill_technical_create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    public function skillTechnicalDelete(Request $request, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_TECHNICAL_SKILL, $this->getUser());
+        
+        $skill = $this->getDoctrine()->getRepository(Skill::class)->find(
+            $request->get('id')
+        );
+        
+        $skillService->deleteSkill($skill);
+        
+        return $this->redirectToRoute('app_admin_skill_technical');
+    }
+    
+    public function skillSoftDelete(Request $request, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_SOFT_SKILL, $this->getUser());
+        
+        $skill = $this->getDoctrine()->getRepository(Skill::class)->find(
+            $request->get('id')
+        );
+        
+        $skillService->deleteSkill($skill);
+        
+        return $this->redirectToRoute('app_admin_skill_soft');
     }
 }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product Panel | Skills{% endblock %}
+{% block title %}Admin Panel | Skills{% endblock %}
 {% block head_title %}
     <h2>Skills</h2>
 {% endblock %}
@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_product_panel') }}">Product panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
         <li class="breadcrumb-item active" aria-current="page">Skills</li>
       </ol>
     </nav>
@@ -20,8 +20,8 @@
     <div class="row">
         <div class="col col-sm-12">
             <div class="list-group">
-                <a href="{{ path('app_product_panel_skill_soft') }}" class="list-group-item list-group-item-action">Soft skills</a>
-                <a href="{{ path('app_product_panel_skill_technical') }}" class="list-group-item list-group-item-action">Technical skills</a>
+                <a href="{{ path('app_admin_skill_soft') }}" class="list-group-item list-group-item-action">Soft skills</a>
+                <a href="{{ path('app_admin_skill_technical') }}" class="list-group-item list-group-item-action">Technical skills</a>
             </div>
         </div>
     </div>

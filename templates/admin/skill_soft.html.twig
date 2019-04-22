@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product Panel | Technical Skills{% endblock %}
+{% block title %}Admin Panel | Soft Skills{% endblock %}
 {% block head_title %}
-    <h2>Technical Skills</h2>
+    <h2>Soft Skills</h2>
 {% endblock %}
 
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_product_panel') }}">Product Panel</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_product_panel_skill') }}">Skills</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Technical Skills</li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_skill') }}">Skills</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Soft Skills</li>
       </ol>
     </nav>
 {% endblock %}
@@ -20,7 +20,7 @@
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ path('app_product_panel_skill_technical_create') }}" class="btn btn-primary">Create skill</a>
+            <a href="{{ path('app_admin_skill_soft_create') }}" class="btn btn-primary">Create skill</a>
         </div>
     </div>
     
@@ -40,7 +40,7 @@
                     <td>{{ item.content }}</td>
                     <td>{{ item.role.name }}</td>
                     <td>
-                        <a href="{{ path('app_product_panel_skill_technical_delete', {'id': item.id}) }}">
+                        <a href="{{ path('app_admin_skill_soft_delete', {'id': item.id}) }}">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </td>
