@@ -21,6 +21,26 @@ class SkillService
         ->findAll();
     }
     
+    public function oneSoftById(int $id) : Skill
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->findOneBy([
+            'type' => SkillEnum::TYPE_SOFT,
+            'id' => $id,
+        ]);
+    }
+    
+    public function oneTechnicalById(int $id) : Skill
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->findOneBy([
+            'type' => SkillEnum::TYPE_TECHNICAL,
+            'id' => $id,
+        ]);
+    }
+    
     public function allSoft() : array
     {
         return $this->entityManager
@@ -65,6 +85,14 @@ class SkillService
         
         $skill->setType(SkillEnum::TYPE_SOFT);
         
+        $this->entityManager->flush();
+        
+        return $skill;
+    }
+
+    public function updateSoft(Skill $skill) : Skill
+    {
+        $this->entityManager->persist($skill);
         $this->entityManager->flush();
         
         return $skill;

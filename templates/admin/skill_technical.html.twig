@@ -40,6 +40,9 @@
                     <td>{{ item.content }}</td>
                     <td>{{ item.role.name }}</td>
                     <td>
+                        <a href="{{ path('app_admin_skill_technical_update', {'id': item.id}) }}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                         <a href="{{ path('app_admin_skill_technical_delete', {'id': item.id}) }}">
                             <i class="far fa-trash-alt"></i>
                         </a>

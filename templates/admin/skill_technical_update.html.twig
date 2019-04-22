@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel | Update Technical Skill{% endblock %}
+{% block head_title %}
+    <h2>Update technical skill</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_skill') }}">Skills</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_skill_soft') }}">Technical Skills</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Update</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    {{ form(form) }}
+
+{% endblock %}

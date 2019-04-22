@@ -133,3 +133,11 @@ app_admin_skill_technical_delete:
 app_admin_skill_soft_delete:
     path: /admin/skills/soft/{id}/delete
     controller: App\Controller\AdminController::skillSoftDelete
+
+app_admin_skill_soft_update:
+    path: /admin/skills/soft/{id}/update
+    controller: App\Controller\AdminController::skillSoftUpdate
+
+app_admin_skill_technical_update:
+    path: /admin/skills/technical/{id}/update
+    controller: App\Controller\AdminController::skillTechnicalUpdate

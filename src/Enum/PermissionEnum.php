@@ -20,5 +20,9 @@ class PermissionEnum
     public const CAN_CREATE_TECHNICAL_SKILL = 'can_create_technical_skill';
     
     public const CAN_DELETE_TECHNICAL_SKILL = 'can_delete_technical_skill';
+    
+    public const CAN_UPDATE_SOFT_SKILL = 'can_update_soft_skill';
+
+    public const CAN_UPDATE_TECHNICAL_SKILL = 'can_update_technical_skill';
 }
 

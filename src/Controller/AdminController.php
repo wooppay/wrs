@@ -295,5 +295,51 @@ class AdminController extends AbstractController
         
         return $this->redirectToRoute('app_admin_skill_soft');
     }
+    
+    public function skillSoftUpdate(Request $request, RoleService $roleService, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_SOFT_SKILL, $this->getUser());
+        
+        $roles = $roleService->all();
+        $skill = $skillService->oneSoftById((int) $request->get('id'));
+        
+        $form = $this->createForm(SkillType::class, $skill, [
+            'roles' => $roles,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $skillService->updateSoft($skill);
+            
+            return $this->redirectToRoute('app_admin_skill_soft');
+        }
+        
+        return $this->render('admin/skill_soft_update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    public function skillTechnicalUpdate(Request $request, RoleService $roleService, SkillService $skillService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TECHNICAL_SKILL, $this->getUser());
+        
+        $roles = $roleService->all();
+        $skill = $skillService->oneTechnicalById((int) $request->get('id'));
+        
+        $form = $this->createForm(SkillType::class, $skill, [
+            'roles' => $roles,
+        ]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $skillService->updateSoft($skill);
+            
+            return $this->redirectToRoute('app_admin_skill_technical');
+        }
+        
+        return $this->render('admin/skill_technical_update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
 
