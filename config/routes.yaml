@@ -141,3 +141,7 @@ app_admin_skill_soft_update:
 app_admin_skill_technical_update:
     path: /admin/skills/technical/{id}/update
     controller: App\Controller\AdminController::skillTechnicalUpdate
+
+app_admin_security_role_update:
+    path: /admin/security/roles/{id}/edit
+    controller: App\Controller\AdminController::roleUpdate

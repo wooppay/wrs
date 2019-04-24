@@ -20,7 +20,21 @@ class RoleService
         ->findAll();
     }
     
+    /**
+     * todo pass collection instead instance and
+     * create instance inside method
+     * 
+     * @return Role
+     */
     public function create(Role $role) : Role
+    {
+        $this->entityManager->persist($role);
+        $this->entityManager->flush();
+        
+        return $role;
+    }
+    
+    public function update(Role $role) : Role
     {
         $this->entityManager->persist($role);
         $this->entityManager->flush();

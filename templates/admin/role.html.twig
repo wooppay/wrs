@@ -38,7 +38,12 @@
                 <tr>
                     <td>{{ item.name }}</td>
                     <td>
-                        <a href="{{ path('app_admin_security_role_manage', {'id': item.id}) }}"><i class="fas fa-tools"></i></a>
+                        <a href="{{ path('app_admin_security_role_update', {'id': item.id}) }}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="{{ path('app_admin_security_role_manage', {'id': item.id}) }}">
+                            <i class="fas fa-tools"></i>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

@@ -341,5 +341,24 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    public function roleUpdate(Request $request, RoleService $roleService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_ROLE, $this->getUser());
+        
+        $role = $roleService->byId((int) $request->get('id'));
+        $form = $this->createForm(RoleFormType::class, $role);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $roleService->update($role);
+            
+            return $this->redirectToRoute('app_admin_security_role');
+        }
+        
+        return $this->render('admin/role_update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }
 
