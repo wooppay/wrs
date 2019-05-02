@@ -33,6 +33,8 @@ class TaskController extends AbstractController
     
     public function create(Request $request, UserService $userService, TeamService $teamService, ProjectService $projectService, TaskService $taskService)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser());
+        
         $users = $userService->all();
         $teams = $teamService->all();
         $projects = $projectService->all();
