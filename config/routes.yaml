@@ -145,3 +145,15 @@ app_admin_skill_technical_update:
 app_admin_security_role_update:
     path: /admin/security/roles/{id}/edit
     controller: App\Controller\AdminController::roleUpdate
+
+app_dashboard:
+    path: /dashboard
+    controller: App\Controller\DashboardController::main
+
+app_dashboard_task:
+    path: /dashboard/tasks
+    controller: App\Controller\TaskController::main
+
+app_dashboard_task_create:
+    path: /dashboard/tasks/create
+    controller: App\Controller\TaskController::create

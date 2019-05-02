@@ -26,5 +26,9 @@ class PermissionEnum
     public const CAN_UPDATE_TECHNICAL_SKILL = 'can_update_technical_skill';
     
     public const CAN_UPDATE_ROLE = 'can_update_role';
+    
+    public const CAN_SEE_MANAGE_TASK = 'can_see_manage_task';
+    
+    public const CAN_CREATE_TASK = 'can_create_task';
 }
 

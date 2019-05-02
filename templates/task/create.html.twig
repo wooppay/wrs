@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | Create Task{% endblock %}
+{% block head_title %}
+    <h2>Create task</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard_task') }}">Tasks</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create task</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    {{ form(form) }}
+
+{% endblock %}

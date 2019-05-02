@@ -17,10 +17,13 @@ class Team
     
     private $projects;
     
+    private $tasks;
+    
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,5 +81,10 @@ class Team
     public function getProjects() : Collection
     {
         return $this->projects;
+    }
+    
+    public function getTasks() : Collection
+    {
+        return $this->tasks;
     }
 }

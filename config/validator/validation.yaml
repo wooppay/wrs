@@ -44,3 +44,16 @@ App\Entity\Project:
             - NotBlank: ~
         customer:
             - NotBlank: ~
+
+App\Entity\Task:
+    properties:
+        name:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+        executor:
+            - NotBlank: ~
+        team:
+            - NotBlank: ~
+        project:
+            - NotBlank: ~

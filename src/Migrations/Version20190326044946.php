@@ -42,6 +42,10 @@ final class Version20190326044946 extends AbstractMigration
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_update_soft_skill\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_update_technical_skill\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_update_role\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_see_manage_task\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_task\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_update_task\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_delete_task\')');
     }
 
     public function down(Schema $schema) : void

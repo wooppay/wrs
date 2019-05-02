@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Project
 {
     private $id;
@@ -13,6 +16,13 @@ class Project
     private $team;
     
     private $customer;
+    
+    private $tasks;
+    
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
 
     public function getName() : ?string
     {
@@ -65,5 +75,10 @@ class Project
     public function getCustomer() : ?User
     {
         return $this->customer;
+    }
+    
+    public function getTasks() : Collection
+    {
+        return $this->tasks;
     }
 }

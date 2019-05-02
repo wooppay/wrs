@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | Tasks{% endblock %}
+{% block head_title %}
+    <h2>Tasks</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tasks</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            <a href="{{ path('app_dashboard_task_create') }}" class="btn btn-primary">Create task</a>
+        </div>
+    </div>
+    
+    <br>
+            {% for item in tasks %}
+            
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Executor: {{ item.executor.email }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
+                        <p class="card-text">{{ item.description }}</p>
+                        <a href="#" class="btn btn-primary">Detail</a>
+                    </div>
+                </div>
+                
+                <br>
+            {% endfor %}
+
+{% endblock %}

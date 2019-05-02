@@ -1,0 +1,48 @@
+App\Entity\Task:
+    type: entity
+    repositoryClass: App\Repository\TaskRepository
+    table: task
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: false
+        description:
+            type: string
+            length: 10000
+            nullable: false
+            unique: false
+        status:
+            type: integer
+            length: 20
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        executor:
+            targetEntity: App\Entity\User
+            inversedBy: tasks
+            joinColumn:
+                nullable: false
+                name: executor_id
+                referencedColumnName: id
+        team:
+            targetEntity: App\Entity\Team
+            inversedBy: tasks
+            joinColumn:
+                nullable: false
+                name: task_id
+                referencedColumnName: id
+        project:
+            targetEntity: App\Entity\Project
+            inversedBy: tasks
+            joinColumn:
+                nullable: false
+                name: project_id
+                referencedColumnName: id
