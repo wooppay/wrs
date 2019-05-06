@@ -3,8 +3,6 @@ namespace App\Enum;
 
 class PermissionEnum
 {
-    public const CAN_SEE_PRODUCT_PANEL = 'can_see_product_panel';
-
     public const CAN_CREATE_TEAM = 'can_create_team';
     
     public const CAN_ADD_MEMBER_TO_TEAM = 'can_add_member_to_team';
@@ -32,5 +30,7 @@ class PermissionEnum
     public const CAN_CREATE_TASK = 'can_create_task';
     
     public const CAN_SEE_MANAGE_TEAM = 'can_see_manage_team';
+
+    public const CAN_SEE_MANAGE_PROJECT = 'can_see_manage_project';
 }
 

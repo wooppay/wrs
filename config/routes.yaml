@@ -73,18 +73,6 @@ app_admin_security_role_manage_attach_permission:
 app_admin_security_role_manage_detach_permission:
     path: /admin/security/roles/{role_id}/manage/detach-permission/{permission_id}
     controller: App\Controller\AdminController::detachPermission
-
-app_product_panel:
-    path: /product-panel
-    controller: App\Controller\ProductController::index
-
-app_product_panel_project:
-    path: /product-panel/projects
-    controller: App\Controller\ProductController::project
-
-app_product_panel_project_create:
-    path: /product-panel/projects/create
-    controller: App\Controller\ProductController::createProject
     
 app_admin_skill:
     path: /admin/skills
@@ -138,10 +126,6 @@ app_dashboard_task_create:
     path: /dashboard/tasks/create
     controller: App\Controller\TaskController::create
 
-
-
-
-
 app_dashboard_team:
     path: /dashboard/teams
     controller: App\Controller\TeamController::main
@@ -161,3 +145,11 @@ app_dashboard_team_manage_add_member:
 app_dashboard_team_manage_delete_member:
     path: /dashboard/teams/{team_id}/manage/delete-member/{member_id}
     controller: App\Controller\TeamController::deleteTeamMember
+
+app_dashboard_project:
+    path: /dashboard/projects
+    controller: App\Controller\ProjectController::main
+
+app_dashboard_project_create:
+    path: /dashboard/projects/create
+    controller: App\Controller\ProjectController::create
