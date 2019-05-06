@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product Panel | Manage Team{% endblock %}
+{% block title %}Dashboard | Manage Team{% endblock %}
 {% block head_title %}
     <h2>{{ team.name }}</h2>
 {% endblock %}
@@ -8,9 +8,8 @@
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_product_panel') }}">Product Panel</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_product_panel_team') }}">Teams</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard_team') }}">Teams</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
       </ol>
     </nav>
@@ -20,7 +19,7 @@
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ path('app_product_panel_team_manage_add_member', {'id': team.id}) }}" class="btn btn-primary">Add Member</a>
+            <a href="{{ path('app_dashboard_team_manage_add_member', {'id': team.id}) }}" class="btn btn-primary">Add Member</a>
         </div>
     </div>
     
@@ -38,7 +37,7 @@
                 <tr>
                     <td>{{ item.email }}</td>
                     <td>
-                        <a href="{{ path('app_product_panel_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}"><i class="far fa-trash-alt"></i></a>
+                        <a href="{{ path('app_dashboard_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
             {% endfor %}

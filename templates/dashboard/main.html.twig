@@ -22,6 +22,9 @@
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TASK'), app.user) %}
                     <a href="{{ path('app_dashboard_task') }}" class="list-group-item list-group-item-action">Tasks</a>
                 {% endif %}
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
+                    <a href="{{ path('app_dashboard_team') }}" class="list-group-item list-group-item-action">Teams</a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -78,26 +78,6 @@ app_product_panel:
     path: /product-panel
     controller: App\Controller\ProductController::index
 
-app_product_panel_team:
-    path: /product-panel/teams
-    controller: App\Controller\ProductController::team
-
-app_product_panel_team_create:
-    path: /product-panel/teams/create
-    controller: App\Controller\ProductController::createTeam
-
-app_product_panel_team_manage:
-    path: /product-panel/teams/{id}/manage
-    controller: App\Controller\ProductController::manage
-
-app_product_panel_team_manage_add_member:
-    path: /product-panel/teams/{id}/manage/add-member
-    controller: App\Controller\ProductController::addMember
-
-app_product_panel_team_manage_delete_member:
-    path: /product-panel/teams/{team_id}/manage/delete-member/{member_id}
-    controller: App\Controller\ProductController::deleteTeamMember
-
 app_product_panel_project:
     path: /product-panel/projects
     controller: App\Controller\ProductController::project
@@ -157,3 +137,27 @@ app_dashboard_task:
 app_dashboard_task_create:
     path: /dashboard/tasks/create
     controller: App\Controller\TaskController::create
+
+
+
+
+
+app_dashboard_team:
+    path: /dashboard/teams
+    controller: App\Controller\TeamController::main
+
+app_dashboard_team_create:
+    path: /dashboard/teams/create
+    controller: App\Controller\TeamController::create
+
+app_dashboard_team_manage:
+    path: /dashboard/teams/{id}/manage
+    controller: App\Controller\TeamController::manage
+
+app_dashboard_team_manage_add_member:
+    path: /dashboard/teams/{id}/manage/add-member
+    controller: App\Controller\TeamController::addMember
+
+app_dashboard_team_manage_delete_member:
+    path: /dashboard/teams/{team_id}/manage/delete-member/{member_id}
+    controller: App\Controller\TeamController::deleteTeamMember

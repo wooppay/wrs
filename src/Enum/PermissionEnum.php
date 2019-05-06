@@ -30,5 +30,7 @@ class PermissionEnum
     public const CAN_SEE_MANAGE_TASK = 'can_see_manage_task';
     
     public const CAN_CREATE_TASK = 'can_create_task';
+    
+    public const CAN_SEE_MANAGE_TEAM = 'can_see_manage_team';
 }
 

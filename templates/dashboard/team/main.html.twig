@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product Panel | Teams{% endblock %}
+{% block title %}Dashboard | Teams{% endblock %}
 {% block head_title %}
     <h2>Teams</h2>
 {% endblock %}
@@ -8,8 +8,7 @@
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_product_panel') }}">Product Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Teams</li>
       </ol>
     </nav>
@@ -19,7 +18,7 @@
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ path('app_product_panel_team_create') }}" class="btn btn-primary">Create team</a>
+            <a href="{{ path('app_dashboard_team_create') }}" class="btn btn-primary">Create team</a>
         </div>
     </div>
     
@@ -37,7 +36,7 @@
                 <tr>
                     <td>{{ item.name }}</td>
                     <td>
-                        <a href="{{ path('app_product_panel_team_manage', {'id': item.id}) }}"><i class="fas fa-tools"></i></a>
+                        <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}"><i class="fas fa-tools"></i></a>
                     </td>
                 </tr>
             {% endfor %}
