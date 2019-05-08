@@ -3,6 +3,8 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Task;
+use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 
 class TaskService
 {
@@ -33,6 +35,23 @@ class TaskService
         $this->entityManager->flush();
         
         return $task;
+    }
+    
+    public function allTasksInAllTeamWhereUserParticipate(User $user) : ?array
+    {
+        $tasks = [];
+
+        $teams = $user->getTeams();
+        
+        foreach ($teams as $team) {
+            if (!empty($team->getTasks())) {
+                foreach ($team->getTasks() as $task) {
+                    $tasks[] = $task;
+                }
+            }
+        }
+        
+        return $tasks;
     }
 }
 

@@ -4,10 +4,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
+use App\Service\TaskService;
 
 class DashboardController extends AbstractController
 {
-    public function main(Security $security)
+    public function main(Security $security, TaskService $taskService)
     {
         $user = $this->getUser();
         
@@ -16,15 +17,7 @@ class DashboardController extends AbstractController
         }
         
         if ($security->isGranted(PermissionEnum::CAN_SEE_MY_TEAM_TASKS, $user)) {
-            $teams = $user->getTeams();
-            
-            foreach ($teams as $team) {
-                if (!empty($team->getTasks())) {
-                    foreach ($team->getTasks() as $task) {
-                        $tasks[] = $task;
-                    }
-                }
-            }
+            $tasks = $taskService->allTasksInAllTeamWhereUserParticipate($user);
         }
         
         return $this->render('dashboard/main.html.twig', [
