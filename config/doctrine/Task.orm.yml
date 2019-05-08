@@ -37,7 +37,7 @@ App\Entity\Task:
             inversedBy: tasks
             joinColumn:
                 nullable: false
-                name: task_id
+                name: team_id
                 referencedColumnName: id
         project:
             targetEntity: App\Entity\Project

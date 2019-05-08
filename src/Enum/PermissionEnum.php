@@ -34,5 +34,7 @@ class PermissionEnum
     public const CAN_SEE_MANAGE_PROJECT = 'can_see_manage_project';
     
     public const CAN_SEE_TASKS_ASSIGNED_TO_ME = 'can_see_tasks_assigned_to_me';
+
+    public const CAN_SEE_MY_TEAM_TASKS = 'can_see_my_team_tasks';
 }
 

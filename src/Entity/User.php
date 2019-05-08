@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Enum\UserEnum;
 use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
 
 class User implements UserInterface
 {
@@ -122,12 +123,12 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
     
-    public function getTeams(): array
+    public function getTeams(): ?Collection
     {
         return $this->teams;
     }
     
-    public function getTasks() : ?PersistentCollection
+    public function getTasks() : ?Collection
     {
         return $this->tasks;
     }

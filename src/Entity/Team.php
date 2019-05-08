@@ -78,12 +78,12 @@ class Team
         return $this;
     }
     
-    public function getProjects() : Collection
+    public function getProjects() : ?Collection
     {
         return $this->projects;
     }
     
-    public function getTasks() : Collection
+    public function getTasks() : ?Collection
     {
         return $this->tasks;
     }
