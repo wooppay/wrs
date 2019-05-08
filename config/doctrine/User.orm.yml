@@ -50,3 +50,7 @@ App\Entity\User:
                 inverseJoinColumns:
                     team_id:
                         referencedColumnName: id
+    oneToMany:
+        tasks:
+            targetEntity: App\Entity\Task
+            mappedBy: executor

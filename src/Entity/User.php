@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Enum\UserEnum;
+use Doctrine\ORM\PersistentCollection;
 
 class User implements UserInterface
 {
@@ -27,7 +28,6 @@ class User implements UserInterface
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->teams = new ArrayCollection();
-        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,7 +127,7 @@ class User implements UserInterface
         return $this->teams;
     }
     
-    public function getTasks() : ArrayCollection
+    public function getTasks() : ?PersistentCollection
     {
         return $this->tasks;
     }

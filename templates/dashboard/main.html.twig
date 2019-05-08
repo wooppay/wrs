@@ -31,5 +31,24 @@
             </div>
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col col-sm-12">
+            {% for item in tasks %}
+            
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Executor: {{ item.executor.email }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
+                        <p class="card-text">{{ item.description }}</p>
+                        <a href="#" class="btn btn-primary">Detail</a>
+                    </div>
+                </div>
+                
+                <br>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

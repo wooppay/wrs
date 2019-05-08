@@ -48,6 +48,7 @@ final class Version20190326044946 extends AbstractMigration
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_delete_task\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_see_manage_team\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_see_manage_project\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_see_tasks_assigned_to_me\')');
     }
 
     public function down(Schema $schema) : void
