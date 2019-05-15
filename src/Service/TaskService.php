@@ -53,5 +53,21 @@ class TaskService
         
         return $tasks;
     }
+    
+    public function allProjectTaskByUser(User $user) : array
+    {
+        $tasks = [];
+        $projects = $user->getProjects();
+        
+        foreach ($projects as $project) {
+            if (!empty($project->getTasks())) {
+                foreach ($project->getTasks() as $task) {
+                    $tasks[] = $task;
+                }
+            }
+        }
+        
+        return $tasks;
+    }
 }
 

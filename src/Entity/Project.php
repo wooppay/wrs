@@ -77,7 +77,7 @@ class Project
         return $this->customer;
     }
     
-    public function getTasks() : Collection
+    public function getTasks() : ?Collection
     {
         return $this->tasks;
     }

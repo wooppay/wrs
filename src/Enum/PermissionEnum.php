@@ -38,5 +38,7 @@ class PermissionEnum
     public const CAN_SEE_MY_TEAM_TASKS = 'can_see_my_team_tasks';
 
     public const CAN_SEE_ALL_TASKS = 'can_see_all_tasks';
+
+    public const CAN_SEE_ALL_MY_PROJECT_TASKS = 'can_see_all_my_project_tasks';
 }
 

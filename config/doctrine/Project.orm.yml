@@ -34,3 +34,7 @@ App\Entity\Project:
                 nullable: false
                 name: customer_id
                 referencedColumnName: id
+    oneToMany:
+        tasks:
+            targetEntity: App\Entity\Task
+            mappedBy: project

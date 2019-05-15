@@ -54,3 +54,6 @@ App\Entity\User:
         tasks:
             targetEntity: App\Entity\Task
             mappedBy: executor
+        projects:
+            targetEntity: App\Entity\Project
+            mappedBy: customer

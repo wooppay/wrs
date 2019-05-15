@@ -12,6 +12,8 @@ class DashboardController extends AbstractController
     {
         $user = $this->getUser();
         
+        $tasks = [];
+        
         if ($security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
             $tasks = $user->getTasks();
         }
@@ -22,6 +24,10 @@ class DashboardController extends AbstractController
         
         if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_TASKS, $user)) {
             $tasks = $taskService->all();
+        }
+        
+        if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
+            $tasks = $taskService->allProjectTaskByUser($user);
         }
         
         return $this->render('dashboard/main.html.twig', [

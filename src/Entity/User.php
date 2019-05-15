@@ -25,10 +25,13 @@ class User implements UserInterface
     
     private $tasks;
     
+    private $projects;
+    
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,5 +134,10 @@ class User implements UserInterface
     public function getTasks() : ?Collection
     {
         return $this->tasks;
+    }
+    
+    public function getProjects() : ?Collection
+    {
+        return $this->projects;
     }
 }
