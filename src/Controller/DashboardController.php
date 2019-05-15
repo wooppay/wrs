@@ -20,6 +20,10 @@ class DashboardController extends AbstractController
             $tasks = $taskService->allTasksInAllTeamWhereUserParticipate($user);
         }
         
+        if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_TASKS, $user)) {
+            $tasks = $taskService->all();
+        }
+        
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
         ]);
