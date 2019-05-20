@@ -200,6 +200,18 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+	public function detachRole($userId, $roleId, SecurityService $security, UserService $userService, RoleService $roleService)
+	{
+        $user = $userService->byId($userId);
+        $role = $roleService->byId($roleId);
+
+        if(!$security->detachRoleFromUser($user, $role)){
+            throw new \Exception();
+        }
+
+        return $this->redirectToRoute('app_admin_security_user_manage', ['id' => $userId]);
+	}
     
     public function skill()
     {

@@ -40,6 +40,11 @@ class SecurityService
             ':role_id' => $role->getId(),
         ])->execute() > 0;
     }
+
+    public function detachRoleFromUser(User $user, Role $role) : bool
+	{
+        return $this->entityManager->getRepository(User::class)->detachRole($user, $role);
+	}
     
     public function setPermissionToRole(Role $role, Permission $permission) : bool
     {

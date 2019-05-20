@@ -42,6 +42,14 @@ app_admin_security_user_manage_attach_role:
     path: /admin/security/users/{id}/manage/attach-role
     controller: App\Controller\AdminController::attachRole
 
+app_admin_security_user_manage_detach_role:
+    path: /admin/security/users/{userId}/manage/detach-role/{roleId}
+    controller: App\Controller\AdminController::detachRole
+    methods: GET
+    requirements:
+        userId: '\d+'
+        roleId: '\d+'
+
 app_admin_security_role:
     path: /admin/security/roles
     controller: App\Controller\AdminController::role
