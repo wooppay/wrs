@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\Task;
+use App\Service\RoleService;
 
 /**
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +16,31 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class SkillRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $roleService;
+    
+    public function __construct(RegistryInterface $registry, RoleService $roleService)
     {
         parent::__construct($registry, Skill::class);
+        
+        $this->roleService = $roleService;
+    }
+    
+    public function executorSkillByTask(Task $task) : array
+    {
+        $executor = $task->getExecutor();
+        $roles = $executor->getRoles();
+        
+        $skills = [];
+        
+        foreach ($roles as $role) {
+            $entity = $this->roleService->byName($role);
+            
+            if (!$entity->getSkills()->isEmpty()) {
+                $skills = array_merge($skills, $entity->getSkills()->toArray());
+            }
+        }
+        
+        return $skills;
     }
 
     // /**

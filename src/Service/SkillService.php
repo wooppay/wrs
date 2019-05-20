@@ -4,6 +4,7 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Skill;
 use App\Enum\SkillEnum;
+use App\Entity\Task;
 
 class SkillService
 {
@@ -12,6 +13,13 @@ class SkillService
     public function __construct(EntityManagerInterface $manager)
     {
         $this->entityManager = $manager;
+    }
+    
+    public function executorSkillByTask(Task $task) : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->executorSkillByTask($task);
     }
     
     public function all() : array

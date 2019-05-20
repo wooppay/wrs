@@ -45,7 +45,10 @@
                         <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
                         <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
                         <p class="card-text">{{ item.description }}</p>
-                        <a href="#" class="btn btn-primary">Detail</a>
+                        
+                        {% if (is_granted_mark(app.user)) %}
+                            <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary">Mark</a>
+                        {% endif %}
                     </div>
                 </div>
                 

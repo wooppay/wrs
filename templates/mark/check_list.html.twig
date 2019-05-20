@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | Check List{% endblock %}
+{% block head_title %}
+    <h2>Check list</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Check list</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col col-sm-12">
+            {% for item in skills %}
+            
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">{{ item.content }}</p>
+                    </div>
+                </div>
+                
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
