@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -47,4 +48,16 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function detachRole(User $user, Role $role)
+	{
+		$qb = $this->_em->getConnection()->createQueryBuilder();
+		$qb->delete('user_role', 'ur')
+			->where('ur.user_id = :user_id AND ur.role_id = :role_id')
+			->setParameters([
+				':user_id' => $user->getId(),
+				':role_id' => $role->getId(),
+			])->execute();
+		return true;
+	}
 }

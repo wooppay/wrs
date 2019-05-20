@@ -1,0 +1,8 @@
+/** THIS IS MAIN CSS!!! **/
+.badge.badge-primary .close{
+	color: white;
+	font-size: 100%;
+	margin-left: 8px;
+	font-weight: bold;
+	opacity: 1;
+}

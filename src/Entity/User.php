@@ -69,7 +69,7 @@ class User implements UserInterface
         $roles = [];
         
         foreach ($this->roles as $role) {
-            $roles[] = $role->getName();
+            $roles[$role->getId()] = $role->getName();
         }
         
         return $roles;
