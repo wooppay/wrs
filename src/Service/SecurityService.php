@@ -8,6 +8,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Enum\RoleEnum;
 use App\Entity\Permission;
+use Symfony\Component\Security\Core\Security;
+use App\Enum\PermissionMarkEnum;
+use App\Enum\PermissionEnum;
 
 class SecurityService
 {
@@ -17,11 +20,14 @@ class SecurityService
     
     private $entityManager;
     
-    public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder)
+    private $security;
+    
+    public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder, Security $security)
     {
         $this->queryBuilder = $manager->getConnection()->createQueryBuilder();
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $manager;
+        $this->security = $security;
     }
     
     public function setRoleToUser(User $user, Role $role) : bool
@@ -93,6 +99,42 @@ class SecurityService
             ':permission_id' => $permission->getId(),
         ])
         ->execute() > 0;
+    }
+    
+    public function accessMarkProductOwnerByUser(User $user) : bool
+    {
+        return $this->security->isGranted(PermissionEnum::CAN_BE_PRODUCT_OWNER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_CUSTOMER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_DEVELOPER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_TEAM_LEAD, $user);
+        
+    }
+    
+    public function accessMarkTeamLeadByUser(User $user) : bool
+    {
+        return $this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_DEVELOPER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_CUSTOMER, $user);
+        
+    }
+
+    public function accessMarkCustomerByUser(User $user) : bool
+    {
+        return $this->security->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_DEVELOPER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_TEAM_LEAD, $user);
+        
+    }
+
+    public function accessMarkDeveloperByUser(User $user) : bool
+    {
+        return $this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_CUSTOMER, $user) &&
+        $this->security->isGranted(PermissionMarkEnum::CAN_MARK_TEAM_LEAD, $user);
+        
     }
 }
 

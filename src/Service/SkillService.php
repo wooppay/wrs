@@ -126,5 +126,19 @@ class SkillService
         
         return true;
     }
+    
+    public function customerSkillByTask(Task $task) : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->customerSkillByTask($task);
+    }
+
+    public function leadSkillByTask(Task $task) : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->leadSkillByTask($task);
+    }
 }
 

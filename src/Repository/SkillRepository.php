@@ -7,6 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\Task;
 use App\Service\RoleService;
+use Symfony\Component\Security\Core\Security;
+use App\Enum\PermissionEnum;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,11 +21,14 @@ class SkillRepository extends ServiceEntityRepository
 {
     private $roleService;
     
-    public function __construct(RegistryInterface $registry, RoleService $roleService)
+    private $securityService;
+    
+    public function __construct(RegistryInterface $registry, RoleService $roleService, Security $security)
     {
         parent::__construct($registry, Skill::class);
         
         $this->roleService = $roleService;
+        $this->securityService = $security;
     }
     
     public function executorSkillByTask(Task $task) : array
@@ -30,6 +36,33 @@ class SkillRepository extends ServiceEntityRepository
         $executor = $task->getExecutor();
         $roles = $executor->getRoles();
         
+        return $this->byRoles($roles);
+    }
+    
+    public function leadSkillByTask(Task $task) : array
+    {
+        $members = $task->getTeam()->getMembers();
+        
+        foreach ($members as $member) {
+            if ($this->securityService->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
+                $roles = $member->getRoles();
+                
+                break;
+            }
+        }
+        
+        return $this->byRoles($roles);
+    }
+    
+    public function customerSkillByTask(Task $task) : array
+    {
+        $customer = $task->getProject()->getCustomer();
+        
+        return $this->byRoles($customer->getRoles());
+    }
+    
+    protected function byRoles(array $roles) : array
+    {
         $skills = [];
         
         foreach ($roles as $role) {

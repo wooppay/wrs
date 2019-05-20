@@ -157,3 +157,5 @@ app_dashboard_project_create:
 app_dashboard_check_list:
     path: /dashboard/task/{id}/check-list
     controller: App\Controller\MarkController::checkList
+    requirements:
+        id: '\d+'
