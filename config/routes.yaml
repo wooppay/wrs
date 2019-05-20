@@ -153,3 +153,7 @@ app_dashboard_project:
 app_dashboard_project_create:
     path: /dashboard/projects/create
     controller: App\Controller\ProjectController::create
+
+app_dashboard_check_list:
+    path: /dashboard/task/{id}/check-list
+    controller: App\Controller\MarkController::checkList

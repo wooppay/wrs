@@ -40,5 +40,13 @@ class PermissionEnum
     public const CAN_SEE_ALL_TASKS = 'can_see_all_tasks';
 
     public const CAN_SEE_ALL_MY_PROJECT_TASKS = 'can_see_all_my_project_tasks';
+
+    public const CAN_BE_TEAMLEAD = 'can_be_teamlead';
+
+    public const CAN_BE_DEVELOPER = 'can_be_developer';
+
+    public const CAN_BE_CUSTOMER = 'can_be_customer';
+
+    public const CAN_BE_PRODUCT_OWNER = 'can_be_product_owner';
 }
 

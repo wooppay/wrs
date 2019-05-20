@@ -90,7 +90,7 @@ class Role
         return $this;
     }
     
-    public function getSkills() : ArrayCollection
+    public function getSkills() : ?Collection
     {
         return $this->skills;
     }
