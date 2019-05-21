@@ -121,7 +121,7 @@ class TeamController extends Controller
             $request->get('member_id')
         );
 
-        $role = $roleService->byName('ROLE_TM');
+        $role = $roleService->byName(RoleEnum::TEAM_LEAD);
 
         if (!$product->deleteTeamMember($team, $member) || !$securityService->detachRoleFromUser($member, $role)) {
             throw new \Exception();
