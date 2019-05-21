@@ -3,6 +3,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Permission;
+use Doctrine\Common\Collections\Collection;
 
 class PermissionService
 {
@@ -33,6 +34,13 @@ class PermissionService
         return $this->entityManager
         ->getRepository(Permission::class)
         ->find($id);
+    }
+    
+    public function byName(string $name) : ?Permission
+    {
+        return $this->entityManager
+        ->getRepository(Permission::class)
+        ->byName($name);
     }
 }
 

@@ -10,6 +10,7 @@ use App\Service\RoleService;
 use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
 use Doctrine\Common\Collections\Collection;
+use App\Service\PermissionService;
 
 /**
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,12 +24,15 @@ class SkillRepository extends ServiceEntityRepository
     
     private $securityService;
     
-    public function __construct(RegistryInterface $registry, RoleService $roleService, Security $security)
+    private $permissionService;
+    
+    public function __construct(RegistryInterface $registry, RoleService $roleService, Security $security, PermissionService $permissionService)
     {
         parent::__construct($registry, Skill::class);
         
         $this->roleService = $roleService;
         $this->securityService = $security;
+        $this->permissionService = $permissionService;
     }
     
     public function executorSkillByTask(Task $task) : array
@@ -42,16 +46,29 @@ class SkillRepository extends ServiceEntityRepository
     public function leadSkillByTask(Task $task) : array
     {
         $members = $task->getTeam()->getMembers();
+        $res = [];
+        $teamLeadPermission = $this->permissionService->byName(PermissionEnum::CAN_BE_TEAMLEAD);
         
         foreach ($members as $member) {
-            if ($this->securityService->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
-                $roles = $member->getRoles();
+            if (!$this->securityService->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
+                continue;
+            }
+            
+            $roles = $member->getRoles();
+            
+            foreach ($roles as $role) {
+                $entity = $this->roleService->byName($role);
+                $permissions = $entity->getPermissions();
                 
-                break;
+                if ($permissions->contains($teamLeadPermission)) {
+                    $res[] = $role;
+                    
+                    break;
+                }
             }
         }
         
-        return $this->byRoles($roles);
+        return $this->byRoles($res);
     }
     
     public function customerSkillByTask(Task $task) : array
