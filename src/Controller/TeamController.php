@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Service\RoleService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Team;
 use Symfony\Component\HttpFoundation\Request;
@@ -107,7 +109,7 @@ class TeamController extends Controller
         ]);
     }
     
-    public function deleteTeamMember(Request $request, ProductService $product)
+    public function deleteTeamMember(Request $request, ProductService $product, SecurityService $securityService, RoleService $roleService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_MEMBER_FROM_TEAM, $this->getUser());
         
@@ -118,11 +120,13 @@ class TeamController extends Controller
         $member = $this->getDoctrine()->getRepository(User::class)->find(
             $request->get('member_id')
         );
-        
-        if (!$product->deleteTeamMember($team, $member)) {
+
+        $role = $roleService->byName('ROLE_TM');
+
+        if (!$product->deleteTeamMember($team, $member) || !$securityService->detachRoleFromUser($member, $role)) {
             throw new \Exception();
         }
-        
+
         return $this->redirectToRoute('app_dashboard_team_manage', [
             'id' => $team->getId(),
         ]);
