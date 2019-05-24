@@ -19,6 +19,8 @@ class Team
     
     private $tasks;
     
+    private $owner;
+    
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -86,5 +88,17 @@ class Team
     public function getTasks() : ?Collection
     {
         return $this->tasks;
+    }
+    
+    public function getOwner() : ?User
+    {
+        return $this->owner;
+    }
+    
+    public function setOwner(User $user) : self
+    {
+        $this->owner = $user;
+        
+        return $this;
     }
 }

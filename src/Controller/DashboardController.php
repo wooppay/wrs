@@ -15,20 +15,22 @@ class DashboardController extends AbstractController
         $tasks = [];
         
         if ($security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
-            $tasks = $user->getTasks();
+            $tasks = array_merge($tasks, $user->getTasks()->toArray());
         }
         
         if ($security->isGranted(PermissionEnum::CAN_SEE_MY_TEAM_TASKS, $user)) {
-            $tasks = $taskService->allTasksInAllTeamWhereUserParticipate($user);
+            $tasks = array_merge($tasks, $taskService->allTasksInAllTeamWhereUserParticipate($user));
         }
         
         if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_TASKS, $user)) {
-            $tasks = $taskService->all();
+            $tasks = array_merge($tasks, $taskService->all());
         }
         
-        if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
-            $tasks = $taskService->allProjectTaskByUser($user);
+        if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS_EXCEPT_ME, $user)) {
+            $tasks = array_merge($tasks, $taskService->allProjectTaskExceptUserExecutorByUser($user));
         }
+        
+        $tasks = array_unique($tasks, SORT_REGULAR);
         
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,

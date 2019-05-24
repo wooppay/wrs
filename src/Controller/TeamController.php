@@ -12,6 +12,7 @@ use App\Form\MemberType;
 use App\Enum\RoleEnum;
 use App\Entity\User;
 use App\Entity\Role;
+use App\Service\TeamService;
 
 class TeamController extends Controller
 {
@@ -28,18 +29,17 @@ class TeamController extends Controller
         ]);
     }
     
-    public function create(Request $request)
+    public function create(Request $request, TeamService $teamService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TEAM, $this->getUser());
         
         $team = new Team();
+        $team->setOwner($this->getUser());
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($team);
-            $entityManager->flush();
+            $teamService->create($team);
             
             return $this->redirectToRoute('app_dashboard_team');
         }
@@ -80,7 +80,7 @@ class TeamController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getDoctrine()->getRepository(User::class)->find(
                 $request->request->get('member')['member_id']
-                );
+            );
             
             // todo transaction
             

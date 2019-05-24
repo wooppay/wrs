@@ -52,5 +52,12 @@ class UserService
         $role = $this->role->byName($name);
         return $role->getUsers()->toArray();
     }
+    
+    public function allExceptAdminAndOwner()
+    {
+        return $this->entityManager
+        ->getRepository(User::class)
+        ->allExceptAdminAndOwner();
+    }
 }
 

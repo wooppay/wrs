@@ -3,7 +3,7 @@ namespace App\Enum;
 
 class PermissionMarkEnum
 {
-    public const CAN_MARK_TEAM_LEAD = 'cam_mark_teamlead';
+    public const CAN_MARK_TEAM_LEAD = 'can_mark_teamlead';
     
     public const CAN_MARK_DEVELOPER = 'can_mark_developer';
     

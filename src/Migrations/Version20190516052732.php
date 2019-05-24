@@ -26,7 +26,7 @@ final class Version20190516052732 extends AbstractMigration
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_be_developer\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_be_customer\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_be_product_owner\')');
-        $this->addSql('INSERT INTO "permission" (name) VALUES (\'cam_mark_teamlead\')');
+        $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_mark_teamlead\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_mark_developer\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_mark_customer\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_mark_product_owner\')');

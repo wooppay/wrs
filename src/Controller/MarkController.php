@@ -33,7 +33,7 @@ class MarkController extends Controller
             $skills = array_merge($skillService->leadSkillByTask($task), $skillService->customerSkillByTask($task));
         }
         
-        return $this->render('mark/check_list.html.twig', [
+        return $this->render('dashboard/mark/check_list.html.twig', [
             'skills' => $skills,
         ]);
     }

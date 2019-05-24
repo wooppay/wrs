@@ -35,5 +35,13 @@ class TeamService
         
         return in_array(RoleEnum::TEAM_LEAD, $roles);
     }
+    
+    public function create(Team $team) : bool
+    {
+        $this->entityManager->persist($team);
+        $this->entityManager->flush();
+        
+        return true;
+    }
 }
 

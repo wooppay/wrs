@@ -37,7 +37,7 @@ class TaskService
         return $task;
     }
     
-    public function allTasksInAllTeamWhereUserParticipate(User $user) : ?array
+    public function allTasksInAllTeamWhereUserParticipate(User $user) : array
     {
         $tasks = [];
 
@@ -68,6 +68,20 @@ class TaskService
         }
         
         return $tasks;
+    }
+    
+    public function allProjectTaskExceptUserExecutorByUser(User $user) : array
+    {
+        $res = [];
+        $tasks = $this->allProjectTaskByUser($user);
+        
+        foreach ($tasks as $task) {
+            if ($task->getExecutor()->getId() !== $user->getId()) {
+                $res[] = $task;
+            }
+        }
+        
+        return $res;
     }
 }
 

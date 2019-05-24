@@ -29,3 +29,12 @@ App\Entity\Team:
         tasks:
             targetEntity: App\Entity\Task
             mappedBy: team
+    manyToOne:
+        owner:
+            targetEntity: App\Entity\User
+            inversedBy: teams
+            joinColumn:
+                name: owner_id
+                nullable: false
+                unique: false
+                referencedColumnName: id

@@ -6,6 +6,8 @@ use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\Security;
+use App\Enum\PermissionEnum;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,9 +17,27 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $security;
+    
+    public function __construct(RegistryInterface $registry, Security $security)
     {
         parent::__construct($registry, User::class);
+        
+        $this->security = $security;
+    }
+    
+    public function allExceptAdminAndOwner()
+    {
+        $collection = $this->findAll();
+        $result = [];
+        
+        foreach ($collection as $item) {
+            if (!$this->security->isGranted(PermissionEnum::CAN_BE_PRODUCT_OWNER, $item) && !$this->security->isGranted(PermissionEnum::CAN_BE_ADMIN, $item)) {
+                $result[] = $item;
+            }
+        }
+        
+        return $result;
     }
 
     // /**
