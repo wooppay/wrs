@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
+use App\Enum\UserEnum;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,6 +34,27 @@ class UserRepository extends ServiceEntityRepository
         
         foreach ($collection as $item) {
             if (!$this->security->isGranted(PermissionEnum::CAN_BE_PRODUCT_OWNER, $item) && !$this->security->isGranted(PermissionEnum::CAN_BE_ADMIN, $item)) {
+                $result[] = $item;
+            }
+        }
+        
+        return $result;
+    }
+    
+    public function allApprovedExceptAdminAndOwnerAndCustomer()
+    {
+        $collection = $this->findBy([
+            'status' => UserEnum::APPROVED,
+        ]);
+
+        $result = [];
+        
+        foreach ($collection as $item) {
+            if (
+                !$this->security->isGranted(PermissionEnum::CAN_BE_PRODUCT_OWNER, $item) &&
+                !$this->security->isGranted(PermissionEnum::CAN_BE_ADMIN, $item) &&
+                !$this->security->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $item)
+              ) {
                 $result[] = $item;
             }
         }

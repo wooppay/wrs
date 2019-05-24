@@ -12,23 +12,23 @@ use App\Enum\UserEnum;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Validator\Constraints\ContainsLeaderInTeam;
+use App\Service\UserService;
 
 class MemberType extends AbstractType
 {
     private $entityManager;
     
-    public function __construct(EntityManagerInterface $manager)
+    private $userService;
+    
+    public function __construct(EntityManagerInterface $manager, UserService $userService)
     {
         $this->entityManager = $manager;
+        $this->userService = $userService;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $members = $this->entityManager
-        ->getRepository(User::class)
-        ->findBy([
-            'status' => UserEnum::APPROVED,
-        ]);
+        $members = $this->userService->allApprovedExceptAdminAndOwnerAndCustomer();
         
         $builder
         ->add('member_id', ChoiceType::class, [

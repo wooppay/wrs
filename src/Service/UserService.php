@@ -59,5 +59,12 @@ class UserService
         ->getRepository(User::class)
         ->allExceptAdminAndOwner();
     }
+
+    public function allApprovedExceptAdminAndOwnerAndCustomer()
+    {
+        return $this->entityManager
+        ->getRepository(User::class)
+        ->allApprovedExceptAdminAndOwnerAndCustomer();
+    }
 }
 
