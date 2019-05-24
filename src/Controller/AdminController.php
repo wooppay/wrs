@@ -201,7 +201,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-	public function detachRole($userId, $roleId, SecurityService $security, UserService $userService, RoleService $roleService)
+	public function detachRole(int $userId, int $roleId, SecurityService $security, UserService $userService, RoleService $roleService)
 	{
         $user = $userService->byId($userId);
         $role = $roleService->byId($roleId);
