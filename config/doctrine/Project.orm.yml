@@ -30,7 +30,7 @@ App\Entity\Project:
             targetEntity: App\Entity\User
             inversedBy: projects
             joinColumn:
-                unique: true
+                unique: false
                 nullable: false
                 name: customer_id
                 referencedColumnName: id

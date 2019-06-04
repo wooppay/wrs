@@ -18,6 +18,11 @@ class ProjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+    
+    public function oneById(int $id) : Project
+    {
+        return $this->find($id);
+    }
 
     // /**
     //  * @return Project[] Returns an array of Project objects

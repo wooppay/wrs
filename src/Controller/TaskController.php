@@ -10,6 +10,7 @@ use App\Service\TeamService;
 use App\Service\ProjectService;
 use App\Entity\Task;
 use App\Form\TaskType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TaskController extends AbstractController
 {
@@ -36,14 +37,12 @@ class TaskController extends AbstractController
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser());
         
         $users = $userService->allExceptAdminAndOwner();
-        $teams = $teamService->all();
         $projects = $projectService->all();
         
         $task = new Task();
         
         $form = $this->createForm(TaskType::class, $task, [
             'users' => $users,
-            'teams' => $teams,
             'projects' => $projects,
         ]);
         
@@ -58,5 +57,13 @@ class TaskController extends AbstractController
         return $this->render('task/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    
+    public function teamByProject(int $project_id, ProjectService $projectService)
+    {
+        $project = $projectService->oneById($project_id);
+        $team = $project->getTeam();
+        
+        return new JsonResponse($team->getName());
     }
 }

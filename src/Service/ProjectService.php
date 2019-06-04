@@ -20,6 +20,13 @@ class ProjectService
         ->findAll();
     }
     
+    public function oneById(int $id) : Project
+    {
+        return $this->entityManager
+        ->getRepository(Project::class)
+        ->oneById($id);
+    }
+    
     public function create(Project $project) : Project
     {
         $this->entityManager->persist($project);

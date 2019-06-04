@@ -26,19 +26,15 @@ class TaskType extends AbstractType
                 },
                 'choice_value' => 'id',
             ])
-            ->add('team', ChoiceType::class, [
-                'choices' => $options['teams'],
-                'choice_label' => function($team) {
-                    return $team->getName();
-                },
-                'choice_value' => 'id',
-            ])
             ->add('project', ChoiceType::class, [
                 'choices' => $options['projects'],
                 'choice_label' => function($project) {
                     return $project->getName();
                 },
                 'choice_value' => 'id',
+                ])
+            ->add('team', TextType::class, [
+                'disabled' => true,
             ])
             ->add('save', SubmitType::class)
         ;
