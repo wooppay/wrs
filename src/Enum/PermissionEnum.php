@@ -52,5 +52,9 @@ class PermissionEnum
     public const CAN_BE_PRODUCT_OWNER = 'can_be_product_owner';
 
     public const CAN_BE_ADMIN = 'can_be_admin';
+    
+    public const CAN_UPDATE_TASK = 'can_update_task';
+
+    public const CAN_DELETE_TASK = 'can_delete_task';
 }
 
