@@ -10,7 +10,7 @@ use App\Service\PermissionService;
 use App\Enum\PermissionEnum;
 use App\Enum\PermissionMarkEnum;
 
-class RolePermission extends Fixture implements DependentFixtureInterface
+class RolePermissionFixtures extends Fixture implements DependentFixtureInterface
 {
     private $securityService;
     
@@ -82,6 +82,10 @@ class RolePermission extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $this->loadAdmin();
+        $this->loadProductOwner();
+        $this->loadCustomer();
+        $this->loadTeamlead();
+        $this->loadDeveloper();
     }
     
     private function loadAdmin()
