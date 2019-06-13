@@ -21,6 +21,13 @@ class TeamService
         ->oneById($id);
     }
     
+    public function byName(string $name) : Team
+    {
+        return $this->entityManager
+        ->getRepository(Team::class)
+        ->byName($name);
+    }
+
     public function all() : array
     {
         return $this->entityManager

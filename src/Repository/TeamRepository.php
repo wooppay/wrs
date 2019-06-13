@@ -24,6 +24,14 @@ class TeamRepository extends ServiceEntityRepository
         return $this->find($id);
     }
 
+
+    public function byName(string $name) : Team
+    {
+        return $this->findOneBy([
+            'name' => $name,
+        ]);
+    }
+
     // /**
     //  * @return Team[] Returns an array of Team objects
     //  */

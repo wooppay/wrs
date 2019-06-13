@@ -35,9 +35,9 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     
     private const EMAIL_CUSTOMER = 'customer@example.com';
     
-    private const EMAIL_TM = 'tm@example.com';
+    public const EMAIL_TM = 'tm@example.com';
     
-    private const EMAIL_DEV = 'dev@example.com';
+    public const EMAIL_DEV = 'dev@example.com';
     
     public function __construct(UserPasswordEncoderInterface $passwordEncoder, SecurityService $security, RoleService $roleService)
     {

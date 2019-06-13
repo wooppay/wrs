@@ -11,11 +11,11 @@ use App\Entity\Team;
 
 class TeamFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const TEAM_ONE_TITLE = 'Team #1';
+    public const TEAM_ONE_TITLE = 'Team #1';
 
     private const TEAM_ONE_DESC = 'Team #1 description';
 
-    private const TEAM_TWO_TITLE = 'Team #2';
+    public const TEAM_TWO_TITLE = 'Team #2';
 
     private const TEAM_TWO_DESC = 'Team #2 description';
 
