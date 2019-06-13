@@ -20,6 +20,8 @@ class Task
     
     private $project;
 
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,5 +97,17 @@ class Task
         $this->status = $status;
         
         return $this;
+    }
+
+    public function setAuthor(User $user): self
+    {
+       $this->author = $user;
+       
+       return $this; 
+    }
+
+    public function getAuthor(): User
+    {
+        return $this->author;
     }
 }

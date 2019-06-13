@@ -13,6 +13,13 @@ class TeamService
     {
         $this->entityManager = $manager;
     }
+
+    public function byId(int $id) : Team
+    {
+        return $this->entityManager
+        ->getRepository(Team::class)
+        ->oneById($id);
+    }
     
     public function all() : array
     {

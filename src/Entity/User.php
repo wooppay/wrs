@@ -26,12 +26,15 @@ class User implements UserInterface
     private $tasks;
     
     private $projects;
+
+    private $myTasks;
     
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->teams = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->myTasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,5 +142,10 @@ class User implements UserInterface
     public function getProjects() : ?Collection
     {
         return $this->projects;
+    }
+
+    public function getMyTasks() : ?Collection
+    {
+        return $this->myTasks;
     }
 }

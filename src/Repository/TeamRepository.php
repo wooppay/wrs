@@ -19,6 +19,11 @@ class TeamRepository extends ServiceEntityRepository
         parent::__construct($registry, Team::class);
     }
 
+    public function oneById(int $id) : Team
+    {
+        return $this->find($id);
+    }
+
     // /**
     //  * @return Team[] Returns an array of Team objects
     //  */

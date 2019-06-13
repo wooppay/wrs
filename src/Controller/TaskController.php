@@ -37,18 +37,16 @@ class TaskController extends AbstractController
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser());
         
         $users = $userService->allExceptAdminAndOwner();
-        $projects = $projectService->all();
         
         $task = new Task();
         
         $form = $this->createForm(TaskType::class, $task, [
             'users' => $users,
-            'projects' => $projects,
         ]);
         
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
+            $task->setAuthor($this->getUser());
             $taskService->create($task);
             
             return $this->redirectToRoute('app_dashboard_task');
@@ -64,6 +62,9 @@ class TaskController extends AbstractController
         $project = $projectService->oneById($project_id);
         $team = $project->getTeam();
         
-        return new JsonResponse($team->getName());
+        return new JsonResponse([
+            'id' => $team->getId(),
+            'name' => $team->getName(),
+        ]);
     }
 }

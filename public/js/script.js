@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	var projectId = $("#task_project").val();
 	
-	taskByProject(projectId);
-	
+    taskByProject(projectId);
+
 	$('#task_project').change(function() {
 		var projectId = $("#task_project").val();
 		
@@ -17,7 +17,7 @@ function taskByProject(projectId) {
 		url: url,
 		method: 'GET',
 		success: function(data) {
-			$('#task_team').val(data);
+			$('#task_team option:first-child').val(data.id).text(data.name);
 		}
 	});
 }

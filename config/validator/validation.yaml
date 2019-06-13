@@ -53,7 +53,7 @@ App\Entity\Task:
             - NotBlank: ~
         executor:
             - NotBlank: ~
-        team:
-            - NotBlank: ~
         project:
+            - NotBlank: ~
+        team:
             - NotBlank: ~

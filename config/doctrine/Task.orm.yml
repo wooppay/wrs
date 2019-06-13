@@ -46,3 +46,10 @@ App\Entity\Task:
                 nullable: false
                 name: project_id
                 referencedColumnName: id
+        author:
+            targetEntity: App\Entity\User
+            inversedBy: myTasks
+            joinColumn:
+                nullable: false
+                name: author_id
+                referencedColumnName: id

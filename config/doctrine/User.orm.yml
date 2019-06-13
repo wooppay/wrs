@@ -57,3 +57,6 @@ App\Entity\User:
         projects:
             targetEntity: App\Entity\Project
             mappedBy: customer
+        myTasks:
+            targetEntity: App\Entity\Task
+            mappedBy: author
