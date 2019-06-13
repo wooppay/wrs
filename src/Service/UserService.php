@@ -66,5 +66,14 @@ class UserService
         ->getRepository(User::class)
         ->allApprovedExceptAdminAndOwnerAndCustomer();
     }
+
+    public function byEmail(string $email) : User
+    {
+        return $this
+            ->entityManager
+            ->getRepository(User::class)
+            ->byEmail($email)
+        ;
+    }
 }
 

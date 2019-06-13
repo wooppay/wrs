@@ -31,7 +31,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     private const EMAIL_ADMIN = 'admin@example.com';
     
-    private const EMAIL_PO = 'po@example.com';
+    public const EMAIL_PO = 'po@example.com';
     
     private const EMAIL_CUSTOMER = 'customer@example.com';
     
