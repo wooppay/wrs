@@ -34,6 +34,14 @@ App\Entity\Project:
                 nullable: false
                 name: customer_id
                 referencedColumnName: id
+        owner:
+            targetEntity: App\Entity\User
+            inversedBy: myProjects
+            joinColumn:
+                name: owner_id
+                nullable: false
+                unique: false
+                referencedColumnName: id
     oneToMany:
         tasks:
             targetEntity: App\Entity\Task

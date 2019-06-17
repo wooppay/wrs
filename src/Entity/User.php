@@ -28,6 +28,8 @@ class User implements UserInterface
     private $projects;
 
     private $myTasks;
+
+    private $myProjects;
     
     public function __construct()
     {
@@ -35,6 +37,7 @@ class User implements UserInterface
         $this->teams = new ArrayCollection();
         $this->projects = new ArrayCollection();
         $this->myTasks = new ArrayCollection();
+        $this->myProjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,5 +150,10 @@ class User implements UserInterface
     public function getMyTasks() : ?Collection
     {
         return $this->myTasks;
+    }
+
+    public function getMyProjects() : ?Collection
+    {
+        return $this->myProjects;
     }
 }

@@ -60,3 +60,6 @@ App\Entity\User:
         myTasks:
             targetEntity: App\Entity\Task
             mappedBy: author
+        myProjects:
+            targetEntity: App\Entity\Project
+            mappedBy: owner

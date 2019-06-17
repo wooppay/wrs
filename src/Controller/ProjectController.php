@@ -31,7 +31,10 @@ class ProjectController extends Controller
         $teams = $teamService->all();
         $customers = $userService->allByRoleName(RoleEnum::CUSTOMER);
         
-        $project = new Project();
+        $project = (new Project())
+            ->setOwner($this->getUser())
+        ;
+
         $form = $this->createForm(ProjectType::class, $project, [
             'teams' => $teams,
             'customers' => $customers,

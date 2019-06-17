@@ -18,6 +18,8 @@ class Project
     private $customer;
     
     private $tasks;
+
+    private $owner;
     
     public function __construct()
     {
@@ -80,5 +82,18 @@ class Project
     public function getTasks() : ?Collection
     {
         return $this->tasks;
+    }
+
+
+    public function getOwner() : ?User
+    {
+        return $this->owner;
+    }
+    
+    public function setOwner(User $user) : self
+    {
+        $this->owner = $user;
+        
+        return $this;
     }
 }

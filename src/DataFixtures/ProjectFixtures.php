@@ -36,12 +36,14 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
     {
         $team = $this->teamService->byName(TeamFixtures::TEAM_ONE_TITLE);
         $customer = $this->userService->byEmail(UserFixtures::EMAIL_CUSTOMER);
+        $po = $this->userService->byEmail(UserFixtures::EMAIL_PO);
 
         $project = (new Project())
             ->setName(self::PROJECT_ONE_TITLE)
             ->setTeam($team)
             ->setCustomer($customer)
             ->setDescription(self::PROJECT_ONE_DESCR)
+            ->setOwner($po)
         ;
 
         $this->projectService->create($project);
@@ -53,6 +55,7 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
             ->setTeam($team)
             ->setCustomer($customer)
             ->setDescription(self::PROJECT_TWO_DESC)
+            ->setOwner($po)
         ;
 
         $this->projectService->create($project);
