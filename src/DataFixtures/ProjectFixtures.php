@@ -18,11 +18,11 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
 
     private $projectService;
 
-    private const PROJECT_ONE_TITLE = 'Project #1';
+    public const PROJECT_ONE_TITLE = 'Project #1';
 
     private const PROJECT_ONE_DESCR = 'Project #1 description';
 
-    private const PROJECT_TWO_TITLE = 'Project #2';
+    public const PROJECT_TWO_TITLE = 'Project #2';
 
     private const PROJECT_TWO_DESC = 'Project #2 description';
 

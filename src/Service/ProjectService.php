@@ -34,5 +34,14 @@ class ProjectService
         
         return $project;
     }
+
+    public function byName(string $name) : Project
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Project::class)
+            ->byName($name)
+        ;
+    }
 }
 

@@ -24,6 +24,13 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->find($id);
     }
 
+    public function byName(string $name) : Project
+    {
+        return $this->findOneBy([
+            'name' => $name,
+        ]);
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
