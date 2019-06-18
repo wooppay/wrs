@@ -100,7 +100,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(PermissionAttachType::class);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $permission = $permissionService->byId(
                 (int) $request->request->get('permission_attach')['permission_id']
             );
@@ -180,10 +180,12 @@ class AdminController extends AbstractController
     {
         $user = $userService->byId((int) $request->get('id'));
         
-        $form = $this->createForm(RoleAttachType::class);
+        $form = $this->createForm(RoleAttachType::class, null, [
+            'user' => $user,
+        ]);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $role = $roleService->byId(
                 $request->request->get('role_attach')['role_id']
             );
