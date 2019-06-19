@@ -35,14 +35,6 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
     private const TASK_TM_TWO_DESCRIPTION = 'Task #2 Description';
 
-    private const TASK_CUSTOMER_ONE_TITLE = 'Task #1 For Customer';
-
-    private const TASK_CUSTOMER_ONE_DESCRIPTION = 'Task #1 Description';
-
-    private const TASK_CUSTOMER_TWO_TITLE = 'Task #2 Customer';
-
-    private const TASK_CUSTOMER_TWO_DESCRIPTION = 'Task #2 Description';
-
     public function __construct(UserService $userService, ProjectService $projectService, TaskService $taskService)
     {
         $this->userService = $userService;
@@ -54,7 +46,6 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
     {
         $this->loadDev();
         $this->loadTm();
-        $this->loadCustomer();
     }
 
     private function loadDev()
@@ -116,37 +107,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
         $this->taskService->create($task);
     }
-
-    private function loadCustomer()
-    {
-        $user = $this->userService->byEmail(UserFixtures::EMAIL_CUSTOMER);
-        $project = $this->projectService->byName(ProjectFixtures::PROJECT_ONE_TITLE);
-        $team = $project->getTeam();
-        $author = $this->userService->byEmail(UserFixtures::EMAIL_PO);
-
-        $task = (new Task())
-            ->setName(self::TASK_CUSTOMER_ONE_TITLE)
-            ->setDescription(self::TASK_CUSTOMER_ONE_DESCRIPTION)
-            ->setExecutor($user)
-            ->setProject($project)
-            ->setTeam($team)
-            ->setAuthor($author)
-        ;
-
-        $this->taskService->create($task);
-
-        $task = (new Task())
-            ->setName(self::TASK_CUSTOMER_TWO_TITLE)
-            ->setDescription(self::TASK_CUSTOMER_TWO_DESCRIPTION)
-            ->setExecutor($user)
-            ->setProject($project)
-            ->setTeam($team)
-            ->setAuthor($author)
-        ;
-
-        $this->taskService->create($task);
-    }
-
+    
     public function getDependencies()
     {
         return [
