@@ -67,7 +67,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $this->createUser($manager, $roles, self::EMAIL_CUSTOMER);
 
             $roles = new ArrayCollection([
-                $this->roleService->byName(RoleFixtures::ROLE_TM)
+                $this->roleService->byName(RoleFixtures::ROLE_TM),
+                $this->roleService->byName(RoleFixtures::ROLE_DEVELOPER),
             ]);
             
             $this->createUser($manager, $roles, self::EMAIL_TM);

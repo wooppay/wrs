@@ -16,9 +16,25 @@ class MarkController extends Controller
         $user = $this->getUser();
         $task = $taskService->oneById((int) $request->get('id'));
         $skills = [];
+        $executor = $task->getExecutor();
         
         if ($security->accessMarkProductOwnerByUser($user)) {
-            $skills = $skillService->executorSkillByTask($task);
+            if ($this->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $executor)) {
+                $skills = $skillService->executorSkillByTask($task);
+            }
+
+            if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
+                $skills = $skillService->executorSkillByTask($task);
+            }
+
+            if ($this->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+                $skills = array_merge(
+                    $skillService->executorSkillByTask($task),
+                    $skillService->leadSkillByTask($task),
+                    $skillService->customerSkillByTask($task)
+                );
+            }
+
         }
 
         if ($security->accessMarkCustomerByUser($user)) {
