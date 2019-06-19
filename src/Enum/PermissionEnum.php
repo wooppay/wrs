@@ -56,5 +56,7 @@ class PermissionEnum
     public const CAN_UPDATE_TASK = 'can_update_task';
 
     public const CAN_DELETE_TASK = 'can_delete_task';
+
+    public const CAN_SEE_MAY_CREATED_TASKS = 'can_see_my_created_tasks';
 }
 

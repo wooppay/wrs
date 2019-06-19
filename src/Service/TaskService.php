@@ -83,5 +83,15 @@ class TaskService
         
         return $res;
     }
+
+
+    public function userCreatedTasks(User $user) : Collection
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Task::class)
+            ->userCreatedTasks($user)
+        ;
+    }
 }
 

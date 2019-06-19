@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @method Task|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,11 @@ class TaskRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Task::class);
+    }
+
+    public function userCreatedTasks(User $user) : Collection
+    {
+        return $user->getMyTasks();
     }
 
     // /**
