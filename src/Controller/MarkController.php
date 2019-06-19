@@ -60,7 +60,11 @@ class MarkController extends Controller
         }
         
         if ($security->accessMarkDeveloperByUser($user)) {
-            $skills = array_merge($skillService->leadSkillByTask($task), $skillService->customerSkillByTask($task));
+            $skills = array_merge(
+                $skillService->leadSkillByTask($task),
+                $skillService->customerSoftSkillByTask($task),
+                $skillService->ownerSoftSkillByTask($task)
+            );
         }
         
         return $this->render('dashboard/mark/check_list.html.twig', [

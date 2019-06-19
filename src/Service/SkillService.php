@@ -142,6 +142,14 @@ class SkillService
         ->customerSkillByTask($task);
     }
 
+    public function customerSoftSkillByTask(Task $task) : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->customerSoftSkillByTask($task);
+    }
+
+
     public function leadSkillByTask(Task $task) : array
     {
         return $this->entityManager

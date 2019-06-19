@@ -21,6 +21,11 @@ class DashboardController extends AbstractController
         if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
             $tasks = array_merge($tasks, $taskService->allProjectTaskByUser($user));
         }
+
+        if ($security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
+            $tasks = array_merge($tasks, $user->getTasks()->toArray());
+        }
+
         
         $tasks = array_unique($tasks, SORT_REGULAR);
         

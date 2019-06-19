@@ -117,6 +117,14 @@ class SkillRepository extends ServiceEntityRepository
         return $this->byRoles($customer->getRoles());
     }
 
+    public function customerSoftSkillByTask(Task $task) : array
+    {
+        $customer = $task->getProject()->getCustomer();
+        
+        return $this->softByRoles($customer->getRoles());
+    }
+
+
     public function ownerSkillByTask(Task $task) : array
     {
         $owner = $task->getProject()->getOwner();

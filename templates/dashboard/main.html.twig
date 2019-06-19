@@ -47,7 +47,7 @@
                         <p class="card-text">{{ item.description }}</p>
                         
                         {% if (is_granted_mark(app.user)) %}
-                            <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary {{ (app.user.id == item.executor.id) ? 'disabled' : '' }}">Mark</a>
+                            <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary">Mark</a>
                         {% endif %}
                     </div>
                 </div>
