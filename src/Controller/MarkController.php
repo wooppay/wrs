@@ -38,7 +38,21 @@ class MarkController extends Controller
         }
 
         if ($security->accessMarkCustomerByUser($user)) {
-            $skills = $skillService->executorSkillByTask($task);
+            if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
+                $skills = array_merge(
+                    $skillService->executorSoftSkillByTask($task),
+                    $skillService->ownerSoftSkillByTask($task)
+                );
+            }
+
+            if ($this->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+                $skills = array_merge(
+                    $skillService->executorSoftSkillByTask($task),
+                    $skillService->leadSoftSkillByTask($task),
+                    $skillService->ownerSoftSkillByTask($task)
+                );
+            }
+
         }
         
         if ($security->accessMarkTeamLeadByUser($user)) {

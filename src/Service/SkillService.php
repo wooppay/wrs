@@ -21,6 +21,14 @@ class SkillService
         ->getRepository(Skill::class)
         ->executorSkillByTask($task);
     }
+
+    public function executorSoftSkillByTask(Task $task) : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->executorSoftSkillByTask($task);
+    }
+
     
     public function all() : array
     {
@@ -139,6 +147,32 @@ class SkillService
         return $this->entityManager
         ->getRepository(Skill::class)
         ->leadSkillByTask($task);
+    }
+
+    public function leadSoftSkillByTask(Task $task) : array
+    {
+        return $this->entityManager
+        ->getRepository(Skill::class)
+        ->leadSoftSkillByTask($task);
+    }
+
+    public function ownerSoftSkillByTask(Task $task) : array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Skill::class)
+            ->ownerSoftSkillByTask($task)
+        ;
+    }
+
+    
+    public function softByRole(Role $role) : ?Collection
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Skill::class)
+            ->softByRole($role)
+        ;
     }
 }
 

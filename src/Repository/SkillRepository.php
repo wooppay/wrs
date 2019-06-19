@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
 use Doctrine\Common\Collections\Collection;
 use App\Service\PermissionService;
+use App\Entity\Role;
+use App\Enum\SkillEnum;
 
 /**
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
@@ -42,6 +44,15 @@ class SkillRepository extends ServiceEntityRepository
         
         return $this->byRoles($roles);
     }
+
+    public function executorSoftSkillByTask(Task $task) : array
+    {
+        $executor = $task->getExecutor();
+        $roles = $executor->getRoles();
+        
+        return $this->softByRoles($roles);
+    }
+
     
     public function leadSkillByTask(Task $task) : array
     {
@@ -70,6 +81,34 @@ class SkillRepository extends ServiceEntityRepository
         
         return $this->byRoles($res);
     }
+
+    public function leadSoftSkillByTask(Task $task) : array
+    {
+        $members = $task->getTeam()->getMembers();
+        $res = [];
+        $teamLeadPermission = $this->permissionService->byName(PermissionEnum::CAN_BE_TEAMLEAD);
+        
+        foreach ($members as $member) {
+            if (!$this->securityService->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
+                continue;
+            }
+            
+            $roles = $member->getRoles();
+            
+            foreach ($roles as $role) {
+                $entity = $this->roleService->byName($role);
+                $permissions = $entity->getPermissions();
+                
+                if ($permissions->contains($teamLeadPermission)) {
+                    $res[] = $role;
+                    
+                    break;
+                }
+            }
+        }
+        
+        return $this->softByRoles($res);
+    }
     
     public function customerSkillByTask(Task $task) : array
     {
@@ -77,6 +116,21 @@ class SkillRepository extends ServiceEntityRepository
         
         return $this->byRoles($customer->getRoles());
     }
+
+    public function ownerSkillByTask(Task $task) : array
+    {
+        $owner = $task->getProject()->getOwner();
+        
+        return $this->byRoles($owner->getRoles());
+    }
+
+    public function ownerSoftSkillByTask(Task $task) : array
+    {
+        $owner = $task->getProject()->getOwner();
+        
+        return $this->softByRoles($owner->getRoles());
+    }
+
     
     protected function byRoles(array $roles) : array
     {
@@ -91,6 +145,31 @@ class SkillRepository extends ServiceEntityRepository
         }
         
         return $skills;
+    }
+
+    protected function softByRoles(array $roles) : array
+    {
+        $skills = [];
+        
+        foreach ($roles as $role) {
+            $entity = $this->roleService->byName($role);
+            
+            if ($this->softByRole($entity) !== null) {
+                $skills = array_merge($skills, $this->softByRole($entity));
+            }
+        }
+        
+        return $skills;
+    }
+
+
+
+    protected function softByRole(Role $role) : ?array
+    {
+        return $this->findBy([
+            'role' => $role,
+            'type' => SkillEnum::TYPE_SOFT,
+        ]);
     }
 
     // /**

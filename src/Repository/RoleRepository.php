@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Enum\SkillEnum;
 
 /**
  * @method Role|null find($id, $lockMode = null, $lockVersion = null)
