@@ -18,7 +18,7 @@ class TaskController extends AbstractController
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_SEE_MANAGE_TASK, $this->getUser());
         
-        $tasks = $taskService->all();
+        $tasks = $taskService->userCreatedTasks($this->getUser());
         
         return $this->render('task/main.html.twig', [
             'tasks' => $tasks,
