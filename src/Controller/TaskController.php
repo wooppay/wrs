@@ -36,7 +36,7 @@ class TaskController extends AbstractController
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser());
         
-        $users = $userService->allExceptAdminAndOwner();
+        $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
         
         $task = new Task();
         
