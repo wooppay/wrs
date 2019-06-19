@@ -1,6 +1,6 @@
 index:
     path: /
-    controller: App\Controller\DefaultController::index
+    controller: App\Controller\DashboardController::main
 
 app_register:
      path: /register
