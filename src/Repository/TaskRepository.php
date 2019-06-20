@@ -26,6 +26,23 @@ class TaskRepository extends ServiceEntityRepository
         return $user->getMyTasks();
     }
 
+    public function teamMembersTasksWhereUserParticipated(User $user) : array
+    {
+        $teams = $user->getTeams();
+        $members = [];
+        $tasks = [];
+
+        foreach ($teams as $team) {
+            $users = $team->getMembers();
+            
+            foreach ($users as $member) {
+                $tasks = array_merge($tasks, $member->getTasks()->toArray());
+            }
+        }
+
+        return $tasks;
+    }
+
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */

@@ -26,6 +26,9 @@ class DashboardController extends AbstractController
             $tasks = array_merge($tasks, $user->getTasks()->toArray());
         }
 
+        if ($security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
+            $tasks = array_merge($tasks, $taskService->teamMembersTasksWhereUserParticipated($user));
+        }
         
         $tasks = array_unique($tasks, SORT_REGULAR);
         

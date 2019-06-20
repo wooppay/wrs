@@ -93,5 +93,15 @@ class TaskService
             ->userCreatedTasks($user)
         ;
     }
+
+
+    public function teamMembersTasksWhereUserParticipated(User $user) : array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Task::class)
+            ->teamMembersTasksWhereUserParticipated($user)
+        ;
+    }
 }
 

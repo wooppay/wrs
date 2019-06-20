@@ -58,5 +58,7 @@ class PermissionEnum
     public const CAN_DELETE_TASK = 'can_delete_task';
 
     public const CAN_SEE_MAY_CREATED_TASKS = 'can_see_my_created_tasks';
+
+    public const CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED = 'can_see_all_members_tasks_from_teams_where_i_participated';
 }
 

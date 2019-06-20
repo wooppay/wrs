@@ -61,6 +61,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME,
         PermissionEnum::CAN_SEE_MY_TEAM_TASKS,
         PermissionEnum::CAN_BE_TEAMLEAD,
+        PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED,
         PermissionMarkEnum::CAN_MARK_DEVELOPER,
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
