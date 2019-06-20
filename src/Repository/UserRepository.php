@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Security;
@@ -67,6 +68,22 @@ class UserRepository extends ServiceEntityRepository
         return $this->findOneBy([
             'email' => $email, 
         ]);
+    }
+
+    public function teamLeadByTask(Task $task) : ?User
+    {
+        $members = $task->getTeam()->getMembers();
+
+        $user = null;
+
+        foreach ($members as $member) {
+            if ($this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
+                $user = $member;
+                break;
+            }
+        }
+
+        return $user;
     }
 
     // /**

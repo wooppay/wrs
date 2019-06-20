@@ -4,6 +4,7 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Enum\UserEnum;
+use App\Entity\Task;
 
 class UserService
 {
@@ -73,6 +74,16 @@ class UserService
             ->entityManager
             ->getRepository(User::class)
             ->byEmail($email)
+        ;
+    }
+
+
+    public function teamLeadByTask(Task $task) : ?User
+    {
+        return $this
+            ->entityManager
+            ->getRepository(User::class)
+            ->teamLeadByTask($task)
         ;
     }
 }

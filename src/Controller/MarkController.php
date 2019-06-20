@@ -78,7 +78,14 @@ class MarkController extends Controller
         
         $form = $this->createForm(CheckListType::class, null, [
             'skills' => $skills,
+            'task' => $task,
         ]);
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            dump($form->getData());exit;
+        }
 
         return $this->render('dashboard/mark/check_list.html.twig', [
             'form' => $form->createView(),
