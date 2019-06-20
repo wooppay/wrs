@@ -82,6 +82,35 @@ class SkillRepository extends ServiceEntityRepository
         return $this->byRoles($res);
     }
 
+    public function devSkillByTask(Task $task) : array
+    {
+        $members = $task->getTeam()->getMembers();
+        $res = [];
+        $devPermission = $this->permissionService->byName(PermissionEnum::CAN_BE_DEVELOPER);
+        
+        foreach ($members as $member) {
+            if (!$this->securityService->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $member)) {
+                continue;
+            }
+            
+            $roles = $member->getRoles();
+            
+            foreach ($roles as $role) {
+                $entity = $this->roleService->byName($role);
+                $permissions = $entity->getPermissions();
+                
+                if ($permissions->contains($devPermission)) {
+                    $res[] = $role;
+                    
+                    break;
+                }
+            }
+        }
+        
+        return $this->byRoles($res);
+    }
+
+
     public function leadSoftSkillByTask(Task $task) : array
     {
         $members = $task->getTeam()->getMembers();

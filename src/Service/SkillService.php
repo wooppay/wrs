@@ -182,5 +182,15 @@ class SkillService
             ->softByRole($role)
         ;
     }
+
+
+    public function devSkillByTask(Task $task) : array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Skill::class)
+            ->devSkillByTask($task)
+        ;
+    }
 }
 
