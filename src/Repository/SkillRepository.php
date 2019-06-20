@@ -74,7 +74,7 @@ class SkillRepository extends ServiceEntityRepository
                 if ($permissions->contains($teamLeadPermission)) {
                     $res[] = $role;
                     
-                    break;
+                    break 2;
                 }
             }
         }
@@ -102,11 +102,11 @@ class SkillRepository extends ServiceEntityRepository
                 if ($permissions->contains($devPermission)) {
                     $res[] = $role;
                     
-                    break;
+                    break 2;
                 }
             }
         }
-        
+
         return $this->byRoles($res);
     }
 
@@ -131,7 +131,7 @@ class SkillRepository extends ServiceEntityRepository
                 if ($permissions->contains($teamLeadPermission)) {
                     $res[] = $role;
                     
-                    break;
+                    break 2;
                 }
             }
         }
