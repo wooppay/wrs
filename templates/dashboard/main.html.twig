@@ -47,7 +47,7 @@
                         <p class="card-text">{{ item.description }}</p>
                         
                         {% if (is_granted_mark(app.user)) %}
-                            <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary">Mark</a>
+                            <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary {{ (is_granted(constant('App\\Enum\\PermissionEnum::CAN_BE_TEAMLEAD'), app.user) and app.user.id == item.executor.id) ? 'disabled' : '' }}">Mark</a>
                         {% endif %}
                     </div>
                 </div>
