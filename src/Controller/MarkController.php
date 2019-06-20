@@ -8,6 +8,7 @@ use App\Service\SkillService;
 use App\Enum\PermissionEnum;
 use App\Enum\PermissionMarkEnum;
 use App\Service\SecurityService;
+use App\Form\CheckListType;
 
 class MarkController extends Controller
 {
@@ -72,9 +73,15 @@ class MarkController extends Controller
                 $skillService->ownerSoftSkillByTask($task)
             );
         }
+
+
         
-        return $this->render('dashboard/mark/check_list.html.twig', [
+        $form = $this->createForm(CheckListType::class, null, [
             'skills' => $skills,
+        ]);
+
+        return $this->render('dashboard/mark/check_list.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

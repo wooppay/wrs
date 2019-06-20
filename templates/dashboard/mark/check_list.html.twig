@@ -17,16 +17,9 @@
 {% block body %}
     <div class="row">
         <div class="col col-sm-12">
-            {% for item in skills %}
-            
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">{{ item.content }}</p>
-                    </div>
-                </div>
-                
-                <br>
-            {% endfor %}
+        
+            {{ form(form) }}
+        
         </div>
     </div>
 
