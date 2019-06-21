@@ -1,0 +1,36 @@
+App\Entity\RateInfo:
+    type: entity
+    repositoryClass: App\Repository\RateInfoRepository
+    table: rate_info
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            type: integer
+            length: 2
+            nullable: false
+    manyToOne:
+        user:
+            targetEntity: App\Entity\User
+            inversedBy: rates
+            joinColumn:
+                nullable: false
+                name: user_id
+                referencedColumnName: id
+        task:
+            targetEntity: App\Entity\Task
+            inversedBy: rates
+            joinColumn:
+                nullable: false
+                name: task_id
+                referencedColumnName: id
+        skill:
+            targetEntity: App\Entity\Skill
+            inversedBy: rates
+            joinColumn:
+                nullable: false
+                name: skill_id
+                referencedColumnName: id

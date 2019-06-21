@@ -9,10 +9,11 @@ use App\Enum\PermissionEnum;
 use App\Enum\PermissionMarkEnum;
 use App\Service\SecurityService;
 use App\Form\CheckListType;
+use App\Service\RateInfoService;
 
 class MarkController extends Controller
 {
-    public function checkList(Request $request, TaskService $taskService, SkillService $skillService, SecurityService $security)
+    public function checkList(Request $request, TaskService $taskService, SkillService $skillService, SecurityService $security, RateInfoService $rateInfoService)
     {
         $user = $this->getUser();
         $task = $taskService->oneById((int) $request->get('id'));
@@ -84,7 +85,10 @@ class MarkController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
-            dump($form->getData());exit;
+            $res = $rateInfoService->prepareData($form->getData(), $task);
+            $rateInfoService->createByCheckList($res);
+
+            return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->render('dashboard/mark/check_list.html.twig', [

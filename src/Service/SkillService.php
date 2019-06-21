@@ -14,6 +14,15 @@ class SkillService
     {
         $this->entityManager = $manager;
     }
+
+    public function byId(int $id) : Skill
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Skill::class)
+            ->byId($id)
+        ;
+    }
     
     public function executorSkillByTask(Task $task) : array
     {

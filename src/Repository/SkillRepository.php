@@ -36,6 +36,11 @@ class SkillRepository extends ServiceEntityRepository
         $this->securityService = $security;
         $this->permissionService = $permissionService;
     }
+
+    public function byId(int $id) : Skill
+    {
+        return $this->find($id);
+    }
     
     public function executorSkillByTask(Task $task) : array
     {
