@@ -16,6 +16,47 @@
 
 {% block body %}
 
+    <div class="row  p-4  bg-light  rounded">
+        <div class="col-sm  d-flex  flex-wrap  user">
+            <div class="flex-shrink-0  mr-4">
+                <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+            </div>
+
+            <div class="d-flex  flex-column">
+                <span class="mb-2  h5  font-weight-bold  user__name">{{ app.user.email }}</span>
+                <span class="mb-2  h6">{{ app.user.roles|join(', ')}}</span>
+                <a href="mailto:{{ app.user.email }}">{{ app.user.email }}</a>
+            </div>
+        </div>
+
+        <div class="col-sm  rating">
+            <div>
+                <p class="h6">Сколько оценок поставил: <span class="font-weight-bold">N</span></p>
+                <p class="h6  mb-4">Сколько оценок получил: &nbsp;<span class="font-weight-bold">N</span></p>
+            </div>
+
+            <div class="list-group  list-group-horizontal">
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="img/icon-github.svg" alt="github icon" width="24" height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="img/icon-gitlab.svg" alt="gitlab icon" width="24" height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="img/icon-telegram.svg" alt="telegram icon" width="24" height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="img/icon-skype.svg" alt="skype icon" width="24"  height="24">
+                </a>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="w-100  my-4  mx-3  separator"></div>
+ 
+
+
+
     <div class="row">
         <div class="col col-sm-12">
             <div class="list-group">

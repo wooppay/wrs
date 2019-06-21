@@ -35,4 +35,6 @@ security:
     access_control:
         - { path: ^/login, allow_if: "not is_authenticated()" }
         - { path: ^/register, allow_if: "not is_authenticated()" }
+        - { path: ^/dashboard, allow_if: "is_authenticated()" }
+        - { path: ^/, allow_if: "is_authenticated()" }
         - { path: ^/admin, roles: ROLE_ADMIN }
