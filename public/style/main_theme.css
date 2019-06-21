@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap&subset=cyrillic-ext');
+
+html {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit; }
+
+body {
+  min-width: 320px;
+  margin: 0;
+  padding: 0;
+  color: #000000;
+  font-family: "Open Sans", "Arial", sans-serif;
+  font-size: 14px;
+  line-height: 1.5em; }
+
+img {
+  max-width: 100%;
+  height: auto; }
+
+a {
+  text-decoration: none; }
+
+.page-header {
+  height: 50px; }
+
+.icon-bell {
+  width: 38px;
+  height: 38px;
+  fill: #ffffff; }
+  .icon-bell:hover {
+    fill: gold; }
+
+.user-avatar {
+  width: 120px;
+  height: 150px; }
+
+.separator {
+  border-bottom: 1px solid #aaaaaa; }
+
+.card {
+  border: 1px solid #aaaaaa; }
+
+.card-header {
+  border-bottom: 1px solid #aaaaaa; }
+
+.card-text {
+  max-height: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.card-item {
+  max-width: 320px;
+  width: 320px;
+  border: 1px solid #aaaaaa; }
+  @media (max-width: 1199px) {
+    .card-item {
+      max-width: 280px; } }
+  @media (max-width: 991px) {
+    .card-item {
+      max-width: 200px; } }
+  @media (max-width: 499px) {
+    .card-item {
+      max-width: none;
+      width: 100%;
+      margin-bottom: 24px; } }
+
+.list-group {
+  width: 50%; }
+  @media (max-width: 991px) {
+    .list-group {
+      width: 60%; } }
+
+@media (max-width: 575px) {
+  .user {
+    margin-bottom: 12px; } }
+
+@media (max-width: 991px) {
+  .user__name {
+    margin-top: 12px; } }
+
+.rating {
+  padding: 0; }
+
+@media (max-width: 460px) {
+  .button--create {
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+    height: 40px; } }
+
+.button--remove, .button--add {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 32px;
+  height: 26px;
+  padding: 0; }
+
+.button--remove {
+  background-color: #e1e1e1;
+  border: none; }
+
+.button--add {
+  height: 32px;
+  font-size: 24px;
+  line-height: 32px; }
+
+.modal-body-scroll {
+  max-height: 360px;
+  overflow-y: scroll; }
+
+.form-textarea {
+  resize: none; }

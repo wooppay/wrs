@@ -6,51 +6,45 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+            <link rel="stylesheet" href="/style/main_theme.css">
             <link rel="stylesheet" href="/style/main.css">
+            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
         {% endblock %}
     </head>
     <body>
-    
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path('index') }}">WRS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto"></ul>
-                
-                <ul class="navbar-nav">
-                    {% if app.user %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-                        </li>
-                        <li class="nav-item navbar-right">
-                            <a class="nav-link" href="{{ path('app_register') }}">Register</a>
-                        </li>
-                    {% endif %}
-                
-                    
-                </ul>
-            </div>
-        </nav>
         
-        <br>
-    
         <div class="container">
-            {% block head_title %}{% endblock %}
-            {% block breadcrumbs %}{% endblock %}
-            {% block body %}{% endblock %}
+            <div class="row  align-items-center  mb-4  px-4  bg-primary  rounded-bottom  page-header">
+                <div class="col  d-block  p-0">
+                    <img src="/img/wooppay-logo.svg" alt="Wooppay Logotype" width="140" height="24">
+                </div>
+
+                <div class="col  d-flex  align-items-center  justify-content-end  p-0">
+                    <button class="btn  d-flex  align-items-center  justify-content-center  mr-3  p-0  icon-bell">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <use xlink:href="img/sprite.svg#icon-bell"></use>
+                        </svg>
+                    </button>
+                    
+                    {% if app.user %}
+                        <a class="btn btn-outline-light" href="{{ path('app_logout') }}">Logout</a>
+                    {% else %}
+                        <a class="btn btn-outline-light" href="{{ path('app_login') }}">Login</a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="row  p-4  bg-light  rounded">
+                {% block body %}{% endblock %}
+            </div>
         </div>
         
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
         {% endblock %}
     </body>
 </html>

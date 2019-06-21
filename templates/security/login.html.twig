@@ -3,11 +3,6 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-
-    <br>
-    <br>
-    
-    <div class="row">
         <div class="col col-sm-3"></div>
 
         <div class="col col-md-6">
@@ -29,6 +24,9 @@
                         >
                         
                         <br>
+                        <p>
+                            <small>If you haven't have account yet, <a href="{{ path('app_register') }}">sign up</a></small>
+                        </p>
                         
                         <button class="btn btn-primary" type="submit">
                             Sign in
@@ -40,5 +38,4 @@
         </div>
 
         <div class="col col-sm-3"></div>
-    </div>
 {% endblock %}
