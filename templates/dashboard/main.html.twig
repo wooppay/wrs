@@ -90,7 +90,7 @@
                             <div class="slider">
 
                                 {% for item in tasks %}
-                                    <div class="card  card-item">
+                                    <div class="card card-item">
                                         <div class="card-header  p-3">
                                             <a class="card-title  h6" href="#!">{{ item.name }}</a>
                                         </div>
@@ -129,22 +129,24 @@
                         <br>
 
                         <div class="row">
-                            <div class="col-sm-12 dashboard-team-container">
-                                {% for item in app.user.myTeams %}
-                                    <div class="card float-left">
-                                        <div class="card-header">
-                                            <span>{{ item.name }}</span>
-                                        </div>
+                            <div class="col-sm-12">
+                                <div class="slider">
+                                    {% for item in app.user.myTeams %}
+                                        <div class="card card-item">
+                                            <div class="card-header">
+                                                <span>{{ item.name }}</span>
+                                            </div>
 
-                                        <div class="card-body">
-                                            <p class="card-text">{{ item.description }}</p>
+                                            <div class="card-body">
+                                                <p class="card-text">{{ item.description }}</p>
 
-                                            <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}" class="btn btn-primary">Detail</a>
+                                                <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}" class="btn btn-primary">Detail</a>
+                                            </div>
                                         </div>
-                                    </div>
                                 
-                                    <br>
-                                {% endfor %}
+                                        <br>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
 
@@ -169,7 +171,7 @@
                         <div class="row">
                             <div class="col-sm-12">
 
-                                <div class="cards-list  d-flex  justify-content-between  flex-wrap  slider">
+                                <div class="slider">
                                     {% for item in app.user.myProjects %}
                                         <div class="card  card-item">
                                             <div class="card-header">
