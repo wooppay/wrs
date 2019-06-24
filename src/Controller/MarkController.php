@@ -39,7 +39,7 @@ class MarkController extends Controller
 
         }
 
-        if ($security->accessMarkCustomerByUser($user)) {
+        if ($security->accessMarkCustomerByUser($user) && empty($skills)) {
             if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
                 $skills = array_merge(
                     $skillService->executorSoftSkillByTask($task),
@@ -57,7 +57,7 @@ class MarkController extends Controller
 
         }
         
-        if ($security->accessMarkTeamLeadByUser($user)) {
+        if ($security->accessMarkTeamLeadByUser($user) && empty($skills)) {
             if ($this->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
                 $skills = array_merge(
                     $skillService->devSkillByTask($task),
@@ -67,7 +67,7 @@ class MarkController extends Controller
             }
         }
         
-        if ($security->accessMarkDeveloperByUser($user)) {
+        if ($security->accessMarkDeveloperByUser($user) && empty($skills)) {
             $skills = array_merge(
                 $skillService->leadSkillByTask($task),
                 $skillService->customerSoftSkillByTask($task),
