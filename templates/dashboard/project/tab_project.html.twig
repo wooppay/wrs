@@ -1,0 +1,40 @@
+<div class="tab-pane fade" id="nav-projects" role="tabpanel" aria-labelledby="nav-projects-tab">
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_PROJECT'), app.user) %}
+                <a href="{{ path('app_dashboard_project_create') }}" class="btn btn-primary float-right">Create</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="slider">
+               {% for item in app.user.myProjects %}
+                   <div class="card  card-item">
+                       <div class="card-header">
+                           <a class="card-title  d-block  mb-3  h6" href="#">{{ item.name }}</a>
+                           <p class="card-subtitle  h7  mb-3">
+                               Team:
+                               <a href="#!">{{ item.team.name }}</a>
+                           </p>
+                           <p class="card-subtitle  h7">
+                               Customer:
+                               <a href="#!">{{ item.customer.email }}</a>
+                           </p>
+                       </div>
+                                    
+                       <div class="card-body">
+                           <p class="card-text  h7">
+                               {{ item.description }}
+                           </p>
+                       </div>
+                   </div>
+               {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
