@@ -34,3 +34,11 @@ App\Entity\RateInfo:
                 nullable: false
                 name: skill_id
                 referencedColumnName: id
+        author:
+            targetEntity: App\Entity\User
+            inversedBy: rates
+            joinColumn:
+                nullable: false
+                name: author_id
+                referencedColumnName: id
+

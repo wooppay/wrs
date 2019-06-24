@@ -85,7 +85,7 @@ class MarkController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
-            $res = $rateInfoService->prepareData($form->getData(), $task);
+            $res = $rateInfoService->prepareData($form->getData(), $task, $user);
             $rateInfoService->createByCheckList($res);
 
             return $this->redirectToRoute('app_dashboard');

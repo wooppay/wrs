@@ -14,6 +14,8 @@ class RateInfo
 
     private $skill;
 
+    private $author;
+
     public function setValue(int $value): self
     {
         $this->value = $value;
@@ -65,5 +67,17 @@ class RateInfo
     public function getId() : ?int
     {
         return $this->id;
+    }
+
+    public function setAuthor(User $user) : self
+    {
+        $this->author = $user;
+
+        return $this;
+    }
+
+    public function getAuthor(User $user) : User
+    {
+        return $this->author;
     }
 }

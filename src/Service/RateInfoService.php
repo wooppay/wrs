@@ -6,6 +6,7 @@ use App\Entity\Permission;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\RateInfo;
 use App\Entity\Task;
+use App\Entity\User;
 
 class RateInfoService
 {
@@ -22,7 +23,7 @@ class RateInfoService
         $this->userService = $userService;
     }
 
-    public function prepareData(array $pack, Task $task) : array
+    public function prepareData(array $pack, Task $task, User $author) : array
     {
         $res = [];
 
@@ -45,6 +46,7 @@ class RateInfoService
             }
 
             $res[$skillId]['task'] = $task;
+            $res[$skillId]['author'] = $author;
 
         }
 
@@ -61,6 +63,7 @@ class RateInfoService
                 ->setSkill($item['skill'])
                 ->setUser($item['user'])
                 ->setTask($item['task'])
+                ->setAuthor($item['author'])
             ;
             
             // todo transaction
