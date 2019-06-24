@@ -1,0 +1,33 @@
+<div class="tab-pane fade" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_TEAM'), app.user) %}
+                <a href="{{ path('app_dashboard_team_create') }}" class="btn btn-primary float-right">Create</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="slider">
+                {% for item in app.user.myTeams %}
+
+                    <div class="card card-item">
+                        <div class="card-header">
+                            <a class="card-title  h6" href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}">{{ item.name }}</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text  h7">
+                                {{ item.description }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
