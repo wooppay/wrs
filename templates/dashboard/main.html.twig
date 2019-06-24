@@ -61,7 +61,11 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Tasks</a>
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
+                        <a class="nav-item nav-link" id="nav-projects-tab" data-toggle="tab" href="#nav-projects" role="tab" aria-controls="nav-projects" aria-selected="false">Projects</a>
+                    {% endif %}
                 </div>
+
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -80,7 +84,6 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {% for item in tasks %}
-            
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ item.name }}</h5>
@@ -100,7 +103,42 @@
                         </div>
                     </div>
 
+                    
                 </div>
+
+                <!---->
+                <div class="tab-pane fade" id="nav-projects" role="tabpanel" aria-labelledby="nav-projects-tab">
+                        <br>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_PROJECT'), app.user) %}
+                                    <a href="{{ path('app_dashboard_project_create') }}" class="btn btn-primary float-right">Create</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% for item in app.user.myProjects %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ item.name }}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">Customer: {{ item.customer.email }}</h6>
+                                            <p class="card-text">{{ item.description }}</p>
+                                        </div>
+                                    </div>
+                                
+                                    <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+
             </div>
 
         </div>
