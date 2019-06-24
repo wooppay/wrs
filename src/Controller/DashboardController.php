@@ -5,10 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
 use App\Service\TaskService;
+use App\Service\RateInfoService;
 
 class DashboardController extends AbstractController
 {
-    public function main(Security $security, TaskService $taskService)
+    public function main(Security $security, TaskService $taskService, RateInfoService $rateInfoService)
     {
         $user = $this->getUser();
         
@@ -31,9 +32,13 @@ class DashboardController extends AbstractController
         }
         
         $tasks = array_unique($tasks, SORT_REGULAR);
-        
+        $receiveMarks = count($user->getRates());
+        $authorMarks = count($user->getAuthorRates());
+
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
+            'receiveMarks' => $receiveMarks,
+            'authorMarks' => $authorMarks,
         ]);
     }
 }

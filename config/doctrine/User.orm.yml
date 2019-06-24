@@ -63,3 +63,9 @@ App\Entity\User:
         myProjects:
             targetEntity: App\Entity\Project
             mappedBy: owner
+        rates:
+            targetEntity: App\Entity\RateInfo
+            mappedBy: user
+        authorRates:
+           targetEntity: App\Entity\RateInfo
+           mappedBy: author

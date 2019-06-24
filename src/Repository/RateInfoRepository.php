@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\User;
 
 /**
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,7 @@ class RateInfoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+
     
     // /**
     //  * @return Project[] Returns an array of Project objects
