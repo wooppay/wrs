@@ -6,10 +6,13 @@ use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
 use App\Service\TaskService;
 use App\Service\RateInfoService;
+use App\Service\UserService;
+use App\Entity\Task;
+use App\Form\TaskType;
 
 class DashboardController extends AbstractController
 {
-    public function main(Security $security, TaskService $taskService, RateInfoService $rateInfoService)
+    public function main(Security $security, TaskService $taskService, RateInfoService $rateInfoService, UserService $userService)
     {
         $user = $this->getUser();
         
@@ -35,10 +38,18 @@ class DashboardController extends AbstractController
         $receiveMarks = count($user->getRates());
         $authorMarks = count($user->getAuthorRates());
 
+
+        $tasksUsers = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
+        
+        $taskForm = $this->createForm(TaskType::class, (new Task()), [
+            'users' => $tasksUsers,
+        ]);
+
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
             'receiveMarks' => $receiveMarks,
             'authorMarks' => $authorMarks,
+            'taskForm' => $taskForm->createView(),
         ]);
     }
 }

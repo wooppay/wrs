@@ -16,19 +16,24 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use App\Service\TeamService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TaskType extends AbstractType
 {
     private $teamService;
+
+    private $router;
     
-    public function __construct(TeamService $teamService)
+    public function __construct(TeamService $teamService, UrlGeneratorInterface $router)
     {
         $this->teamService = $teamService;
+        $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setAction($this->router->generate('app_dashboard_task_create'))
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('executor')

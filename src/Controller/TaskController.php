@@ -49,7 +49,7 @@ class TaskController extends AbstractController
             $task->setAuthor($this->getUser());
             $taskService->create($task);
             
-            return $this->redirectToRoute('app_dashboard_task');
+            return $this->redirectToRoute('app_dashboard');
         }
         
         return $this->render('task/create.html.twig', [
