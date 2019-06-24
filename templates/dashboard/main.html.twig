@@ -92,12 +92,23 @@
                                 {% for item in tasks %}
                                     <div class="card card-item">
                                         <div class="card-header  p-3">
-                                            <a class="card-title  h6" href="#!">{{ item.name }}</a>
+                                            <p>
+                                                <a class="card-title  h6" href="#!">{{ item.name }}</a>
+                                            </p>
+                                            <p class="card-subtitle  h7  mb-3">
+                                                Executor:
+                                                <a href="#!">{{ item.executor.email }}</a>
+                                            </p>
+                                            <p class="card-subtitle  h7 mb-3">
+                                                Team:
+                                                <a href="#!">{{ item.team.name }}</a>
+                                            </p>
+                                            <p class="card-subtitle  h7">
+                                                Project:
+                                                <a href="#!">{{ item.project.name }}</a>
+                                            </p>
                                         </div>
                                         <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted">Executor: {{ item.executor.email }}</h6>
-                                            <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
-                                            <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
                                             <p class="card-text h7">{{ item.description }}</p>
                         
                                             {% if (is_granted_mark(app.user)) %}
@@ -175,12 +186,12 @@
                                     {% for item in app.user.myProjects %}
                                         <div class="card  card-item">
                                             <div class="card-header">
-                                                <a class="card-title  d-block  mb-3  h4" href="#">{{ item.name }}</a>
-                                                <p class="card-subtitle  h6  mb-3">
+                                                <a class="card-title  d-block  mb-3  h6" href="#">{{ item.name }}</a>
+                                                <p class="card-subtitle  h7  mb-3">
                                                     Team:
                                                     <a href="#!">{{ item.team.name }}</a>
                                                 </p>
-                                                <p class="card-subtitle  h6">
+                                                <p class="card-subtitle  h7">
                                                     Customer:
                                                     <a href="#!">{{ item.customer.email }}</a>
                                                 </p>
