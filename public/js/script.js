@@ -8,6 +8,7 @@ $(document).ready(function() {
 		
 		taskByProject(projectId);
 	});
+
 });
 
 function taskByProject(projectId) {

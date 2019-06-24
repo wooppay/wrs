@@ -87,25 +87,26 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            {% for item in tasks %}
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span>{{ item.name }}</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <h6 class="card-subtitle mb-2 text-muted">Executor: {{ item.executor.email }}</h6>
-                                        <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
-                                        <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
-                                        <p class="card-text">{{ item.description }}</p>
+                            <div class="slider">
+
+                                {% for item in tasks %}
+                                    <div class="card  card-item">
+                                        <div class="card-header  p-3">
+                                            <a class="card-title  h6" href="#!">{{ item.name }}</a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-subtitle mb-2 text-muted">Executor: {{ item.executor.email }}</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
+                                            <p class="card-text h7">{{ item.description }}</p>
                         
-                                        {% if (is_granted_mark(app.user)) %}
-                                            <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary {{ (is_granted(constant('App\\Enum\\PermissionEnum::CAN_BE_TEAMLEAD'), app.user) and app.user.id == item.executor.id) ? 'disabled' : '' }}">Mark</a>
-                                        {% endif %}
+                                            {% if (is_granted_mark(app.user)) %}
+                                                <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary {{ (is_granted(constant('App\\Enum\\PermissionEnum::CAN_BE_TEAMLEAD'), app.user) and app.user.id == item.executor.id) ? 'disabled' : '' }}">Mark</a>
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <br>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
 
@@ -128,9 +129,9 @@
                         <br>
 
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 dashboard-team-container">
                                 {% for item in app.user.myTeams %}
-                                    <div class="card">
+                                    <div class="card float-left">
                                         <div class="card-header">
                                             <span>{{ item.name }}</span>
                                         </div>
@@ -167,21 +168,31 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                {% for item in app.user.myProjects %}
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <span>{{ item.name }}</span>
-                                        </div>
 
-                                        <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
-                                            <h6 class="card-subtitle mb-2 text-muted">Customer: {{ item.customer.email }}</h6>
-                                            <p class="card-text">{{ item.description }}</p>
+                                <div class="cards-list  d-flex  justify-content-between  flex-wrap  slider">
+                                    {% for item in app.user.myProjects %}
+                                        <div class="card  card-item">
+                                            <div class="card-header">
+                                                <a class="card-title  d-block  mb-3  h4" href="#">{{ item.name }}</a>
+                                                <p class="card-subtitle  h6  mb-3">
+                                                    Team:
+                                                    <a href="#!">{{ item.team.name }}</a>
+                                                </p>
+                                                <p class="card-subtitle  h6">
+                                                    Customer:
+                                                    <a href="#!">{{ item.customer.email }}</a>
+                                                </p>
+                                            </div>
+                                        
+                                            <div class="card-body">
+                                                <p class="card-text  h7">
+                                                    {{ item.description }}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                
-                                    <br>
-                                {% endfor %}
+                                    {% endfor %}
+
+                                </div>
                             </div>
                         </div>
 

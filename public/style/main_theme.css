@@ -115,3 +115,16 @@ a {
 
 .form-textarea {
   resize: none; }
+
+
+.slick-prev::before, .slick-next::before {
+    color: #6b6b6b;
+}
+
+.slick-slide {
+        margin: 0 10px;
+}
+.slick-list {
+        margin: 0 -10px;
+}
+
