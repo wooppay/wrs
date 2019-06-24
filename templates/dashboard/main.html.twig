@@ -72,58 +72,8 @@
 
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <br>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_TASK'), app.user) %}
-                                <a href="{{ path('app_dashboard_task_create') }}" class="btn btn-primary float-right">Create</a>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="slider">
-
-                                {% for item in tasks %}
-                                    <div class="card card-item">
-                                        <div class="card-header  p-3">
-                                            <p>
-                                                <a class="card-title  h6" href="#!">{{ item.name }}</a>
-                                            </p>
-                                            <p class="card-subtitle  h7  mb-3">
-                                                Executor:
-                                                <a href="#!">{{ item.executor.email }}</a>
-                                            </p>
-                                            <p class="card-subtitle  h7 mb-3">
-                                                Team:
-                                                <a href="#!">{{ item.team.name }}</a>
-                                            </p>
-                                            <p class="card-subtitle  h7">
-                                                Project:
-                                                <a href="#!">{{ item.project.name }}</a>
-                                            </p>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="card-text h7">{{ item.description }}</p>
-                        
-                                            {% if (is_granted_mark(app.user)) %}
-                                                <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary {{ (is_granted(constant('App\\Enum\\PermissionEnum::CAN_BE_TEAMLEAD'), app.user) and app.user.id == item.executor.id) ? 'disabled' : '' }}">Mark</a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-
-                    
-                </div>
-
+                {% include 'task/tab_task.html.twig' %}
+                
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
                     {% include 'dashboard/team/tab_team.html.twig' %}
                 {% endif %}
