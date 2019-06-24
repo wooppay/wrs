@@ -89,8 +89,10 @@
                         <div class="col-sm-12">
                             {% for item in tasks %}
                                 <div class="card">
+                                    <div class="card-header">
+                                        <span>{{ item.name }}</span>
+                                    </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ item.name }}</h5>
                                         <h6 class="card-subtitle mb-2 text-muted">Executor: {{ item.executor.email }}</h6>
                                         <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
                                         <h6 class="card-subtitle mb-2 text-muted">Project: {{ item.project.name }}</h6>
@@ -129,8 +131,11 @@
                             <div class="col-sm-12">
                                 {% for item in app.user.myTeams %}
                                     <div class="card">
+                                        <div class="card-header">
+                                            <span>{{ item.name }}</span>
+                                        </div>
+
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ item.name }}</h5>
                                             <p class="card-text">{{ item.description }}</p>
 
                                             <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}" class="btn btn-primary">Detail</a>
@@ -164,8 +169,11 @@
                             <div class="col-sm-12">
                                 {% for item in app.user.myProjects %}
                                     <div class="card">
+                                        <div class="card-header">
+                                            <span>{{ item.name }}</span>
+                                        </div>
+
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ item.name }}</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">Team: {{ item.team.name }}</h6>
                                             <h6 class="card-subtitle mb-2 text-muted">Customer: {{ item.customer.email }}</h6>
                                             <p class="card-text">{{ item.description }}</p>
