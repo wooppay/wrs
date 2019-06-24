@@ -146,14 +146,12 @@
 
                                         <div class="card card-item">
                                             <div class="card-header">
-                                                <a class="card-title  h6" href="#">{{ item.name }}</a>
+                                                <a class="card-title  h6" href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}">{{ item.name }}</a>
                                             </div>
                                             <div class="card-body">
                                                 <p class="card-text  h7">
                                                     {{ item.description }}
                                                 </p>
-
-                                                <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}" class="btn btn-primary">Detail</a>
                                             </div>
                                         </div>
                                     {% endfor %}
