@@ -143,19 +143,19 @@
                             <div class="col-sm-12">
                                 <div class="slider">
                                     {% for item in app.user.myTeams %}
+
                                         <div class="card card-item">
                                             <div class="card-header">
-                                                <span>{{ item.name }}</span>
+                                                <a class="card-title  h6" href="#">{{ item.name }}</a>
                                             </div>
-
                                             <div class="card-body">
-                                                <p class="card-text">{{ item.description }}</p>
+                                                <p class="card-text  h7">
+                                                    {{ item.description }}
+                                                </p>
 
                                                 <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}" class="btn btn-primary">Detail</a>
                                             </div>
                                         </div>
-                                
-                                        <br>
                                     {% endfor %}
                                 </div>
                             </div>
