@@ -69,3 +69,6 @@ App\Entity\User:
         authorRates:
            targetEntity: App\Entity\RateInfo
            mappedBy: author
+        myTeams:
+            targetEntity: App\Entity\Team
+            mappedBy: owner

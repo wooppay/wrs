@@ -61,9 +61,13 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Tasks</a>
-                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}
                         <a class="nav-item nav-link" id="nav-projects-tab" data-toggle="tab" href="#nav-projects" role="tab" aria-controls="nav-projects" aria-selected="false">Projects</a>
                     {% endif %}
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
+                        <a class="nav-item nav-link" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="false">Teams</a>
+                    {% endif %}
+
                 </div>
 
             </nav>
@@ -106,8 +110,44 @@
                     
                 </div>
 
-                <!---->
-                <div class="tab-pane fade" id="nav-projects" role="tabpanel" aria-labelledby="nav-projects-tab">
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
+
+                    <div class="tab-pane fade" id="nav-team" role="tabpanel" aria-labelledby="nav-team-tab">
+                        <br>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_TEAM'), app.user) %}
+                                    <a href="{{ path('app_dashboard_team_create') }}" class="btn btn-primary float-right">Create</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% for item in app.user.myTeams %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ item.name }}</h5>
+                                            <p class="card-text">{{ item.description }}</p>
+
+                                            <a href="{{ path('app_dashboard_team_manage', {'id': item.id}) }}" class="btn btn-primary">Detail</a>
+                                        </div>
+                                    </div>
+                                
+                                    <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                {% endif %}
+
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}
+
+                    <div class="tab-pane fade" id="nav-projects" role="tabpanel" aria-labelledby="nav-projects-tab">
                         <br>
 
                         <div class="row">
@@ -138,6 +178,8 @@
                         </div>
 
                     </div>
+                {% endif %}
+
 
             </div>
 

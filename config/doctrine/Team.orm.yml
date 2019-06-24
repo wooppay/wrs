@@ -32,7 +32,7 @@ App\Entity\Team:
     manyToOne:
         owner:
             targetEntity: App\Entity\User
-            inversedBy: teams
+            inversedBy: myTeams
             joinColumn:
                 name: owner_id
                 nullable: false
