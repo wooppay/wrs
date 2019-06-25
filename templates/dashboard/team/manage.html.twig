@@ -5,17 +5,16 @@
     <h2>{{ team.name }}</h2>
 {% endblock %}
 
-{% block breadcrumbs %}
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_dashboard_team') }}">Teams</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
-      </ol>
-    </nav>
-{% endblock %}
 
 {% block body %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
+  </ol>
+</nav>
+
 
 <div class="row  w-100">
     <div class="col-lg  col-md-4  col-sm-12  col-12  mb-4">
