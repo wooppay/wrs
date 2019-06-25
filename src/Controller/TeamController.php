@@ -58,7 +58,7 @@ class TeamController extends Controller
         $team = $this->getDoctrine()
         ->getRepository(Team::class)
         ->find($request->get('id'));
-        
+
         return $this->render('dashboard/team/manage.html.twig', [
             'team' => $team,
         ]);

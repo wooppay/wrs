@@ -17,31 +17,55 @@
 
 {% block body %}
 
-    <div class="card">
-        <div class="card-body">
-            <a href="{{ path('app_dashboard_team_manage_add_member', {'id': team.id}) }}" class="btn btn-primary">Add Member</a>
+<div class="row  w-100">
+    <div class="col-lg  col-md-4  col-sm-12  col-12  mb-4">
+        <div class="card">
+            <div class="card-header  d-flex  align-items-center">
+                <a class="card-title  mb-0  h6  text-secondary">{{ team.name }}</a>
+
+                <button class="btn  btn-primary  button  button--add  ml-auto">+</button>
+            </div>
+
+            <div class="list-group  w-100">
+                {% for item in team.members %}
+                    <p class="list-group-item  list-group-item-action  d-flex  align-items-center  py-0  h7  text-primary">
+                        <a class="d-block  w-75  py-2" href="#!">
+                            {{ item.email }}
+                        </a>
+                        <span class="font-italic  text-black-50">({{ item.roles|join(', ') }})</span>
+
+
+                        <a href="{{ path('app_dashboard_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}" class="btn  btn-secondary  ml-auto  button  button--remove">X</a>
+                    </p>
+                {% endfor %}
+            </div>
         </div>
     </div>
-    
-    <br>
-    
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Tools</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in team.members %}
-                <tr>
-                    <td>{{ item.email }}</td>
-                    <td>
-                        <a href="{{ path('app_dashboard_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}"><i class="far fa-trash-alt"></i></a>
-                    </td>
-                </tr>
+
+    <div class="col-lg-8  col-md-8  d-flex  flex-wrap">
+        <div class="row">
+            {% for item in team.projects %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-title  d-block  mb-3  h6" href="#">{{ item.name }}</a>
+                            <p class="card-subtitle  h7">
+                                ПМ:
+                                <a href="#!">item.customer.email</a>
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text  h7">
+                                {{ item.description }}
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
             {% endfor %}
-        </tbody>
-    </table>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}
