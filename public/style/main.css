@@ -6,3 +6,31 @@
 	font-weight: bold;
 	opacity: 1;
 }
+
+form[name=check_list] #check_list fieldset.form-group {
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+form[name=check_list] #check_list fieldset {
+    padding: 8px;
+    border-radius: .25rem;
+}
+
+form[name=check_list] #check_list fieldset legend {
+    display: block;
+    float: left;
+    width: 88%;
+    padding-left: 15px;
+}
+
+form[name=check_list] #check_list fieldset > div {
+    float: left;
+    padding-top: 5px;
+}
+
+form[name=check_list] #check_list fieldset > div .form-check {
+    float: left;
+    margin-right: 15px;
+}

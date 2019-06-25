@@ -5,19 +5,18 @@
     <h2>Check list</h2>
 {% endblock %}
 
-{% block breadcrumbs %}
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Check list</li>
-      </ol>
-    </nav>
-{% endblock %}
-
 {% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ task.name }}</li>
+        </ol>
+    </nav>
+
     <div class="row">
         <div class="col col-sm-12">
-        
+            
             {{ form(form) }}
         
         </div>

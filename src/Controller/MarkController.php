@@ -83,7 +83,7 @@ class MarkController extends Controller
         ]);
 
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted()) {
             $res = $rateInfoService->prepareData($form->getData(), $task, $user);
             $rateInfoService->createByCheckList($res);
@@ -93,6 +93,7 @@ class MarkController extends Controller
 
         return $this->render('dashboard/mark/check_list.html.twig', [
             'form' => $form->createView(),
+            'task' => $task,
         ]);
     }
 }
