@@ -77,14 +77,14 @@
 
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                {% include 'task/tab_task.html.twig' %}
+                {% include 'dashboard/task/tab/list_preview.html.twig' %}
                 
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
-                    {% include 'dashboard/team/tab_team.html.twig' %}
+                    {% include 'dashboard/team/tab/list_preview.html.twig' %}
                 {% endif %}
 
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}
-                    {% include 'dashboard/project/tab_project.html.twig' %}
+                    {% include 'dashboard/project/tab/list_preview.html.twig' %}
                 {% endif %}
 
 
