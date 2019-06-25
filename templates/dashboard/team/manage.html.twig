@@ -22,8 +22,10 @@
         <div class="card">
             <div class="card-header  d-flex  align-items-center">
                 <a class="card-title  mb-0  h6  text-secondary">{{ team.name }}</a>
-
-                <button class="btn  btn-primary  button  button--add  ml-auto">+</button>
+                
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_ADD_MEMBER_TO_TEAM'), app.user) %}
+                    <button class="btn  btn-primary  button  button--add  ml-auto" data-toggle="modal" data-target="#addMemberToTeam">+</button>
+                {% endif %}
             </div>
 
             <div class="list-group  w-100">
@@ -67,5 +69,8 @@
     </div>
 
 </div>
+
+
+{% include 'dashboard/team/modal/add_member.html.twig' with {'form': memberForm} %}
 
 {% endblock %}

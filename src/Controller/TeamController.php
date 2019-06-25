@@ -59,8 +59,14 @@ class TeamController extends Controller
         ->getRepository(Team::class)
         ->find($request->get('id'));
 
+        $memberForm = $this->createForm(MemberType::class, null, [
+            'team' => $team,
+            'is_checked' => $request->get('member')['is_leader'] ?? false,
+        ]);
+
         return $this->render('dashboard/team/manage.html.twig', [
             'team' => $team,
+            'memberForm' => $memberForm->createView(),
         ]);
     }
     
@@ -121,6 +127,7 @@ class TeamController extends Controller
             $request->get('member_id')
         );
 
+        // todo delete hardcode role
         $role = $roleService->byName(RoleEnum::TEAM_LEAD);
 
         if (!$product->deleteTeamMember($team, $member) || !$securityService->detachRoleFromUser($member, $role)) {

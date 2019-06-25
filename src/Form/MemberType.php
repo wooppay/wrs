@@ -13,17 +13,21 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Validator\Constraints\ContainsLeaderInTeam;
 use App\Service\UserService;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MemberType extends AbstractType
 {
     private $entityManager;
     
     private $userService;
+
+    private $router;
     
-    public function __construct(EntityManagerInterface $manager, UserService $userService)
+    public function __construct(EntityManagerInterface $manager, UserService $userService, UrlGeneratorInterface $router)
     {
         $this->entityManager = $manager;
         $this->userService = $userService;
+        $this->router = $router;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,6 +35,7 @@ class MemberType extends AbstractType
         $members = $this->userService->allApprovedExceptAdminAndOwnerAndCustomer();
         
         $builder
+        ->setAction($this->router->generate('app_dashboard_team_manage_add_member', ['id' => $options['team']->getId()]))
         ->add('member_id', ChoiceType::class, [
             'choices' => $members,
             'choice_label' => function($members) {

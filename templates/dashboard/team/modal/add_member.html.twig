@@ -1,0 +1,29 @@
+<div id="addMemberToTeam" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            {{ form_start(form) }}
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add member</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <div class="modal-body">
+                    {{ form_row(form.member_id) }}
+                    {{ form_row(form.is_leader) }}
+                </div>
+
+                <div class="modal-footer">
+                    {{ form_row(form.save) }}
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+</div>
+
+
+{{ form(form) }}
