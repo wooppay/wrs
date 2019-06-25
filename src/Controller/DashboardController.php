@@ -10,9 +10,11 @@ use App\Service\UserService;
 use App\Service\TeamService;
 use App\Entity\Task;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Form\TaskType;
 use App\Enum\RoleEnum;
 use App\Form\ProjectType;
+use App\Form\TeamType;
 
 class DashboardController extends AbstractController
 {
@@ -58,8 +60,12 @@ class DashboardController extends AbstractController
             'customers' => $projectCustomers,
         ]);
 
+
+        $teamForm = $this->createForm(TeamType::class, (new Team()));
+
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
+            'teamForm' => $teamForm->createView(),
             'receiveMarks' => $receiveMarks,
             'authorMarks' => $authorMarks,
             'taskForm' => $taskForm->createView(),
