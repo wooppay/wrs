@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-sm-12">
             {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_TASK'), app.user) %}
-                <a href="{{ path('app_dashboard_task_create') }}" class="btn btn-primary float-right" data-toggle="modal" data-target="#taskCreate">Create</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#taskCreate">Create</a>
             {% endif %}
         </div>
     </div>

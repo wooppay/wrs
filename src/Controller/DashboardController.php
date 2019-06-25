@@ -7,12 +7,16 @@ use App\Enum\PermissionEnum;
 use App\Service\TaskService;
 use App\Service\RateInfoService;
 use App\Service\UserService;
+use App\Service\TeamService;
 use App\Entity\Task;
+use App\Entity\Project;
 use App\Form\TaskType;
+use App\Enum\RoleEnum;
+use App\Form\ProjectType;
 
 class DashboardController extends AbstractController
 {
-    public function main(Security $security, TaskService $taskService, RateInfoService $rateInfoService, UserService $userService)
+    public function main(Security $security, TaskService $taskService, RateInfoService $rateInfoService, UserService $userService, TeamService $teamService)
     {
         $user = $this->getUser();
         
@@ -45,11 +49,21 @@ class DashboardController extends AbstractController
             'users' => $tasksUsers,
         ]);
 
+        // todo delete role hardcode
+        $projectCustomers = $userService->allByRoleName(RoleEnum::CUSTOMER);
+        $teams = $teamService->all();
+        
+        $projectForm = $this->createForm(ProjectType::class, (new Project()), [
+            'teams' => $teams,
+            'customers' => $projectCustomers,
+        ]);
+
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
             'receiveMarks' => $receiveMarks,
             'authorMarks' => $authorMarks,
             'taskForm' => $taskForm->createView(),
+            'projectForm' => $projectForm->createView(),
         ]);
     }
 }

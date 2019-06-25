@@ -44,7 +44,7 @@ class ProjectController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $projectService->create($project);
             
-            return $this->redirectToRoute('app_dashboard_project');
+            return $this->redirectToRoute('app_dashboard');
         }
         
         return $this->render('dashboard/project/create.html.twig', [

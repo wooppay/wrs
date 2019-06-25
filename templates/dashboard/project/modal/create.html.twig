@@ -1,4 +1,4 @@
-<div id="taskCreate" class="modal fade" role="dialog">
+<div id="projectCreate" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -6,16 +6,15 @@
             {{ form_start(form) }}
 
                 <div class="modal-header">
-                    <h4 class="modal-title">New Task</h4>
+                    <h4 class="modal-title">New Project</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
         
                 <div class="modal-body">
                     {{ form_row(form.name) }}
-                    {{ form_row(form.description) }}
-                    {{ form_row(form.executor) }}
-                    {{ form_row(form.project) }}
                     {{ form_row(form.team) }}
+                    {{ form_row(form.customer) }}
+                    {{ form_row(form.description) }}
                 </div>
 
                 <div class="modal-footer">
@@ -27,4 +26,3 @@
 
     </div>
 </div>
-
