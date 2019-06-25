@@ -36,8 +36,9 @@
                         </a>
                         <span class="font-italic  text-black-50">({{ item.roles|join(', ') }})</span>
 
-
-                        <a href="{{ path('app_dashboard_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}" class="btn  btn-secondary  ml-auto  button  button--remove">X</a>
+                        {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_MEMBER_FROM_TEAM'), app.user) %}
+                            <a href="{{ path('app_dashboard_team_manage_delete_member', {'team_id': team.id, 'member_id': item.id}) }}" class="btn  btn-secondary  ml-auto  button  button--remove">X</a>
+                        {% endif %}
                     </p>
                 {% endfor %}
             </div>
