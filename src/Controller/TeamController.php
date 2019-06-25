@@ -127,11 +127,15 @@ class TeamController extends Controller
             $request->get('member_id')
         );
 
-        // todo delete hardcode role
-        $role = $roleService->byName(RoleEnum::TEAM_LEAD);
-
-        if (!$product->deleteTeamMember($team, $member) || !$securityService->detachRoleFromUser($member, $role)) {
+        if (!$product->deleteTeamMember($team, $member)) {
             throw new \Exception();
+        }
+
+        // todo transaction
+        if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
+            // todo delete hardcode role
+            $role = $roleService->byName(RoleEnum::TEAM_LEAD);
+            $securityService->detachRoleFromUser($member, $role);
         }
 
         return $this->redirectToRoute('app_dashboard_team_manage', [
