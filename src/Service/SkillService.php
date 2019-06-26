@@ -4,15 +4,20 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Skill;
 use App\Enum\SkillEnum;
+use App\Enum\PermissionEnum;
 use App\Entity\Task;
+use Symfony\Component\Security\Core\Security;
 
 class SkillService
 {
     private $entityManager;
+
+    private $security;
     
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, Security $security)
     {
         $this->entityManager = $manager;
+        $this->security = $security;
     }
 
     public function byId(int $id) : Skill
@@ -200,6 +205,78 @@ class SkillService
             ->getRepository(Skill::class)
             ->devSkillByTask($task)
         ;
+    }
+
+    public function skillsAuthorProductOwnerByTask(Task $task) : array
+    {
+        $skill = [];
+        $executor = $task->getExecutor();
+
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $executor)) {
+            $skills = $this->executorSkillByTask($task);
+        }
+
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
+            $skills = $this->executorSkillByTask($task);
+        }
+
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+            $skills = array_merge(
+                $this->executorSkillByTask($task),
+                $this->leadSkillByTask($task),
+                $this->customerSkillByTask($task)
+            );
+        }
+
+        return $skills;
+    }
+
+    public function skillsAuthorCustomerByTask(Task $task) : array
+    {
+        $skills = [];
+        $executor = $task->getExecutor();
+        
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
+            $skills = array_merge(
+                $this->executorSoftSkillByTask($task),
+                $this->ownerSoftSkillByTask($task)
+            );
+        }
+
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+            $skills = array_merge(
+                $this->executorSoftSkillByTask($task),
+                $this->leadSoftSkillByTask($task),
+                $this->ownerSoftSkillByTask($task)
+            );
+        }
+
+        return $skills;
+    }
+
+    public function skillsAuthorTeamLeadByTask(Task $task) : array
+    {
+        $skills = [];
+        $executor = $task->getExecutor();
+
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+            $skills = array_merge(
+                $this->devSkillByTask($task),
+                $this->customerSoftSkillByTask($task),
+                $this->ownerSoftSkillByTask($task)
+            );
+        }
+
+        return $skills;
+    }
+
+    public function skillsAuthorDeveloperByTask(Task $task) : array
+    {
+        return array_merge(
+            $this->leadSkillByTask($task),
+            $this->customerSoftSkillByTask($task),
+            $this->ownerSoftSkillByTask($task)
+        );
     }
 }
 

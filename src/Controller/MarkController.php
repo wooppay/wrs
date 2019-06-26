@@ -21,61 +21,20 @@ class MarkController extends Controller
         $executor = $task->getExecutor();
         
         if ($security->accessMarkProductOwnerByUser($user)) {
-            if ($this->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $executor)) {
-                $skills = $skillService->executorSkillByTask($task);
-            }
-
-            if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
-                $skills = $skillService->executorSkillByTask($task);
-            }
-
-            if ($this->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
-                $skills = array_merge(
-                    $skillService->executorSkillByTask($task),
-                    $skillService->leadSkillByTask($task),
-                    $skillService->customerSkillByTask($task)
-                );
-            }
-
+            $skills = $skillService->skillsAuthorProductOwnerByTask($task);
         }
 
         if ($security->accessMarkCustomerByUser($user) && empty($skills)) {
-            if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
-                $skills = array_merge(
-                    $skillService->executorSoftSkillByTask($task),
-                    $skillService->ownerSoftSkillByTask($task)
-                );
-            }
-
-            if ($this->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
-                $skills = array_merge(
-                    $skillService->executorSoftSkillByTask($task),
-                    $skillService->leadSoftSkillByTask($task),
-                    $skillService->ownerSoftSkillByTask($task)
-                );
-            }
-
+            $skills = $skillService->skillsAuthorCustomerByTask($task);
         }
         
         if ($security->accessMarkTeamLeadByUser($user) && empty($skills)) {
-            if ($this->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
-                $skills = array_merge(
-                    $skillService->devSkillByTask($task),
-                    $skillService->customerSoftSkillByTask($task),
-                    $skillService->ownerSoftSkillByTask($task)
-                );
-            }
+            $skills = $skillService->skillsAuthorTeamLeadByTask($task);
         }
         
         if ($security->accessMarkDeveloperByUser($user) && empty($skills)) {
-            $skills = array_merge(
-                $skillService->leadSkillByTask($task),
-                $skillService->customerSoftSkillByTask($task),
-                $skillService->ownerSoftSkillByTask($task)
-            );
+            $skills = $skillService->skillsAuthorDeveloperByTask($task);
         }
-
-
         
         $form = $this->createForm(CheckListType::class, null, [
             'skills' => $skills,
