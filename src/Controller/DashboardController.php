@@ -15,10 +15,11 @@ use App\Form\TaskType;
 use App\Enum\RoleEnum;
 use App\Form\ProjectType;
 use App\Form\TeamType;
+use App\Service\RoleService;
 
 class DashboardController extends AbstractController
 {
-    public function main(Security $security, TaskService $taskService, RateInfoService $rateInfoService, UserService $userService, TeamService $teamService)
+    public function main(RoleService $roleService, Security $security, TaskService $taskService, RateInfoService $rateInfoService, UserService $userService, TeamService $teamService)
     {
         $user = $this->getUser();
         
@@ -51,15 +52,13 @@ class DashboardController extends AbstractController
             'users' => $tasksUsers,
         ]);
 
-        // todo delete role hardcode
-        $projectCustomers = $userService->allByRoleName(RoleEnum::CUSTOMER);
+        $projectCustomers = $userService->allByRoleName($roleService->getRoleCustomer()->getName());
         $teams = $teamService->all();
         
         $projectForm = $this->createForm(ProjectType::class, (new Project()), [
             'teams' => $teams,
             'customers' => $projectCustomers,
         ]);
-
 
         $teamForm = $this->createForm(TeamType::class, (new Team()));
 
