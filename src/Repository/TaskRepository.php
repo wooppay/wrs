@@ -7,6 +7,9 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Common\Collections\Collection;
+use App\Service\TaskService;
+use App\Enum\PermissionEnum;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method Task|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,9 +19,15 @@ use Doctrine\Common\Collections\Collection;
  */
 class TaskRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $taskService;
+    private $security;
+
+    public function __construct(RegistryInterface $registry, TaskService $taskService, Security $security)
     {
         parent::__construct($registry, Task::class);
+
+        $this->taskService = $taskService;
+        $this->security = $security;
     }
 
     public function userCreatedTasks(User $user) : Collection
@@ -41,6 +50,29 @@ class TaskRepository extends ServiceEntityRepository
         }
 
         return $tasks;
+    }
+
+    public function tasksForDashboardByUser(User $user) : array
+    {
+        $tasks = [];
+        
+        if ($this->security->isGranted(PermissionEnum::CAN_SEE_MAY_CREATED_TASKS, $user)) {
+            $tasks = array_merge($tasks, $this->taskService->userCreatedTasks($user)->toArray());
+        }
+
+        if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
+            $tasks = array_merge($tasks, $this->taskService->allProjectTaskByUser($user));
+        }
+
+        if ($this->security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
+            $tasks = array_merge($tasks, $user->getTasks()->toArray());
+        }
+
+        if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
+            $tasks = array_merge($tasks, $this->taskService->teamMembersTasksWhereUserParticipated($user));
+        }
+        
+        return array_unique($tasks, SORT_REGULAR);
     }
 
     // /**

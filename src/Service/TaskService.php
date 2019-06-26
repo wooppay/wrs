@@ -103,5 +103,16 @@ class TaskService
             ->teamMembersTasksWhereUserParticipated($user)
         ;
     }
+
+
+    public function tasksForDashboardByUser(User $user) : array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Task::class)
+            ->tasksForDashboardByUser($user)
+        ;
+
+    }
 }
 
