@@ -176,7 +176,7 @@ class SkillService
             $skills = $this->allByRole($this->roleService->getRoleTeamLead());
         }
 
-        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor) && empty($skills)) {
             $skills = array_merge(
                 $this->allByRole($this->roleService->getRoleDeveloper()),
                 $this->allByRole($this->roleService->getRoleTeamLead()),
@@ -199,7 +199,7 @@ class SkillService
             );
         }
 
-        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
+        if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor) && empty($skills)) {
             $skills = array_merge(
                 $this->softByRole($this->roleService->getRoleDeveloper()),
                 $this->softByRole($this->roleService->getRoleTeamLead()),
