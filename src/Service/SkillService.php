@@ -7,17 +7,21 @@ use App\Enum\SkillEnum;
 use App\Enum\PermissionEnum;
 use App\Entity\Task;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\Role;
 
 class SkillService
 {
     private $entityManager;
 
     private $security;
+
+    private $roleService;
     
-    public function __construct(EntityManagerInterface $manager, Security $security)
+    public function __construct(EntityManagerInterface $manager, Security $security, RoleService $roleService)
     {
         $this->entityManager = $manager;
         $this->security = $security;
+        $this->roleService = $roleService;
     }
 
     public function byId(int $id) : Skill
@@ -28,21 +32,6 @@ class SkillService
             ->byId($id)
         ;
     }
-    
-    public function executorSkillByTask(Task $task) : array
-    {
-        return $this->entityManager
-        ->getRepository(Skill::class)
-        ->executorSkillByTask($task);
-    }
-
-    public function executorSoftSkillByTask(Task $task) : array
-    {
-        return $this->entityManager
-        ->getRepository(Skill::class)
-        ->executorSoftSkillByTask($task);
-    }
-
     
     public function all() : array
     {
@@ -149,46 +138,7 @@ class SkillService
         return true;
     }
     
-    public function customerSkillByTask(Task $task) : array
-    {
-        return $this->entityManager
-        ->getRepository(Skill::class)
-        ->customerSkillByTask($task);
-    }
-
-    public function customerSoftSkillByTask(Task $task) : array
-    {
-        return $this->entityManager
-        ->getRepository(Skill::class)
-        ->customerSoftSkillByTask($task);
-    }
-
-
-    public function leadSkillByTask(Task $task) : array
-    {
-        return $this->entityManager
-        ->getRepository(Skill::class)
-        ->leadSkillByTask($task);
-    }
-
-    public function leadSoftSkillByTask(Task $task) : array
-    {
-        return $this->entityManager
-        ->getRepository(Skill::class)
-        ->leadSoftSkillByTask($task);
-    }
-
-    public function ownerSoftSkillByTask(Task $task) : array
-    {
-        return $this
-            ->entityManager
-            ->getRepository(Skill::class)
-            ->ownerSoftSkillByTask($task)
-        ;
-    }
-
-    
-    public function softByRole(Role $role) : ?Collection
+    public function softByRole(Role $role) : ?array
     {
         return $this
             ->entityManager
@@ -196,35 +146,41 @@ class SkillService
             ->softByRole($role)
         ;
     }
-
-
-    public function devSkillByTask(Task $task) : array
+    
+    public function allByRole(Role $role) : ?array
     {
         return $this
             ->entityManager
             ->getRepository(Skill::class)
-            ->devSkillByTask($task)
+            ->allByRole($role)
         ;
     }
+
+
+    public function technicalByRole(Role $role) : ?array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Skill::class)
+            ->technicalByRole($role)
+        ;
+    }
+
 
     public function skillsAuthorProductOwnerByTask(Task $task) : array
     {
         $skill = [];
         $executor = $task->getExecutor();
 
-        if ($this->security->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $executor)) {
-            $skills = $this->executorSkillByTask($task);
-        }
-
         if ($this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
-            $skills = $this->executorSkillByTask($task);
+            $skills = $this->allByRole($this->roleService->getRoleTeamLead());
         }
 
         if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
             $skills = array_merge(
-                $this->executorSkillByTask($task),
-                $this->leadSkillByTask($task),
-                $this->customerSkillByTask($task)
+                $this->allByRole($this->roleService->getRoleDeveloper()),
+                $this->allByRole($this->roleService->getRoleTeamLead()),
+                $this->allByRole($this->roleService->getRoleCustomer()),
             );
         }
 
@@ -238,16 +194,16 @@ class SkillService
         
         if ($this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
             $skills = array_merge(
-                $this->executorSoftSkillByTask($task),
-                $this->ownerSoftSkillByTask($task)
+                $this->softByRole($this->roleService->getRoleTeamLead()),
+                $this->softByRole($this->roleService->getRoleProductOwner()),
             );
         }
 
         if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
             $skills = array_merge(
-                $this->executorSoftSkillByTask($task),
-                $this->leadSoftSkillByTask($task),
-                $this->ownerSoftSkillByTask($task)
+                $this->softByRole($this->roleService->getRoleDeveloper()),
+                $this->softByRole($this->roleService->getRoleTeamLead()),
+                $this->softByRole($this->roleService->getRoleProductOwner()),
             );
         }
 
@@ -261,9 +217,9 @@ class SkillService
 
         if ($this->security->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $executor)) {
             $skills = array_merge(
-                $this->devSkillByTask($task),
-                $this->customerSoftSkillByTask($task),
-                $this->ownerSoftSkillByTask($task)
+                $this->allByRole($this->roleService->getRoleDeveloper()),
+                $this->softByRole($this->roleService->getRoleCustomer()),
+                $this->softByRole($this->roleService->getRoleProductOwner()),
             );
         }
 
@@ -273,9 +229,9 @@ class SkillService
     public function skillsAuthorDeveloperByTask(Task $task) : array
     {
         return array_merge(
-            $this->leadSkillByTask($task),
-            $this->customerSoftSkillByTask($task),
-            $this->ownerSoftSkillByTask($task)
+            $this->softByRole($this->roleService->getRoleCustomer()),
+            $this->softByRole($this->roleService->getRoleProductOwner()),
+            $this->allByRole($this->roleService->getRoleTeamLead()),
         );
     }
 }

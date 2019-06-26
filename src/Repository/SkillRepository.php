@@ -42,177 +42,29 @@ class SkillRepository extends ServiceEntityRepository
         return $this->find($id);
     }
     
-    public function executorSkillByTask(Task $task) : array
-    {
-        $executor = $task->getExecutor();
-        $roles = $executor->getRoles();
-        
-        return $this->byRoles($roles);
-    }
-
-    public function executorSoftSkillByTask(Task $task) : array
-    {
-        $executor = $task->getExecutor();
-        $roles = $executor->getRoles();
-        
-        return $this->softByRoles($roles);
-    }
-
-    
-    public function leadSkillByTask(Task $task) : array
-    {
-        $members = $task->getTeam()->getMembers();
-        $res = [];
-        $teamLeadPermission = $this->permissionService->byName(PermissionEnum::CAN_BE_TEAMLEAD);
-        
-        foreach ($members as $member) {
-            if (!$this->securityService->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
-                continue;
-            }
-            
-            $roles = $member->getRoles();
-            
-            foreach ($roles as $role) {
-                $entity = $this->roleService->byName($role);
-                $permissions = $entity->getPermissions();
-                
-                if ($permissions->contains($teamLeadPermission)) {
-                    $res[] = $role;
-                    
-                    break 2;
-                }
-            }
-        }
-        
-        return $this->byRoles($res);
-    }
-
-    public function devSkillByTask(Task $task) : array
-    {
-        $members = $task->getTeam()->getMembers();
-        $res = [];
-        $devPermission = $this->permissionService->byName(PermissionEnum::CAN_BE_DEVELOPER);
-        
-        foreach ($members as $member) {
-            if (!$this->securityService->isGranted(PermissionEnum::CAN_BE_DEVELOPER, $member)) {
-                continue;
-            }
-            
-            $roles = $member->getRoles();
-            
-            foreach ($roles as $role) {
-                $entity = $this->roleService->byName($role);
-                $permissions = $entity->getPermissions();
-                
-                if ($permissions->contains($devPermission)) {
-                    $res[] = $role;
-                    
-                    break 2;
-                }
-            }
-        }
-
-        return $this->byRoles($res);
-    }
-
-
-    public function leadSoftSkillByTask(Task $task) : array
-    {
-        $members = $task->getTeam()->getMembers();
-        $res = [];
-        $teamLeadPermission = $this->permissionService->byName(PermissionEnum::CAN_BE_TEAMLEAD);
-        
-        foreach ($members as $member) {
-            if (!$this->securityService->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
-                continue;
-            }
-            
-            $roles = $member->getRoles();
-            
-            foreach ($roles as $role) {
-                $entity = $this->roleService->byName($role);
-                $permissions = $entity->getPermissions();
-                
-                if ($permissions->contains($teamLeadPermission)) {
-                    $res[] = $role;
-                    
-                    break 2;
-                }
-            }
-        }
-        
-        return $this->softByRoles($res);
-    }
-    
-    public function customerSkillByTask(Task $task) : array
-    {
-        $customer = $task->getProject()->getCustomer();
-        
-        return $this->byRoles($customer->getRoles());
-    }
-
-    public function customerSoftSkillByTask(Task $task) : array
-    {
-        $customer = $task->getProject()->getCustomer();
-        
-        return $this->softByRoles($customer->getRoles());
-    }
-
-
-    public function ownerSkillByTask(Task $task) : array
-    {
-        $owner = $task->getProject()->getOwner();
-        
-        return $this->byRoles($owner->getRoles());
-    }
-
-    public function ownerSoftSkillByTask(Task $task) : array
-    {
-        $owner = $task->getProject()->getOwner();
-        
-        return $this->softByRoles($owner->getRoles());
-    }
-
-    
-    protected function byRoles(array $roles) : array
-    {
-        $skills = [];
-        
-        foreach ($roles as $role) {
-            $entity = $this->roleService->byName($role);
-            
-            if (!$entity->getSkills()->isEmpty()) {
-                $skills = array_merge($skills, $entity->getSkills()->toArray());
-            }
-        }
-        
-        return $skills;
-    }
-
-    protected function softByRoles(array $roles) : array
-    {
-        $skills = [];
-        
-        foreach ($roles as $role) {
-            $entity = $this->roleService->byName($role);
-            
-            if ($this->softByRole($entity) !== null) {
-                $skills = array_merge($skills, $this->softByRole($entity));
-            }
-        }
-        
-        return $skills;
-    }
-
-
-
-    protected function softByRole(Role $role) : ?array
+    public function softByRole(Role $role) : ?array
     {
         return $this->findBy([
             'role' => $role,
             'type' => SkillEnum::TYPE_SOFT,
         ]);
     }
+
+    public function technicalByRole(Role $role) : ?array
+    {
+        return $this->findBy([
+            'role' => $role,
+            'type' => SkillEnum::TYPE_TECHNICAL,
+        ]);
+    }
+
+    public function allByRole(Role $role) : ?array
+    {
+        return $this->findBy([
+            'role' => $role,
+        ]);
+    }
+
 
     // /**
     //  * @return Skill[] Returns an array of Skill objects
