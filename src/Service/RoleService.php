@@ -57,5 +57,51 @@ class RoleService
             'name' => $name,
         ]);
     }
+
+
+    public function getRoleAdmin() : ?Role
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Role::class)
+            ->getRoleAdmin()
+        ;
+    }
+
+    public function getRoleProductOwner() : ?Role
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Role::class)
+            ->getRoleProductOwner()
+        ;
+    }
+
+    public function getRoleCustomer() : ?Role
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Role::class)
+            ->getRoleCustomer()
+        ;
+    }
+
+    public function getRoleTeamLead() : ?Role
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Role::class)
+            ->getRoleTeamLead()
+        ;
+    }
+
+    public function getRoleDeveloper() : ?Role
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Role::class)
+            ->getRoleDeveloper()
+        ;
+    }
 }
 

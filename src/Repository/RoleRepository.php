@@ -6,6 +6,9 @@ use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Enum\SkillEnum;
+use App\Service\PermissionService;
+use App\Enum\PermissionEnum;
+use App\Entity\Permission;
 
 /**
  * @method Role|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,29 +18,72 @@ use App\Enum\SkillEnum;
  */
 class RoleRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    private $permissionService;
+
+    public function __construct(RegistryInterface $registry, PermissionService $permissionService)
     {
         parent::__construct($registry, Role::class);
+
+        $this->permissionService = $permissionService;
     }
 
-    // /**
-    //  * @return Role[] Returns an array of Role objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    protected function recognizeRoleByPermission(Permission $permission) : ?Role
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $roles = $this->findAll();
+        $res = null;
 
-    
+        foreach ($roles as $role) {
+            $permissions = $role->getPermissions();
+
+            if ($permissions->contains($permission)) {
+                $res = $role;
+                break;
+            }
+        }
+
+        return $res;
+
+    }
+
+    public function getRoleAdmin() : ?Role
+    {
+        $permission = $this->permissionService->byName(PermissionEnum::CAN_BE_ADMIN);
+
+        return $this->recognizeRoleByPermission($permission);
+    }
+
+    public function getRoleProductOwner() : ?Role
+    {
+        $permission = $this->permissionService->byName(PermissionEnum::CAN_BE_PRODUCT_OWNER);
+
+        return $this->recognizeRoleByPermission($permission);
+    }
+
+    public function getRoleCustomer() : ?Role
+    {
+        $permission = $this->permissionService->byName(PermissionEnum::CAN_BE_CUSTOMER);
+
+        return $this->recognizeRoleByPermission($permission);
+    }
+
+    public function getRoleTeamLead() : ?Role
+    {
+        $permission = $this->permissionService->byName(PermissionEnum::CAN_BE_TEAMLEAD);
+
+        return $this->recognizeRoleByPermission($permission);
+    }
+
+    public function getRoleDeveloper() : ?Role
+    {
+        $permission = $this->permissionService->byName(PermissionEnum::CAN_BE_DEVELOPER);
+
+        return $this->recognizeRoleByPermission($permission);
+    }
+
+
+
+
+
     public function findOneByName(string $name): ?Role
     {
         return $this->createQueryBuilder('r')
