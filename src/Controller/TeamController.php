@@ -42,13 +42,11 @@ class TeamController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $teamService->create($team);
-            
-            return $this->redirectToRoute('app_dashboard');
+
+            $this->addFlash('success', 'Team was successfully created');
         }
-        
-        return $this->render('dashboard/team/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
+
+        return $this->redirectToRoute('app_dashboard');
     }
     
     public function manage(Request $request)
