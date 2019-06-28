@@ -34,27 +34,24 @@ class TaskController extends AbstractController
     
     public function create(Request $request, UserService $userService, TeamService $teamService, ProjectService $projectService, TaskService $taskService)
     {
-        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser());
-        
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser()); 
         $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
-        
         $task = new Task();
-        
+
         $form = $this->createForm(TaskType::class, $task, [
             'users' => $users,
         ]);
         
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setAuthor($this->getUser());
             $taskService->create($task);
-            
-            return $this->redirectToRoute('app_dashboard');
+
+            $this->addFlash('success', 'Task was successfully created');
         }
-        
-        return $this->render('task/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
+
+        return $this->redirectToRoute('app_dashboard');
     }
     
     public function teamByProject(int $project_id, ProjectService $projectService)

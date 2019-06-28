@@ -55,5 +55,14 @@ class MarkController extends Controller
             'task' => $task,
         ]);
     }
+
+    public function historyIncoming(RateInfoService $rateInfoService)
+    {
+        $previews = $rateInfoService->incomingByUserGroupByTask($this->getUser());
+        
+        return $this->render('dashboard/mark/history/main.html.twig', [
+            'previews' => $previews,
+        ]);
+    }
 }
 
