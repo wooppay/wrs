@@ -180,7 +180,7 @@ class SkillService
             $skills = array_merge(
                 $this->allByRole($this->roleService->getRoleDeveloper()),
                 $this->allByRole($this->roleService->getRoleTeamLead()),
-                $this->allByRole($this->roleService->getRoleCustomer()),
+                $this->allByRole($this->roleService->getRoleCustomer())
             );
         }
 
@@ -195,7 +195,7 @@ class SkillService
         if ($this->security->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $executor)) {
             $skills = array_merge(
                 $this->softByRole($this->roleService->getRoleTeamLead()),
-                $this->softByRole($this->roleService->getRoleProductOwner()),
+                $this->softByRole($this->roleService->getRoleProductOwner())
             );
         }
 
@@ -203,7 +203,7 @@ class SkillService
             $skills = array_merge(
                 $this->softByRole($this->roleService->getRoleDeveloper()),
                 $this->softByRole($this->roleService->getRoleTeamLead()),
-                $this->softByRole($this->roleService->getRoleProductOwner()),
+                $this->softByRole($this->roleService->getRoleProductOwner())
             );
         }
 
@@ -219,7 +219,7 @@ class SkillService
             $skills = array_merge(
                 $this->allByRole($this->roleService->getRoleDeveloper()),
                 $this->softByRole($this->roleService->getRoleCustomer()),
-                $this->softByRole($this->roleService->getRoleProductOwner()),
+                $this->softByRole($this->roleService->getRoleProductOwner())
             );
         }
 
@@ -231,7 +231,7 @@ class SkillService
         return array_merge(
             $this->softByRole($this->roleService->getRoleCustomer()),
             $this->softByRole($this->roleService->getRoleProductOwner()),
-            $this->allByRole($this->roleService->getRoleTeamLead()),
+            $this->allByRole($this->roleService->getRoleTeamLead())
         );
     }
 }
