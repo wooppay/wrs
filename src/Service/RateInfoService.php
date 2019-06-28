@@ -88,6 +88,14 @@ class RateInfoService
         foreach ($collection as $item) {
             $res[$item->getTask()->getId()]['task_name'] = $item->getTask()->getName();
 
+            if (!array_key_exists('positive', $res[$item->getTask()->getId()])) {
+                $res[$item->getTask()->getId()]['positive'] = [];
+            }
+
+            if (!array_key_exists('negative', $res[$item->getTask()->getId()])) {
+                $res[$item->getTask()->getId()]['negative'] = [];
+            }
+
             if ($item->getValue() == RateInfoEnum::POSITIVE) {
                 $res[$item->getTask()->getId()]['positive'][] = $item;
             } else {
