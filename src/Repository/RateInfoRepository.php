@@ -7,6 +7,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\User;
 use App\Entity\Task;
 use App\Entity\RateInfo;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,20 +24,24 @@ class RateInfoRepository extends ServiceEntityRepository
     }
 
 
-    public function incomingByUserAndTask(User $user, Task $task) : ?array
+    public function incomingByUserAndTask(User $user, Task $task) : ?Collection
     {
-        return $this->findBy([
+        $res = $this->findBy([
             'user' => $user,
             'task' => $task,
         ]);
+
+        return new ArrayCollection($res);
     }
 
-    public function outcomingByUserAndTask(User $user, Task $task) : ?array
+    public function outcomingByUserAndTask(User $user, Task $task) : ?Collection
     {
-        return $this->findBy([
+        $res = $this->findBy([
             'author' => $user,
             'task' => $task,
         ]);
+
+        return new ArrayCollection($res);
     }
 
 

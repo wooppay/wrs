@@ -123,7 +123,7 @@ class RateInfoService
         return new ArrayCollection($res);
     }
 
-    public function incomingByUserAndTask(User $user, Task $task) : ?array
+    public function incomingByUserAndTask(User $user, Task $task) : ?Collection
     {
         return $this
             ->entityManager
@@ -132,7 +132,7 @@ class RateInfoService
         ;
     }
 
-    public function outcomingByUserAndTask(User $user, Task $task) : ?array
+    public function outcomingByUserAndTask(User $user, Task $task) : ?Collection
     {
         return $this
             ->entityManager
@@ -142,7 +142,7 @@ class RateInfoService
     }
 
 
-    public function incomingByUserAndTaskGroupByAuthorAndMarks(User $user, Task $task) : ?array
+    public function incomingByUserAndTaskGroupByAuthorAndMarks(User $user, Task $task) : ?Collection
     {
         $collection = $this->incomingByUserAndTask($user, $task);
 
@@ -150,6 +150,23 @@ class RateInfoService
             return null;
         }
 
+        return $this->groupByAuthorAndMarksByCollection($collection);
+    }
+
+    public function outcomingByUserAndTaskGroupByAuthorAndMarks(User $user, Task $task) : ?Collection
+    {
+        $collection = $this->outcomingByUserAndTask($user, $task);
+
+        if (null === $collection) {
+            return null;
+        }
+
+        return $this->groupByAuthorAndMarksByCollection($collection);
+    }
+
+
+    protected function groupByAuthorAndMarksByCollection(Collection $collection) : ?Collection
+    {
         $res = [];
 
         foreach ($collection as $item) {
@@ -170,7 +187,9 @@ class RateInfoService
             }
         }
 
-        return $res;
+        return new ArrayCollection($res);
+
     }
+
 }
 

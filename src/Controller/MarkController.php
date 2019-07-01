@@ -88,5 +88,20 @@ class MarkController extends Controller
             'rates' => $rates,
         ]);
     }
+
+    public function historyOutcomingDetail(Request $request, TaskService $taskService, RateInfoService $rateInfoService)
+    {
+        $task = $taskService->oneById(
+            $request->get('id')
+        );
+
+        $rates = $rateInfoService->outcomingByUserAndTaskGroupByAuthorAndMarks($this->getUser(), $task);
+        
+        return $this->render('dashboard/mark/history/outcoming_detail.html.twig', [
+            'task' => $task,
+            'rates' => $rates,
+        ]);
+    }
+
 }
 

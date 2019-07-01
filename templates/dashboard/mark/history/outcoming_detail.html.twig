@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | Rate History Detail{% endblock %}
+{% block head_title %}
+    <h2>{{ task.name }}</h2>
+{% endblock %}
+
+{% block body %}
+
+    <div class ="row">
+        <div class="col-md-12">
+            <h4>{{ task.name }}</h4>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_dashboard_history_outcoming') }}">Rate History Outcoming</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ task.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+                    {% for item in rates %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b>Positives</b>
+                                <i class="far fa-thumbs-up"></i>
+                                {% for rate in item.positive %}
+                                    <div class="skill-item">
+                                        <span>{{ rate.skill.content }}</span>
+                                        <a href="#"><i>({{ rate.user.email }})</i></a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <b>Negatives</b>
+                                <i class="far fa-thumbs-down"></i>
+                                {% for rate in item.negative %}
+                                    <div class="skill-item">
+                                        <span>{{ rate.skill.content }}</span>
+                                        <a href=#"><i>({{ rate.user.email }})</i></a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <br>
+                 
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

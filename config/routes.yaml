@@ -188,3 +188,9 @@ app_dashboard_history_incoming_detail:
     requirements:
         id: '\d+'
 
+app_dashboard_history_outcoming_detail:
+    path: /dashboard/history/outcoming/task/{id}
+    controller: App\Controller\MarkController::historyOutcomingDetail
+    requirements:
+        id: '\d+'
+
