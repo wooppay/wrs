@@ -108,7 +108,6 @@ class TeamController extends Controller
                 $em->getConnection()->rollBack();
                 throw $e;
             }
-
             $em->commit();
 
             $this->addFlash('success', 'Memeber was successfully added to team');
