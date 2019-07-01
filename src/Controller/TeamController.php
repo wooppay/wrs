@@ -43,13 +43,11 @@ class TeamController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $teamService->create($team);
-            
-            return $this->redirectToRoute('app_dashboard');
+
+            $this->addFlash('success', 'Team was successfully created');
         }
-        
-        return $this->render('dashboard/team/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
+
+        return $this->redirectToRoute('app_dashboard');
     }
     
     public function manage(Request $request)
@@ -110,15 +108,16 @@ class TeamController extends Controller
                 $em->getConnection()->rollBack();
                 throw $e;
             }
+
             $em->commit();
 
-            return $this->redirectToRoute('app_dashboard_team_manage', ['id' => $team->getId()]);
+            $this->addFlash('success', 'Memeber was successfully added to team');
+        } else {
+            $this->addFlash('danger', 'Cannot add member to team');
+
         }
         
-        return $this->render('dashboard/team/add_member.html.twig', [
-            'team' => $team,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('app_dashboard_team_manage', ['id' => $team->getId()]);
     }
     
     public function deleteTeamMember(Request $request, ProductService $product, SecurityService $securityService, RoleService $roleService)
@@ -151,6 +150,8 @@ class TeamController extends Controller
         }
         $em->commit();
 
+
+        $this->addFlash('success', 'Memeber was successfully deleted from team');
 
         return $this->redirectToRoute('app_dashboard_team_manage', [
             'id' => $team->getId(),

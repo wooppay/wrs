@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\RateInfo;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Enum\RateInfoEnum;
 
 class RateInfoService
 {
@@ -77,6 +78,34 @@ class RateInfoService
         $this->entityManager->flush();
         
         return $rateInfo;
+    }
+
+    public function incomingByUserGroupByTask(User $user) : array
+    {
+        $collection = $user->getRates();
+        $res = [];
+
+        foreach ($collection as $item) {
+            $res[$item->getTask()->getId()]['task_name'] = $item->getTask()->getName();
+
+            if (!array_key_exists('positive', $res[$item->getTask()->getId()])) {
+                $res[$item->getTask()->getId()]['positive'] = [];
+            }
+
+            if (!array_key_exists('negative', $res[$item->getTask()->getId()])) {
+                $res[$item->getTask()->getId()]['negative'] = [];
+            }
+
+            if ($item->getValue() == RateInfoEnum::POSITIVE) {
+                $res[$item->getTask()->getId()]['positive'][] = $item;
+            } else {
+                $res[$item->getTask()->getId()]['negative'][] = $item;
+            }
+        }
+
+        sort($res);
+
+        return $res;
     }
 }
 

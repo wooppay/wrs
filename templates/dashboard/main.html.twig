@@ -37,7 +37,7 @@
         <div class="col-sm  rating">
             <div>
                 <p class="h6">Сколько оценок поставил: <span class="font-weight-bold">{{ authorMarks }}</span></p>
-                <p class="h6  mb-4">Сколько оценок получил: &nbsp;<span class="font-weight-bold">{{ receiveMarks }}</span></p>
+                <p class="h6  mb-4">Сколько оценок получил: &nbsp;<a class="font-weight-bold" href="{{ path('app_dashboard_history_incoming')}}">{{ receiveMarks }}</span></p>
             </div>
 
             <div class="list-group  list-group-horizontal">
@@ -60,6 +60,8 @@
     <div class="w-100  my-4  mx-3  separator"></div>
  
     <br>
+
+    {% include 'parts/flash_message.html.twig' %}
     
     <div class="row">
         <div class="col col-sm-12">
