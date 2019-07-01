@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Service\RoleService;
 use App\Service\UserService;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Team;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,7 +69,7 @@ class TeamController extends Controller
         ]);
     }
     
-    public function addMember(Request $request, ProductService $service, SecurityService $security)
+    public function addMember(Request $request, ProductService $service, SecurityService $security, RoleService $roleService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_ADD_MEMBER_TO_TEAM, $this->getUser());
         
@@ -87,22 +88,27 @@ class TeamController extends Controller
             $user = $this->getDoctrine()->getRepository(User::class)->find(
                 $request->request->get('member')['member_id']
             );
-            
-            // todo transaction
-            
-            if (!$service->addMemberToTeam($user, $team)) {
-                throw new \Exception();
-            }
-            
-            if ($form->getData()['is_leader'] == 'true') {
-                $role = $this->getDoctrine()->getRepository(Role::class)->findOneBy([
-                    'name' => RoleEnum::TEAM_LEAD,
-                ]);
-                
-                if (!$security->setRoleToUser($user, $role)) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->getConnection()->beginTransaction();
+
+            try{
+                if (!$service->addMemberToTeam($user, $team)) {
                     throw new \Exception();
                 }
+
+                if ($form->getData()['is_leader'] == 'true') {
+                    $role = $roleService->getRoleTeamLead();
+
+                    if (!$security->setRoleToUser($user, $role)) {
+                        throw new \Exception();
+                    }
+                }
+            }catch(\Exception $e){
+                $em->getConnection()->rollBack();
+                throw $e;
             }
+            $em->commit();
 
             $this->addFlash('success', 'Memeber was successfully added to team');
         } else {
@@ -124,16 +130,24 @@ class TeamController extends Controller
             $request->get('member_id')
         );
 
-        if (!$product->deleteTeamMember($team, $member)) {
-            throw new \Exception();
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->beginTransaction();
+        try{
+            if (!$product->deleteTeamMember($team, $member)) {
+                throw new \Exception();
+            }
 
-        // todo transaction
-        if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
-            // todo delete hardcode role
-            $role = $roleService->byName(RoleEnum::TEAM_LEAD);
-            $securityService->detachRoleFromUser($member, $role);
+            if ($this->isGranted(PermissionEnum::CAN_BE_TEAMLEAD, $member)) {
+
+                $role = $roleService->getRoleTeamLead();
+                $securityService->detachRoleFromUser($member, $role);
+            }
+        }catch(\Exception $e){
+            $em->getConnection()->rollBack();
+            throw $e;
         }
+        $em->commit();
+
 
         $this->addFlash('success', 'Memeber was successfully deleted from team');
 
