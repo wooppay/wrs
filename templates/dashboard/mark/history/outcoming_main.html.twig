@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | Rate History Incoming{% endblock %}
+{% block head_title %}
+    <h2>Rate History Outcoming</h2>
+{% endblock %}
+
+{% block body %}
+    <div class ="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Rate History Outcoming</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for item in previews %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        {{ item.task_name }}
+                    </div>
+                    
+                    <div class="card-body text-center">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>Positives</span>
+                                <span class="badge badge-pill badge-success">{{ item.positive|length }}</span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span>Negatives</span>
+                                <span class="badge badge-pill badge-danger">{{ item.negative|length }}</span>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#">read more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            
+        
+    </div>
+
+{% endblock %}

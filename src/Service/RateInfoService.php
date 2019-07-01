@@ -8,6 +8,7 @@ use App\Entity\RateInfo;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Enum\RateInfoEnum;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class RateInfoService
 {
@@ -80,9 +81,22 @@ class RateInfoService
         return $rateInfo;
     }
 
-    public function incomingByUserGroupByTask(User $user) : array
+    public function incomingByUserGroupByTask(User $user) : ?Collection
     {
         $collection = $user->getRates();
+        
+        return $this->groupByTaskByCollection($collection);
+    }
+
+    public function outcomingByUserGroupByTask(User $user) : ?Collection
+    {
+        $collection = $user->getAuthorRates();
+        
+        return $this->groupByTaskByCollection($collection);
+    }
+
+    protected function groupByTaskByCollection(Collection $collection) : Collection
+    {
         $res = [];
 
         foreach ($collection as $item) {
@@ -106,7 +120,7 @@ class RateInfoService
 
         sort($res);
 
-        return $res;
+        return new ArrayCollection($res);
     }
 
     public function incomingByUserAndTask(User $user, Task $task) : ?array
@@ -117,6 +131,16 @@ class RateInfoService
             ->incomingByUserAndTask($user, $task)
         ;
     }
+
+    public function outcomingByUserAndTask(User $user, Task $task) : ?array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(RateInfo::class)
+            ->outcomingByUserAndTask($user, $task)
+        ;
+    }
+
 
     public function incomingByUserAndTaskGroupByAuthorAndMarks(User $user, Task $task) : ?array
     {
