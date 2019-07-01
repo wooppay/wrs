@@ -6,6 +6,9 @@ use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Query\Parameter;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
@@ -126,4 +129,22 @@ class UserRepository extends ServiceEntityRepository
 				':role_id' => $role->getId(),
 			])->execute() > 0;
 	}
+
+	public function findAllApprovedExceptList(Collection $exceptList) : Collection
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $array = $qb->select('u')
+            ->where('u.status = :status')
+            ->andWhere('u.id NOT IN (:exceptList)')
+            ->setParameters(new ArrayCollection([
+                new Parameter(':status', UserEnum::APPROVED),
+                new Parameter(':exceptList', $exceptList)
+            ]))
+            ->getQuery()
+            ->getResult();
+
+        return new ArrayCollection($array);
+
+    }
 }
