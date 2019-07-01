@@ -32,7 +32,7 @@ class MemberType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $members = $this->userService->allApprovedExceptAdminAndOwnerAndCustomer();
+        $members = $this->userService->allApprovedExceptAdminAndOwnerAndCustomerAndTeamMembers($options['team']);
         
         $builder
         ->setAction($this->router->generate('app_dashboard_team_manage_add_member', ['id' => $options['team']->getId()]))
