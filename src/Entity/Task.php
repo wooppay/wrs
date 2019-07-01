@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Enum\TaskEnum;
+use Doctrine\Common\Collections\ArrayCollection; 
+use Doctrine\Common\Collections\Collection;
 
 class Task
 {
@@ -21,6 +23,13 @@ class Task
     private $project;
 
     private $author;
+
+    private $rates;
+
+    public function __construct()
+    {
+        $this->rates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,6 +64,11 @@ class Task
     public function getStatus(): ?int
     {
         return $this->status;
+    }
+
+    public function getRates() : ?Collection
+    {
+        return $this->rates;
     }
     
     public function setName(string $name): self

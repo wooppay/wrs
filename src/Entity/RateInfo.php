@@ -76,7 +76,7 @@ class RateInfo
         return $this;
     }
 
-    public function getAuthor(User $user) : ?User
+    public function getAuthor() : ?User
     {
         return $this->author;
     }

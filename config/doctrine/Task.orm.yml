@@ -53,3 +53,7 @@ App\Entity\Task:
                 nullable: false
                 name: author_id
                 referencedColumnName: id
+    oneToMany:
+        rates:
+            targetEntity: App\Entity\RateInfo
+            mappedBy: task

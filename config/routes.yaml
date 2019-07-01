@@ -176,3 +176,10 @@ app_dashboard_check_list:
 app_dashboard_history_incoming:
     path: /dashboard/history/incoming
     controller: App\Controller\MarkController::historyIncoming
+
+app_dashboard_history_incoming_detail:
+    path: /dashboard/history/incoming/task/{id}
+    controller: App\Controller\MarkController::historyIncomingDetail
+    requirements:
+        id: '\d+'
+

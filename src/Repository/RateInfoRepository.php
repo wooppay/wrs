@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Project;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\User;
+use App\Entity\Task;
+use App\Entity\RateInfo;
 
 /**
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,7 +18,16 @@ class RateInfoRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Project::class);
+        parent::__construct($registry, RateInfo::class);
+    }
+
+
+    public function incomingByUserAndTask(User $user, Task $task) : ?array
+    {
+        return $this->findBy([
+            'user' => $user,
+            'task' => $task,
+        ]);
     }
 
     // /**

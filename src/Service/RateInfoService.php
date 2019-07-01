@@ -87,6 +87,7 @@ class RateInfoService
 
         foreach ($collection as $item) {
             $res[$item->getTask()->getId()]['task_name'] = $item->getTask()->getName();
+            $res[$item->getTask()->getId()]['task_id'] = $item->getTask()->getId();
 
             if (!array_key_exists('positive', $res[$item->getTask()->getId()])) {
                 $res[$item->getTask()->getId()]['positive'] = [];
@@ -104,6 +105,46 @@ class RateInfoService
         }
 
         sort($res);
+
+        return $res;
+    }
+
+    public function incomingByUserAndTask(User $user, Task $task) : ?array
+    {
+        return $this
+            ->entityManager
+            ->getRepository(RateInfo::class)
+            ->incomingByUserAndTask($user, $task)
+        ;
+    }
+
+    public function incomingByUserAndTaskGroupByAuthorAndMarks(User $user, Task $task) : ?array
+    {
+        $collection = $this->incomingByUserAndTask($user, $task);
+
+        if (null === $collection) {
+            return null;
+        }
+
+        $res = [];
+
+        foreach ($collection as $item) {
+            $res[$item->getAuthor()->getId()]['author'] = $item->getAuthor();
+
+            if (!array_key_exists('positive', $res[$item->getAuthor()->getId()])) {
+                $res[$item->getAuthor()->getId()]['positive'] = [];
+            }
+
+            if (!array_key_exists('negative', $res[$item->getAuthor()->getId()])) {
+                $res[$item->getAuthor()->getId()]['negative'] = [];
+            }
+
+            if ($item->getValue() == RateInfoEnum::POSITIVE) {
+                $res[$item->getAuthor()->getId()]['positive'][] = $item;
+            } else {
+                $res[$item->getAuthor()->getId()]['negative'][] = $item;
+            }
+        }
 
         return $res;
     }
