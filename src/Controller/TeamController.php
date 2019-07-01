@@ -113,6 +113,7 @@ class TeamController extends Controller
             $this->addFlash('success', 'Memeber was successfully added to team');
         } else {
             $this->addFlash('danger', 'Cannot add member to team');
+
         }
         
         return $this->redirectToRoute('app_dashboard_team_manage', ['id' => $team->getId()]);

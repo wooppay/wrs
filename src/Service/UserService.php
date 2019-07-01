@@ -1,10 +1,15 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Team;
+use App\Enum\PermissionEnum;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Enum\UserEnum;
 use App\Entity\Task;
+use Symfony\Component\Security\Core\Security;
 
 class UserService
 {
@@ -12,10 +17,11 @@ class UserService
     
     private $role;
     
-    public function __construct(EntityManagerInterface $manager, RoleService $roleService)
+    public function __construct(EntityManagerInterface $manager, RoleService $roleService, Security $security)
     {
         $this->entityManager = $manager;
         $this->role = $roleService;
+        $this->security = $security;
     }
     
     public function all() : array
@@ -66,6 +72,24 @@ class UserService
         return $this->entityManager
         ->getRepository(User::class)
         ->allApprovedExceptAdminAndOwnerAndCustomer();
+    }
+
+    public function allApprovedExceptAdminAndOwnerAndCustomerAndTeamMembers(Team $team) : Collection
+    {
+        $collection = $this->entityManager->getRepository(User::class)->findAllApprovedExceptList($team->getMembers());
+
+        $result = new ArrayCollection();
+        foreach ($collection as $item) {
+            if (
+                !$this->security->isGranted(PermissionEnum::CAN_BE_PRODUCT_OWNER, $item) &&
+                !$this->security->isGranted(PermissionEnum::CAN_BE_ADMIN, $item) &&
+                !$this->security->isGranted(PermissionEnum::CAN_BE_CUSTOMER, $item)
+            ) {
+                $result->add($item);
+            }
+        }
+
+        return $result;
     }
 
     public function byEmail(string $email) : User
