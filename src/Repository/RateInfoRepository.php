@@ -45,6 +45,17 @@ class RateInfoRepository extends ServiceEntityRepository
     }
 
 
+    public function allByUserAndTask(User $user, Task $task) : ?Collection
+    {
+        $res = $this->findBy([
+            'author' => $user,
+            'task' => $task,
+        ]);
+
+        return new ArrayCollection($res);
+    }
+
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

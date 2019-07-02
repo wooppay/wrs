@@ -72,7 +72,16 @@ class TaskRepository extends ServiceEntityRepository
             $tasks = array_merge($tasks, $this->taskService->teamMembersTasksWhereUserParticipated($user));
         }
         
-        return array_unique($tasks, SORT_REGULAR);
+        $tasks = array_unique($tasks, SORT_REGULAR);
+        $res = [];
+
+        foreach ($tasks as $task) {
+            if (!$this->taskService->hasAlreadyMarkedByUserAndTask($user, $task)) {
+                $res[] = $task;
+            }
+        }
+
+        return $res;
     }
 
     // /**

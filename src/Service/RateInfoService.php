@@ -191,5 +191,14 @@ class RateInfoService
 
     }
 
+    public function allByUserAndTask(User $user, Task $task) : ?Collection
+    {
+        return $this
+            ->entityManager
+            ->getRepository(RateInfo::class)
+            ->allByUserAndTask($user, $task)
+        ;
+    }
+
 }
 

@@ -5,14 +5,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
+use App\Service\RateInfoService;
 
 class TaskService
 {
     private $entityManager;
+
+    private $rateInfoService;
     
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, RateInfoService $rateInfoService)
     {
         $this->entityManager = $manager;
+        $this->rateInfoService = $rateInfoService;
     }
     
     public function all() : array
@@ -113,6 +117,11 @@ class TaskService
             ->tasksForDashboardByUser($user)
         ;
 
+    }
+
+    public function hasAlreadyMarkedByUserAndTask(User $user, Task $task) : bool
+    {
+        return $this->rateInfoService->allByUserAndTask($user, $task)->count() > 0;
     }
 }
 
