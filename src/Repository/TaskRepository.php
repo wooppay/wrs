@@ -5,11 +5,11 @@ namespace App\Repository;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Common\Collections\Collection;
 use App\Service\TaskService;
 use App\Enum\PermissionEnum;
 use Symfony\Component\Security\Core\Security;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Task|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +22,7 @@ class TaskRepository extends ServiceEntityRepository
     private $taskService;
     private $security;
 
-    public function __construct(RegistryInterface $registry, TaskService $taskService, Security $security)
+    public function __construct(ManagerRegistry $registry, TaskService $taskService, Security $security)
     {
         parent::__construct($registry, Task::class);
 

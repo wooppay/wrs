@@ -4,15 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use App\Entity\Task;
 use App\Service\RoleService;
 use Symfony\Component\Security\Core\Security;
-use App\Enum\PermissionEnum;
-use Doctrine\Common\Collections\Collection;
 use App\Service\PermissionService;
 use App\Entity\Role;
 use App\Enum\SkillEnum;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,7 +25,7 @@ class SkillRepository extends ServiceEntityRepository
     
     private $permissionService;
     
-    public function __construct(RegistryInterface $registry, RoleService $roleService, Security $security, PermissionService $permissionService)
+    public function __construct(ManagerRegistry $registry, RoleService $roleService, Security $security, PermissionService $permissionService)
     {
         parent::__construct($registry, Skill::class);
         

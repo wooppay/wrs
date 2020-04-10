@@ -19,3 +19,7 @@
 /.idea
 tags
 *.swp
+
+.buildpath
+.project
+.settings

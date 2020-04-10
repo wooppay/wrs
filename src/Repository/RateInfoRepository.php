@@ -3,12 +3,12 @@
 namespace App\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\User;
 use App\Entity\Task;
 use App\Entity\RateInfo;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Project|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class RateInfoRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RateInfo::class);
     }

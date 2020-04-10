@@ -4,11 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use App\Enum\SkillEnum;
 use App\Service\PermissionService;
 use App\Enum\PermissionEnum;
 use App\Entity\Permission;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Role|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +19,7 @@ class RoleRepository extends ServiceEntityRepository
 {
     private $permissionService;
 
-    public function __construct(RegistryInterface $registry, PermissionService $permissionService)
+    public function __construct(ManagerRegistry $registry, PermissionService $permissionService)
     {
         parent::__construct($registry, Role::class);
 

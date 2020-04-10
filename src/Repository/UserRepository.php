@@ -9,10 +9,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query\Parameter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Enum\PermissionEnum;
 use App\Enum\UserEnum;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,7 +24,7 @@ class UserRepository extends ServiceEntityRepository
 {
     private $security;
     
-    public function __construct(RegistryInterface $registry, Security $security)
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, User::class);
         

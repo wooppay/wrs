@@ -4,8 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Permission;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Permission|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +14,7 @@ use Doctrine\Common\Collections\Collection;
  */
 class PermissionRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Permission::class);
     }
