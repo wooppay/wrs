@@ -130,17 +130,13 @@ class UserRepository extends ServiceEntityRepository
 			])->execute() > 0;
 	}
 
-	public function findAllApprovedExceptList(Collection $exceptList) : Collection
+    public function findAllApprovedExceptList(Collection $exceptList) : Collection
     {
         $qb = $this->createQueryBuilder('u');
 
         $array = $qb->select('u')
-            ->where('u.status = :status')
-            ->andWhere('u.id NOT IN (:exceptList)')
-            ->setParameters(new ArrayCollection([
-                new Parameter(':status', UserEnum::APPROVED),
-                new Parameter(':exceptList', $exceptList)
-            ]))
+            ->where('u.id NOT IN (:exceptList)')
+            ->setParameter(':exceptList', $exceptList)
             ->getQuery()
             ->getResult();
 
