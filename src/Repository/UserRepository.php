@@ -135,10 +135,11 @@ class UserRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('u');
 
         $array = $qb->select('u')
-            ->where('u.id NOT IN (:exceptList)')
-            ->setParameter(':exceptList', $exceptList)
+            ->where('u.status = :status')
+            ->setParameter(':status', UserEnum::APPROVED)
             ->getQuery()
             ->getResult();
+
 
         return new ArrayCollection($array);
 
