@@ -13,12 +13,14 @@ $(document).ready(function() {
 
 function taskByProject(projectId) {
 	var url = '/dashboard/tasks/create/ajax/team/' + projectId;
+	$('#task_save').attr('disabled',true);
 	
 	$.ajax({
 		url: url,
 		method: 'GET',
 		success: function(data) {
 			$('#task_team option:first-child').val(data.id).text(data.name);
+			$('#task_save').attr('disabled',false);
 		}
 	});
 }
