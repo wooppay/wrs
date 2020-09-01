@@ -44,6 +44,7 @@ class SkillRepository extends ServiceEntityRepository
         return $this->findBy([
             'role' => $role,
             'type' => SkillEnum::TYPE_SOFT,
+            'status' => SkillEnum::STATUS_ACTIVE,
         ]);
     }
 
@@ -59,6 +60,7 @@ class SkillRepository extends ServiceEntityRepository
     {
         return $this->findBy([
             'role' => $role,
+            'status' => SkillEnum::STATUS_ACTIVE,
         ]);
     }
 
