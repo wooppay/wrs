@@ -38,6 +38,11 @@
                             {% if (is_granted_mark(app.user)) %}
                                 <a href="{{ path('app_dashboard_check_list', {"id" : item.id}) }}" class="btn btn-primary {{ (is_granted(constant('App\\Enum\\PermissionEnum::CAN_BE_TEAMLEAD'), app.user) and app.user.id == item.executor.id) ? 'disabled' : '' }}">Mark</a>
                             {% endif %}
+                            {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
+                                <a href="#" class="task-edit float-right">
+                                    <img id="{{ item.id }}" src="img/icon-edit.svg" alt="Edit" width="25" height="25">
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

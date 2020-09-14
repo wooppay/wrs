@@ -32,8 +32,20 @@ class TaskType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if ($options['formAction'] == 'create') {
+            $formAction = $this->router->generate('app_dashboard_task_create');
+            $projectDisabled = false;
+        }
+
+        if ($options['formAction'] == 'update') {
+            $formAction = $this->router->generate('app_dashboard_task_update', [
+                'id' => $builder->getData()->getId()
+            ]);
+            $projectDisabled = true;
+        }
+
         $builder
-            ->setAction($this->router->generate('app_dashboard_task_create'))
+            ->setAction($formAction)
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('executor')
@@ -48,29 +60,43 @@ class TaskType extends AbstractType
                 'class' => Project::class,
                 'placeholder' => 'Choose project',
                 'choice_label' => 'name',
+                'disabled' => $projectDisabled
             ])
             ->add('save', SubmitType::class)
         ;
 
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
+        if ($options['formAction'] == 'create') {
+            $builder->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                function (FormEvent $event) {
+                    $form = $event->getForm();
+    
+                    $task = $event->getData();
+                    $project = $task->getProject();
+                    $team = null === $project ? [] : $project->getTeam();
 
-                $task = $event->getData();
-                $project = $task->getProject();
-                $team = null === $project ? [] : $project->getTeam();
-                
-                $form->add('team', EntityType::class, [
-                    'class' => Team::class,
-                    'placeholder' => 'Project team',
-                    'choices' => $team,
-                    'attr' => [
-                        'readonly' => true,
-                    ],
-                ]);
-            }
-        );
+                    $form->add('team', EntityType::class, [
+                        'class' => Team::class,
+                        'placeholder' => 'Project team',
+                        'choices' => $team,
+                        'attr' => [
+                            'readonly' => true,
+                        ],
+                    ]);
+                }
+            );
+        }
+
+        if ($options['formAction'] == 'update') {
+            $builder->add('team', EntityType::class, [
+                'class' => Team::class,
+                'choices' => [$builder->getData()->getProject()->getTeam()],
+                'attr' => [
+                    'readonly' => true,
+                ],
+                'disabled' => true
+            ]);
+        }
 
         $builder->get('project')->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -97,6 +123,9 @@ class TaskType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Task::class,
             'users' => [],
+            'formAction' => 'create'
         ]);
+
+        $resolver->setAllowedTypes('formAction', 'string');
     }
 }

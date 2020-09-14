@@ -53,6 +53,33 @@ class TaskController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard');
     }
+
+    public function update(int $id, Request $request, UserService $userService, TaskService $taskService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TASK, $this->getUser());
+        $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
+        $task = $taskService->oneById($id);
+
+        $form = $this->createForm(TaskType::class, $task, [
+            'users' => $users,
+            'formAction' => 'update'
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $task->setAuthor($this->getUser());
+            $taskService->create($task);
+
+            $this->addFlash('success', 'Task was successfully updated');
+
+            return $this->redirectToRoute('app_dashboard');
+        }
+
+        return $this->render('dashboard/task/modal/update.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
     
     public function teamByProject(int $project_id, ProjectService $projectService)
     {

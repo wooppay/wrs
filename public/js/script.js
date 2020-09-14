@@ -24,3 +24,17 @@ function taskByProject(projectId) {
 		}
 	});
 }
+
+$(document).on('click', '.task-edit', (e) => {
+	let taskId = e.target.id;
+	let url = '/dashboard/tasks/update/' + taskId;
+
+	$.ajax({
+		url: url,
+		method: 'GET',
+		success: function(data) {
+			$('#taskUpdate').html(data);
+			$('#taskUpdate').modal();
+		}
+	})
+});

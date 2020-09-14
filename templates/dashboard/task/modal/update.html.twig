@@ -1,0 +1,27 @@
+<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        {{ form_start(form) }}
+
+            <div class="modal-header">
+                <h4 class="modal-title">Update Task</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <div class="modal-body">
+                {{ form_row(form.name) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.executor) }}
+                {{ form_row(form.project) }}
+                {{ form_row(form.team) }}
+            </div>
+
+            <div class="modal-footer">
+                {{ form_row(form.save) }}
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+
+</div>
