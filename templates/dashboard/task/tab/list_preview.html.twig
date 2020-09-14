@@ -40,7 +40,7 @@
                             {% endif %}
                             {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
                                 <a href="#" class="task-edit float-right">
-                                    <img id="{{ item.id }}" src="img/icon-edit.svg" alt="Edit" width="25" height="25">
+                                    <i id="{{ item.id }}" class="far fa-edit fa-2x"></i>
                                 </a>
                             {% endif %}
                         </div>
