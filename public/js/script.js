@@ -12,12 +12,14 @@ $(document).ready(function() {
 });
 
 function taskByProject(projectId) {
-	var url = '/dashboard/tasks/create/ajax/team/' + projectId;
 	$('#task_save').attr('disabled',true);
 	
 	$.ajax({
-		url: url,
-		method: 'GET',
+		url: routeTeamByProject,
+		method: 'POST',
+		data: {
+			project_id: projectId
+		},
 		success: function(data) {
 			$('#task_team option:first-child').val(data.id).text(data.name);
 			$('#task_save').attr('disabled',false);
@@ -27,11 +29,13 @@ function taskByProject(projectId) {
 
 $(document).on('click', '.task-edit', (e) => {
 	let taskId = e.target.id;
-	let url = '/dashboard/tasks/update/' + taskId;
 
 	$.ajax({
-		url: url,
-		method: 'GET',
+		url: routeTaskUpdate,
+		method: 'POST',
+		data: {
+			task_id: taskId
+		},
 		success: function(data) {
 			$('#taskUpdate').html(data);
 			$('#taskUpdate').modal();

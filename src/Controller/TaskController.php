@@ -54,11 +54,12 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('app_dashboard');
     }
 
-    public function update(int $id, Request $request, UserService $userService, TaskService $taskService)
+    public function update(Request $request, UserService $userService, TaskService $taskService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TASK, $this->getUser());
         $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
-        $task = $taskService->oneById($id);
+        $taskId = $request->request->get('task_id');
+        $task = $taskService->oneById($taskId);
 
         $form = $this->createForm(TaskType::class, $task, [
             'users' => $users,
@@ -81,9 +82,10 @@ class TaskController extends AbstractController
         ]);
     }
     
-    public function teamByProject(int $project_id, ProjectService $projectService)
+    public function teamByProject(Request $request, ProjectService $projectService)
     {
-        $project = $projectService->oneById($project_id);
+        $projectId = $request->request->get('project_id');
+        $project = $projectService->oneById($projectId);
         $team = $project->getTeam();
         
         return new JsonResponse([
