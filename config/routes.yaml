@@ -138,7 +138,7 @@ app_dashboard_task_create_ajax_team:
 
 app_dashboard_task_create:
     path: /dashboard/tasks/create
-    controller: App\Controller\TaskController::create\
+    controller: App\Controller\TaskController::create
 
 app_dashboard_task_update:
     path: /dashboard/tasks/update/{id}
