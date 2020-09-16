@@ -14,6 +14,14 @@ app_logout:
     path: /logout
     methods: GET
 
+app_password_recovery:
+    path: /password-recovery
+    controller: App\Controller\SecurityController::passwordRecovery
+
+app_password_recovery_confirm:
+    path: /password-recovery-confirm
+    controller: App\Controller\SecurityController::confirmPasswordRecovery
+
 app_admin:
     path: /admin
     controller: App\Controller\AdminController::index

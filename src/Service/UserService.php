@@ -101,7 +101,6 @@ class UserService
         ;
     }
 
-
     public function teamLeadByTask(Task $task) : ?User
     {
         return $this
@@ -109,6 +108,14 @@ class UserService
             ->getRepository(User::class)
             ->teamLeadByTask($task)
         ;
+    }
+
+    public function save(User $user): bool
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return true;
     }
 }
 
