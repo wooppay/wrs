@@ -38,3 +38,4 @@ security:
         - { path: ^/dashboard, allow_if: "is_authenticated()" }
         - { path: ^/, allow_if: "is_authenticated()" }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/dashboard/user-report, roles: ROLE_TM ROLE_PRODUCT_OWNER }

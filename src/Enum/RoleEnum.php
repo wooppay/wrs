@@ -10,5 +10,7 @@ class RoleEnum
     public const TEAM_LEAD = 'ROLE_TM';
     
     public const CUSTOMER = 'ROLE_CUSTOMER';
+
+    public const DEVELOPER = 'ROLE_DEVELOPER';
 }
 

@@ -1,0 +1,20 @@
+<div class="tab-pane" id="nav-report" role="tabpanel" aria-labelledby="nav-report-tab">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(form, {'attr': {'id':'user_report_form'} }) }}
+
+                    {{ form_row(form.user) }}
+                    {{ form_row(form.dateFrom) }}
+                    {{ form_row(form.dateTo) }}
+
+                    {{ form_end(form, {'render_rest':true}) }}
+                    <button class="btn btn-primary" onclick="displayReport()">Предварительный просмотр</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

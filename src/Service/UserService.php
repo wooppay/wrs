@@ -110,5 +110,18 @@ class UserService
             ->teamLeadByTask($task)
         ;
     }
+
+    //TODO: сделать через чистый SQL запрос ради производительности
+    public function allForSelectByRole(string $role) : array
+    {
+	    $usersForSelect = [];
+    	$usersEntities = $this->allByRoleName($role);
+		array_map(function($value) use (&$usersForSelect) {
+			/** @var User $value **/
+			$usersForSelect[$value->getId()] = $value->getEmail();
+		}, $usersEntities);
+
+		return $usersForSelect;
+    }
 }
 
