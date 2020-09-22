@@ -17,7 +17,7 @@ class UserService
     
     private $role;
     
-    public function __construct(EntityManagerInterface $manager, RoleService $roleService, Security $security)
+    public function __construct(EntityManagerInterface $manager = null, RoleService $roleService = null, Security $security = null)
     {
         $this->entityManager = $manager;
         $this->role = $roleService;
@@ -118,10 +118,15 @@ class UserService
     	$usersEntities = $this->allByRoleName($role);
 		array_map(function($value) use (&$usersForSelect) {
 			/** @var User $value **/
-			$usersForSelect[$value->getId()] = $value->getEmail();
+			$usersForSelect[] = ['id' => $value->getId(), 'email' => $value->getEmail()];
 		}, $usersEntities);
 
 		return $usersForSelect;
+    }
+
+    public function makeReportByData(User $user, string $dateFrom, string $dateTo)
+    {
+		return ;
     }
 }
 

@@ -145,4 +145,9 @@ class UserRepository extends ServiceEntityRepository
 
         return new ArrayCollection($array);
     }
+
+    public function allByRoleForSelect(string $role)
+    {
+
+    }
 }

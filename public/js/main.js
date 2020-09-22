@@ -35,7 +35,7 @@ function getUsersForSelect() {
         method: 'GET',
         success: function (data) {
             $.each(data, function (key, value) {
-                selectList.append('<option value="' + key + '">' + value + '</option>');
+                selectList.append('<option value="' + value['id'] + '">' + value['email'] + '</option>');
             });
         }
     })

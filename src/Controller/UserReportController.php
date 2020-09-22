@@ -21,14 +21,20 @@ class UserReportController extends AbstractController
 
 	public function getReport(UserService $userService, Request $request)
 	{
-		$userReportForm = $this->createForm(UserReportType::class);
+		$userReportForm = $this->createForm(UserReportType::class, null, ['userService' => $userService]);
 
 		$userReportForm->handleRequest($request);
 
 		if ($userReportForm->isValid()){
-			$users = $userService->allForSelectByRole(RoleEnum::DEVELOPER);
+			$report = $userService->makeReportByData(
+				$userReportForm->get('user')->getData(),
+				$userReportForm->get('dateFrom')->getData(),
+				$userReportForm->get('dateTo')->getData()
+			);
 
-			return new JsonResponse($users);
+			return new JsonResponse($report);
+		} else {
+			return new JsonResponse($userReportForm->getErrors());
 		}
 
 	}
