@@ -20,11 +20,21 @@ function slickInit() {
 $(function(){
     $('#user_report_dateFrom').daterangepicker({
         singleDatePicker: true,
+        startDate: moment(),
+        endDate: moment(),
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 });
 $(function(){
     $('#user_report_dateTo').daterangepicker({
         singleDatePicker: true,
+        startDate: moment(),
+        endDate: moment(),
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 });
 function getUsersForSelect() {

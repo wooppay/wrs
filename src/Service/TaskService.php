@@ -123,5 +123,10 @@ class TaskService
     {
         return $this->rateInfoService->allByUserAndTask($user, $task)->count() > 0;
     }
+
+    public function byUserAndTime(User $user, $dateFrom, $dateTo)
+    {
+    	return $this->entityManager->getRepository(Task::class)->byUserAndTime($user, $dateFrom, $dateTo);
+    }
 }
 

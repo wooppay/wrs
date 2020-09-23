@@ -84,7 +84,8 @@
                 
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
                     {% include 'dashboard/team/tab/list_preview.html.twig' %}
-                    {% include 'dashboard/report/tab/report-form.html.twig ' with {'form': userReportForm} %}
+                    {% include '/dashboard/report/tab/report-form.html.twig' with {'form': userReportForm} %}
+                    {% include '/dashboard/report/modal/report-modal.html.twig' %}
                 {% endif %}
 
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}

@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Component\GeneratePDFComponent;
 use App\Entity\Team;
 use App\Enum\PermissionEnum;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -124,9 +125,22 @@ class UserService
 		return $usersForSelect;
     }
 
-    public function makeReportByData(User $user, string $dateFrom, string $dateTo)
+	public function byUserAndTime(User $user, $dateFrom, $dateTo)
+	{
+		return $this->entityManager->getRepository(Task::class)->byUserAndTime($user, $dateFrom, $dateTo);
+	}
+
+    public function makeReportByData(User $user, string $dateFrom, string $dateTo) : array
     {
-		return ;
+		$tasks = $this->byUserAndTime($user, $dateFrom, $dateTo);
+		$tasksArray = [];
+
+	    /** @var Task $task */
+		foreach ($tasks as $task) {
+			$tasksArray[] = $task->toArrayForReport();
+		}
+
+		return $tasks;
     }
 }
 

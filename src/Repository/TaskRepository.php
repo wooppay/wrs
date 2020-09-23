@@ -4,10 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Task;
 use App\Entity\User;
+use App\Enum\TaskEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use App\Service\TaskService;
 use App\Enum\PermissionEnum;
+use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -83,6 +85,37 @@ class TaskRepository extends ServiceEntityRepository
 
         return $res;
     }
+
+	public function byUserAndTime(User $user, $dateFrom, $dateTo)
+	{
+		/*$query = $this->createQueryBuilder('t')
+			->where('t.executor = :user')
+			->andWhere('t.created_at >= :dateFrom')
+			->andWhere('t.created_at <= :dateTo')
+			//->andWhere('t.status = :status')
+			->setParameter('user', $user)
+			->setParameter('dateFrom', $dateFrom)
+			->setParameter('dateTo', $dateTo)
+			//->setParameter('status', TaskEnum::DONE)
+			->orderBy('t.id', 'ASC')
+			->getQuery()->getSQL();*/
+
+
+
+		return $this->createQueryBuilder('t')
+			->where('t.executor = :user')
+			->andWhere('t.created_at >= :dateFrom')
+			->andWhere('t.created_at <= :dateTo')
+			//->andWhere('t.status = :status')
+			->setParameter('user', $user)
+			->setParameter('dateFrom', $dateFrom)
+			->setParameter('dateTo', (new \DateTime($dateTo))->modify('1 day'))
+			//->setParameter('status', TaskEnum::DONE)
+			->orderBy('t.id', 'ASC')
+			->getQuery()
+			->getResult()
+			;
+	}
 
     // /**
     //  * @return Task[] Returns an array of Task objects

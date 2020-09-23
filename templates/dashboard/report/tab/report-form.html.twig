@@ -10,7 +10,7 @@
                     {{ form_row(form.dateTo) }}
 
                     {{ form_end(form, {'render_rest':true}) }}
-                    <button class="btn btn-primary" onclick="displayReport()">Предварительный просмотр</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#report" id="get-report-btn" onclick="displayReport()">Предварительный просмотр</button>
                 </div>
             </div>
 
