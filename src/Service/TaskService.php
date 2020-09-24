@@ -35,6 +35,7 @@ class TaskService
     
     public function create(Task $task) : Task
     {
+    	$task->setCreatedAt(new \DateTime());
         $this->entityManager->persist($task);
         $this->entityManager->flush();
         

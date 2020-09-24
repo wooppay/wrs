@@ -26,7 +26,6 @@ App\Entity\Task:
                 default: 1
         created_at:
             type: datetime
-            nullable: false
             options:
                 default: CURRENT_TIMESTAMP
     manyToOne:

@@ -127,23 +127,24 @@ class Task
         return $this->author;
     }
 
-    public function setCreatedAt($created_at): self
+    public function setCreatedAt(\DateTime $created_at): self
     {
-       $this->created_at = $created_at;
+       $this->created_at = $created_at;//(new \DateTime($created_at))->format('Y-m-d H:i:s');
 
        return $this;
     }
 
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->created_at->format('Y-m-d H:i');
     }
 
-    public function toArrayForReport() : array
+    public function toArrayForReport(User $user) : array
     {
     	$task = [
     		'name' => $this->getName(),
 		    'author' => $this->getAuthor()->getUsername(),
+		    'created_at' => $this->getCreatedAt(),
 		    'rates' => []
 	    ];
 
@@ -151,11 +152,13 @@ class Task
 	     * @var RateInfo $rate
 	     */
     	foreach ($this->getRates() as $rate) {
-    		$skill = $rate->getSkill();
-    		$task['rates'][] = [
-    			'value' => $rate->getValue(),
-			    'question' => $skill->getContent(),
-		    ];
+    		if ($rate->getUser()->getId() === $user->getId()) {
+			    $skill = $rate->getSkill();
+			    $task['rates'][] = [
+				    'value' => $rate->getValue(),
+				    'question' => $skill->getContent(),
+			    ];
+		    }
 	    }
 
     	return $task;

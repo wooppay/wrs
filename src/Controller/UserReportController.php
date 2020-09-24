@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Enum\RoleEnum;
 use App\Form\UserReportType;
 use App\Service\UserService;
@@ -26,13 +27,19 @@ class UserReportController extends AbstractController
 		$userReportForm->handleRequest($request);
 
 		if ($userReportForm->isValid()){
-			$report = $userService->makeReportByData(
-				$userReportForm->get('user')->getData(),
-				$userReportForm->get('dateFrom')->getData(),
-				$userReportForm->get('dateTo')->getData()
+			/** @var User $user */
+			$user = $userReportForm->get('user')->getData();
+			$dateFrom = $userReportForm->get('dateFrom')->getData();
+			$dateTo = $userReportForm->get('dateTo')->getData();
+			$tasks = $userService->makeReportData(
+				$user,
+				$dateFrom,
+				$dateTo
 			);
 
-			return new JsonResponse($report);
+			$response = array_merge(['userEmail' => $user->getEmail(), 'dateFrom' => $dateFrom, 'dateTo' => $dateTo], $tasks);
+
+			return new JsonResponse($response);
 		} else {
 			return new JsonResponse($userReportForm->getErrors());
 		}

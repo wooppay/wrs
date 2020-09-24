@@ -86,21 +86,9 @@ class TaskRepository extends ServiceEntityRepository
         return $res;
     }
 
+    //TODO: Сделать изменение статуса задачи при выполнении, затем получать только выполненные задачи
 	public function byUserAndTime(User $user, $dateFrom, $dateTo)
 	{
-		/*$query = $this->createQueryBuilder('t')
-			->where('t.executor = :user')
-			->andWhere('t.created_at >= :dateFrom')
-			->andWhere('t.created_at <= :dateTo')
-			//->andWhere('t.status = :status')
-			->setParameter('user', $user)
-			->setParameter('dateFrom', $dateFrom)
-			->setParameter('dateTo', $dateTo)
-			//->setParameter('status', TaskEnum::DONE)
-			->orderBy('t.id', 'ASC')
-			->getQuery()->getSQL();*/
-
-
 
 		return $this->createQueryBuilder('t')
 			->where('t.executor = :user')
@@ -113,8 +101,7 @@ class TaskRepository extends ServiceEntityRepository
 			//->setParameter('status', TaskEnum::DONE)
 			->orderBy('t.id', 'ASC')
 			->getQuery()
-			->getResult()
-			;
+			->getResult();
 	}
 
     // /**

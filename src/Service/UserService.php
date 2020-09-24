@@ -2,8 +2,11 @@
 namespace App\Service;
 
 use App\Component\GeneratePDFComponent;
+use App\Entity\RateInfo;
 use App\Entity\Team;
 use App\Enum\PermissionEnum;
+use App\Enum\RateInfoEnum;
+use App\Enum\SkillEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +20,8 @@ class UserService
     private $entityManager;
     
     private $role;
+
+    private $rateInfoService;
     
     public function __construct(EntityManagerInterface $manager = null, RoleService $roleService = null, Security $security = null)
     {
@@ -130,17 +135,35 @@ class UserService
 		return $this->entityManager->getRepository(Task::class)->byUserAndTime($user, $dateFrom, $dateTo);
 	}
 
-    public function makeReportByData(User $user, string $dateFrom, string $dateTo) : array
+	public function countRatesByParams(User $user, int $value, string $type, array $tasksIds)
+	{
+		return count($this
+			->entityManager
+			->getRepository(RateInfo::class)
+			->allRatesByParams($user, $value, $type, $tasksIds));
+	}
+
+    public function makeReportData(User $user, string $dateFrom, string $dateTo) : array
     {
 		$tasks = $this->byUserAndTime($user, $dateFrom, $dateTo);
 		$tasksArray = [];
+		$tasksIds = [];
 
 	    /** @var Task $task */
 		foreach ($tasks as $task) {
-			$tasksArray[] = $task->toArrayForReport();
+			$tasksArray[] = $task->toArrayForReport($user);
+			$tasksIds[] = $task->getId();
 		}
 
-		return $tasks;
+		$rates = [
+			'positiveSoft' => $this->countRatesByParams($user, RateInfoEnum::POSITIVE, SkillEnum::TYPE_SOFT, $tasksIds),
+			'negativeSoft' => $this->countRatesByParams($user, RateInfoEnum::NEGATIVE, SkillEnum::TYPE_SOFT, $tasksIds),
+			'positiveHard' => $this->countRatesByParams($user, RateInfoEnum::POSITIVE, SkillEnum::TYPE_TECHNICAL, $tasksIds),
+			'negativeHard' => $this->countRatesByParams($user, RateInfoEnum::NEGATIVE, SkillEnum::TYPE_TECHNICAL, $tasksIds)
+		];
+
+
+		return ['tasks' => $tasksArray, 'rates' => $rates, 'countRates' => array_sum($rates)];
     }
 }
 
