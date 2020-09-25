@@ -60,7 +60,9 @@ function displayReport() {
         data: data,
         success: function (res) {
             if (res['errors']) {
-                console.log(res['errors']);
+                $.each(res['errors'], function (index, error) {
+                    $('#' + index).html(error);
+                });
             } else {
                 $('#report').modal('show');
                 $('#report-time').html('от ' + res['dateFrom'] + ' до ' + res['dateTo']);
