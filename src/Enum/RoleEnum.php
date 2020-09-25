@@ -11,6 +11,5 @@ class RoleEnum
     
     public const CUSTOMER = 'ROLE_CUSTOMER';
 
-    public const DEVELOPER = 'ROLE_DEVELOPER';
 }
 
