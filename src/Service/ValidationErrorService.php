@@ -6,7 +6,7 @@ namespace App\Service;
 
 class ValidationErrorService
 {
-	public function getErrorMessages(\Symfony\Component\Form\Form $form)
+	public function getErrorMessages(\Symfony\Component\Form\Form $form) : array
 	{
 		$errors = array();
 		foreach ($form->getErrors() as $key => $error) {

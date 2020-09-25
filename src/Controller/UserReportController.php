@@ -17,7 +17,7 @@ class UserReportController extends AbstractController
 {
 	public function getUsers(UserService $userService)
 	{
-		$users = $userService->allForSelectByRole(RoleEnum::DEVELOPER);
+		$users = $userService->allForSelectByRole();
 
 		return new JsonResponse($users);
 	}

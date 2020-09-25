@@ -8,7 +8,7 @@ use Dompdf\Dompdf;
 
 class GeneratePdfService
 {
-	public static function generateByHtml(string $html)
+	public static function generateByHtml(string $html) : void
 	{
 		// instantiate and use the dompdf class
 		$dompdf = new Dompdf();

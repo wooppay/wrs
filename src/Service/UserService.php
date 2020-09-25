@@ -21,8 +21,6 @@ class UserService
     
     private $role;
 
-    private $rateInfoService;
-    
     public function __construct(EntityManagerInterface $manager = null, RoleService $roleService = null, Security $security = null)
     {
         $this->entityManager = $manager;
@@ -73,6 +71,13 @@ class UserService
         ->allExceptAdminAndOwner();
     }
 
+    public function allExceptAdmin()
+    {
+        return $this->entityManager
+        ->getRepository(User::class)
+        ->allExceptAdmin();
+    }
+
     public function allApprovedExceptAdminAndOwnerAndCustomer()
     {
         return $this->entityManager
@@ -118,10 +123,10 @@ class UserService
     }
 
     //TODO: сделать через чистый SQL запрос ради производительности
-    public function allForSelectByRole(string $role) : array
+    public function allForSelectByRole() : array
     {
 	    $usersForSelect = [];
-    	$usersEntities = $this->allByRoleName($role);
+    	$usersEntities = $this->allExceptAdmin();
 		array_map(function($value) use (&$usersForSelect) {
 			/** @var User $value **/
 			$usersForSelect[] = ['id' => $value->getId(), 'email' => $value->getEmail()];
