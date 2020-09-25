@@ -80,4 +80,9 @@ class RateInfo
     {
         return $this->author;
     }
+
+    /*public function toArrayForReport() : array
+    {
+    	return ['value' => $this->getValue(), 'skill' => $this->getSk]
+    }*/
 }

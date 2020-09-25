@@ -2,12 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use App\Entity\User;
 use App\Entity\Task;
 use App\Entity\RateInfo;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -54,6 +56,22 @@ class RateInfoRepository extends ServiceEntityRepository
 
         return new ArrayCollection($res);
     }
+
+	public function allRatesByParams(User $user, int $value, string $type, array $tasksIds) : ?array
+	{
+		return $this->createQueryBuilder('r')
+			->innerJoin('r.skill', 's', Join::WITH, 's.type = :type')
+			->where('r.user = :user')
+			->andWhere('r.value = :value')
+			->andWhere('s.type = :type')
+			->andWhere('r.task IN (:tasksIds)')
+			->setParameter('user', $user)
+			->setParameter('value', $value)
+			->setParameter('type', $type)
+			->setParameter('tasksIds', $tasksIds)
+			->getQuery()
+			->getResult();
+	}
 
 
     // /**

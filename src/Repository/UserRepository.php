@@ -44,6 +44,20 @@ class UserRepository extends ServiceEntityRepository
         
         return $result;
     }
+
+    public function allExceptAdmin() : array
+    {
+        $collection = $this->findAll();
+        $result = [];
+
+        foreach ($collection as $item) {
+            if (!$this->security->isGranted(PermissionEnum::CAN_BE_ADMIN, $item)) {
+                $result[] = $item;
+            }
+        }
+
+        return $result;
+    }
     
     public function allApprovedExceptAdminAndOwnerAndCustomer()
     {
@@ -145,4 +159,5 @@ class UserRepository extends ServiceEntityRepository
 
         return new ArrayCollection($array);
     }
+
 }
