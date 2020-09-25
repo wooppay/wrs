@@ -32,7 +32,7 @@ class UserReportType extends AbstractType
     	//TODO: Do lazy load
     	if (isset($options['userService'])) {
 		    $optionsForChoiceField['choice_loader'] = new CallbackChoiceLoader(function () use ($options) {
-			    return $options['userService']->allByRoleName(RoleEnum::DEVELOPER);
+			    return $options['userService']->all();
 		    });
 	    }
 
