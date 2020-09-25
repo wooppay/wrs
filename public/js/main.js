@@ -60,6 +60,9 @@ function displayReport() {
         data: data,
         success: function (res) {
             if (res['errors']) {
+                $.each(res['errors'], function (index, error) {
+                  $('#' + index).html(error);
+                });
                 console.log(res['errors']);
             } else {
                 $('#report').modal('show');

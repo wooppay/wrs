@@ -4,6 +4,11 @@
             <div class="card">
                 <div class="card-body">
                     {{ form_start(form, {'attr': {'id':'user_report_form'} }) }}
+                    <span class="invalid-feedback d-block">
+                        <span class="d-block">
+                            <span id="user" class="form-error-message"></span>
+                        </span>
+                    </span>
 
                     {{ form_row(form.user) }}
                     {{ form_row(form.dateFrom) }}
