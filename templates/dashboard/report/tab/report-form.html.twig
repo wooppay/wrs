@@ -5,25 +5,12 @@
                 <div class="card-body">
                     {{ form_start(form, {'attr': {'id':'user_report_form'} }) }}
 
-                    <div class="mb-3" style="position: relative;">
-                        <label class="required" for="user_report_user">Пользователь</label>
-                        <br>
-                        <select id="user_report_user" name="user_report[user]" required="required" class="form-control" style="z-index: 2;
-    position: absolute;
-    background-color: transparent;
-    padding-left: 4%">
-                            <option value="" selected="selected">Выберите пользователя</option>
-                        </select>
-                        <span class="fa fa-user-circle" style="position: absolute;
-    z-index: 1;
-    padding: 6px;"></span>
-
-                    </div>
+                    {{ form_row(form.user) }}
                     {{ form_row(form.dateFrom) }}
                     {{ form_row(form.dateTo) }}
 
-                    {{ form_end(form, {'render_rest':false}) }}
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#report" id="get-report-btn"
+                    {{ form_end(form, {}) }}
+                    <button class="btn btn-primary" id="get-report-btn"
                             onclick="displayReport()">Предварительный просмотр
                     </button>
                 </div>

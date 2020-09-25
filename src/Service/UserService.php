@@ -130,12 +130,12 @@ class UserService
 		return $usersForSelect;
     }
 
-	public function byUserAndTime(User $user, $dateFrom, $dateTo)
+	public function byUserAndTime(User $user, $dateFrom, $dateTo) : ?array
 	{
 		return $this->entityManager->getRepository(Task::class)->byUserAndTime($user, $dateFrom, $dateTo);
 	}
 
-	public function countRatesByParams(User $user, int $value, string $type, array $tasksIds)
+	public function countRatesByParams(User $user, int $value, string $type, array $tasksIds) : int
 	{
 		return count($this
 			->entityManager

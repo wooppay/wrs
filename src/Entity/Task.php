@@ -129,12 +129,12 @@ class Task
 
     public function setCreatedAt(\DateTime $created_at): self
     {
-       $this->created_at = $created_at;//(new \DateTime($created_at))->format('Y-m-d H:i:s');
+       $this->created_at = $created_at;
 
        return $this;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt() : string
     {
         return $this->created_at->format('Y-m-d H:i');
     }

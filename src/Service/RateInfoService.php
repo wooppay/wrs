@@ -200,7 +200,7 @@ class RateInfoService
         ;
     }
 
-    public function allRatesByParams(User $user, int $value, string $type)
+    public function allRatesByParams(User $user, int $value, string $type) : ?array
     {
 	    return $this
 		    ->entityManager

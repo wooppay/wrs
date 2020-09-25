@@ -14,17 +14,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserReportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$optionsForChoiceField = [
-		    'choice_label' => 'Выберите пользователя',
+		    'choice_label' => 'Choose user',
 		    'choice_value' => 'id',
-		    'placeholder' => 'Выберите пользователя',
-		    'label' => 'Пользователь',
+		    'placeholder' => 'Choose user',
+		    'label' => 'User',
 		    'required' => true,
+		    'constraints' => [new NotBlank()]
 	    ];
 
     	//TODO: Do lazy load
@@ -39,11 +41,11 @@ class UserReportType extends AbstractType
             ->add('user', ChoiceType::class, $optionsForChoiceField)
 	        ->add('dateFrom', TextType::class, [
 	        	'mapped' => false,
-		        'label' => 'От'
+		        'label' => 'From'
 	        ])
 	        ->add('dateTo', TextType::class, [
 		        'mapped' => false,
-		        'label' => 'До'
+		        'label' => 'To'
 	        ])
         ;
     }

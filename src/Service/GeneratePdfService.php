@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Component;
+namespace App\Service;
+
 
 use Dompdf\Dompdf;
 
-
-class GeneratePDFComponent
+class GeneratePdfService
 {
 	public static function generateByHtml(string $html)
 	{

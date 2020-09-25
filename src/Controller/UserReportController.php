@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Enum\PermissionEnum;
 use App\Enum\RoleEnum;
 use App\Form\UserReportType;
 use App\Service\UserService;
+use App\Service\ValidationErrorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +22,10 @@ class UserReportController extends AbstractController
 		return new JsonResponse($users);
 	}
 
-	public function getReport(UserService $userService, Request $request)
+	public function getReport(UserService $userService, Request $request, ValidationErrorService $ves)
 	{
+		$this->denyAccessUnlessGranted(PermissionEnum::CAN_GENERATE_MARK_REPORT, $this->getUser());
+
 		$userReportForm = $this->createForm(UserReportType::class, null, ['userService' => $userService]);
 
 		$userReportForm->handleRequest($request);
@@ -41,7 +45,7 @@ class UserReportController extends AbstractController
 
 			return new JsonResponse($response);
 		} else {
-			return new JsonResponse($userReportForm->getErrors());
+			return new JsonResponse(['errors' => $ves->getErrorMessages($userReportForm)]);
 		}
 
 	}

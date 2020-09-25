@@ -59,24 +59,30 @@ function displayReport() {
         method: 'POST',
         data: data,
         success: function (res) {
-            $('#report-time').html('от ' + res['dateFrom'] + ' до ' + res['dateTo']);
-            $('#username').html(res['userEmail']);
+            if (res['errors']) {
+                console.log(res['errors']);
+            } else {
+                $('#report').modal('show');
+                $('#report-time').html('от ' + res['dateFrom'] + ' до ' + res['dateTo']);
+                $('#username').html(res['userEmail']);
 
-            let userEmail = document.getElementById('user-email');
-            userEmail.innerHTML = res['userEmail'];
-            userEmail.setAttribute('href', 'mailto:' + res['userEmail']);
+                let userEmail = document.getElementById('user-email');
+                userEmail.innerHTML = res['userEmail'];
+                userEmail.setAttribute('href', 'mailto:' + res['userEmail']);
 
-            let reportTableHtml = getReportTableHtml(res['tasks']);
-            $('#tasks-rates').html(reportTableHtml);
+                let reportTableHtml = getReportTableHtml(res['tasks']);
+                $('#tasks-rates').html(reportTableHtml);
 
-            let rates = res['rates'];
-            $('#countTasks').html(res['tasks'].length);
-            $('#positiveSoft').html(rates.positiveSoft);
-            $('#negativeSoft').html(rates.negativeSoft);
+                let rates = res['rates'];
+                $('#countTasks').html(res['tasks'].length);
+                $('#positiveSoft').html(rates.positiveSoft);
+                $('#negativeSoft').html(rates.negativeSoft);
 
-            $('#countRates').html(res['countRates']);
-            $('#positiveHard').html(rates.positiveHard);
-            $('#negativeHard').html(rates.negativeHard);
+                $('#countRates').html(res['countRates']);
+                $('#positiveHard').html(rates.positiveHard);
+                $('#negativeHard').html(rates.negativeHard);
+            }
+
         }
     })
 }
