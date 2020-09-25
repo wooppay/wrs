@@ -95,21 +95,32 @@ function getReportTableHtml(tasks)
 
     $.each(tasks, function (index, task) {
         let taskName = '<td>' + task.name + '</td>';
-        $.each(task.rates, function (index, rate) {
-            let rateData = ''
-            !index ? rateData += taskName : rateData += '<td style="border-right: ; border-bottom: solid white;"></td>';
+        if (task.rates.length) {
+            $.each(task.rates, function (index, rate) {
+                let rateData = '';
+                !index ? rateData += taskName : rateData += '<td style="border-right: ; border-bottom: solid white;"></td>';
 
-            let iconOfResult = '';
-            rate.value ? iconOfResult = "fa fa-check" : iconOfResult = "fa fa-times";
+                let iconOfResult = '';
+                rate.value ? iconOfResult = "fa fa-check" : iconOfResult = "fa fa-times";
 
 
-            rateData += '<td>' + rate.question + '</td>' +
+                rateData += '<td>' + rate.question + '</td>' +
+                    '<td>' + task.created_at + '</td>' +
+                    '<td>' + task.author + '</td>' +
+                    '<td class="text-center">' + '<span class="' + iconOfResult + '"></span>' + '</td>';
+
+                reportTableHtml += '<tr>' + rateData + '</tr>';
+            });
+        } else {
+            let rateData = '';
+            rateData +=
+                taskName +
+                '<td></td>' +
                 '<td>' + task.created_at + '</td>' +
                 '<td>' + task.author + '</td>' +
-                '<td class="text-center">' + '<span class="' + iconOfResult + '"></span>' + '</td>';
-
+                '<td class="text-center">' + '<span>Оценки отсутствуют</span>' + '</td>';
             reportTableHtml += '<tr>' + rateData + '</tr>';
-        });
+        }
     });
 
     return reportTableHtml;
