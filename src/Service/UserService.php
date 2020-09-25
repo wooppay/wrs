@@ -135,7 +135,7 @@ class UserService
 		return $usersForSelect;
     }
 
-	public function byUserAndTime(User $user, $dateFrom, $dateTo) : ?array
+	public function byUserAndTime(User $user, string $dateFrom, string $dateTo) : ?array
 	{
 		return $this->entityManager->getRepository(Task::class)->byUserAndTime($user, $dateFrom, $dateTo);
 	}

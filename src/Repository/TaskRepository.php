@@ -87,7 +87,7 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     //TODO: Сделать изменение статуса задачи при выполнении, затем получать только выполненные задачи
-	public function byUserAndTime(User $user, $dateFrom, $dateTo) : ?array
+	public function byUserAndTime(User $user, string $dateFrom, string $dateTo) : ?array
 	{
 
 		return $this->createQueryBuilder('t')
