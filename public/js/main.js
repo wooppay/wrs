@@ -64,6 +64,11 @@ function displayReport() {
                     $('#' + index).html(error);
                 });
             } else {
+                let submitBtn = $('#get-report-btn');
+                submitBtn.html('Loading...');
+                submitBtn.attr('disabled', true);
+
+
                 $('#report').modal('show');
                 $('#report-time').html('от ' + res['dateFrom'] + ' до ' + res['dateTo']);
                 $('#username').html(res['userEmail']);
@@ -89,6 +94,12 @@ function displayReport() {
     })
 }
 
+$("#report").on("hidden.bs.modal", function () {
+        let submitBtn = $('#get-report-btn');
+        submitBtn.attr('disabled', false);
+        submitBtn.html('View report');
+});
+
 function getReportTableHtml(tasks)
 {
     let reportTableHtml = '';
@@ -101,7 +112,7 @@ function getReportTableHtml(tasks)
                 !index ? rateData += taskName : rateData += '<td style="border-right: ; border-bottom: solid white;"></td>';
 
                 let iconOfResult = '';
-                rate.value ? iconOfResult = "fa fa-check" : iconOfResult = "fa fa-times";
+                rate.value ? iconOfResult = "text-success fa fa-check" : iconOfResult = "text-danger fa fa-times";
 
 
                 rateData += '<td>' + rate.question + '</td>' +
