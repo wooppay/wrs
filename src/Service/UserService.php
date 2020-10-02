@@ -1,8 +1,12 @@
 <?php
 namespace App\Service;
 
+use App\Component\GeneratePDFComponent;
+use App\Entity\RateInfo;
 use App\Entity\Team;
 use App\Enum\PermissionEnum;
+use App\Enum\RateInfoEnum;
+use App\Enum\SkillEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,8 +20,8 @@ class UserService
     private $entityManager;
     
     private $role;
-    
-    public function __construct(EntityManagerInterface $manager, RoleService $roleService, Security $security)
+
+    public function __construct(EntityManagerInterface $manager = null, RoleService $roleService = null, Security $security = null)
     {
         $this->entityManager = $manager;
         $this->role = $roleService;
@@ -67,6 +71,13 @@ class UserService
         ->allExceptAdminAndOwner();
     }
 
+    public function allExceptAdmin()
+    {
+        return $this->entityManager
+        ->getRepository(User::class)
+        ->allExceptAdmin();
+    }
+
     public function allApprovedExceptAdminAndOwnerAndCustomer()
     {
         return $this->entityManager
@@ -109,6 +120,55 @@ class UserService
             ->getRepository(User::class)
             ->teamLeadByTask($task)
         ;
+    }
+
+    //TODO: сделать через чистый SQL запрос ради производительности
+    public function allForSelectByRole() : array
+    {
+	    $usersForSelect = [];
+    	$usersEntities = $this->allExceptAdmin();
+		array_map(function($value) use (&$usersForSelect) {
+			/** @var User $value **/
+			$usersForSelect[] = ['id' => $value->getId(), 'email' => $value->getEmail()];
+		}, $usersEntities);
+
+		return $usersForSelect;
+    }
+
+	public function byUserAndTime(User $user, string $dateFrom, string $dateTo) : ?array
+	{
+		return $this->entityManager->getRepository(Task::class)->byUserAndTime($user, $dateFrom, $dateTo);
+	}
+
+	public function countRatesByParams(User $user, int $value, string $type, array $tasksIds) : int
+	{
+		return count($this
+			->entityManager
+			->getRepository(RateInfo::class)
+			->allRatesByParams($user, $value, $type, $tasksIds));
+	}
+
+    public function makeReportData(User $user, string $dateFrom, string $dateTo) : array
+    {
+		$tasks = $this->byUserAndTime($user, $dateFrom, $dateTo);
+		$tasksArray = [];
+		$tasksIds = [];
+
+	    /** @var Task $task */
+		foreach ($tasks as $task) {
+			$tasksArray[] = $task->toArrayForReport($user);
+			$tasksIds[] = $task->getId();
+		}
+
+		$rates = [
+			'positiveSoft' => $this->countRatesByParams($user, RateInfoEnum::POSITIVE, SkillEnum::TYPE_SOFT, $tasksIds),
+			'negativeSoft' => $this->countRatesByParams($user, RateInfoEnum::NEGATIVE, SkillEnum::TYPE_SOFT, $tasksIds),
+			'positiveHard' => $this->countRatesByParams($user, RateInfoEnum::POSITIVE, SkillEnum::TYPE_TECHNICAL, $tasksIds),
+			'negativeHard' => $this->countRatesByParams($user, RateInfoEnum::NEGATIVE, SkillEnum::TYPE_TECHNICAL, $tasksIds)
+		];
+
+
+		return ['tasks' => $tasksArray, 'rates' => $rates, 'countRates' => array_sum($rates)];
     }
 }
 

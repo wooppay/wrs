@@ -128,3 +128,10 @@ a {
         margin: 0 -10px;
 }
 
+.task-edit {
+  display: none;
+}
+
+.card-item:hover .task-edit {
+  display: block;
+}

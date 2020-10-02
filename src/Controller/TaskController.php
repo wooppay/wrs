@@ -53,10 +53,39 @@ class TaskController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard');
     }
-    
-    public function teamByProject(int $project_id, ProjectService $projectService)
+
+    public function update(Request $request, UserService $userService, TaskService $taskService)
     {
-        $project = $projectService->oneById($project_id);
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TASK, $this->getUser());
+        $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
+        $taskId = $request->request->get('task_id');
+        $task = $taskService->oneById($taskId);
+
+        $form = $this->createForm(TaskType::class, $task, [
+            'users' => $users,
+            'formAction' => 'update'
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $task->setAuthor($this->getUser());
+            $taskService->create($task);
+
+            $this->addFlash('success', 'Task was successfully updated');
+
+            return $this->redirectToRoute('app_dashboard');
+        }
+
+        return $this->render('dashboard/task/modal/update.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    
+    public function teamByProject(Request $request, ProjectService $projectService)
+    {
+        $projectId = $request->request->get('project_id');
+        $project = $projectService->oneById($projectId);
         $team = $project->getTeam();
         
         return new JsonResponse([
