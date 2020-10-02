@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PasswordRecoveryService
 {
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
     
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -47,11 +47,7 @@ class PasswordRecoveryService
         $current = new \DateTime();
         $difference = $created->diff($current);
 
-        if ($difference->format('%h') > '1') {
-            return true;
-        }
-
-        return false;
+        return $difference->format('%h') > '1';
     }
 }
 

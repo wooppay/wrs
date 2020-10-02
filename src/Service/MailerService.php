@@ -6,11 +6,11 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class MailerService
 {
-    private $mailer;
+    private \Swift_Mailer $mailer;
 
-    private $logger;
+    private LoggerInterface $logger;
 
-    private $emailSendFrom;
+    private string $emailSendFrom;
     
     public function __construct(string $emailSendFrom, \Swift_Mailer $mailer, LoggerInterface $logger)
     {

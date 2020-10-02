@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
             $user = $userService->byEmail($email);
 
             if (!$user) {
-                $form->get('email')->addError(new FormError('Пользователь с таким email не найден'));
+                $form->get('email')->addError(new FormError('User with this mail was not found'));
 
                 return $this->render('security/password_recovery.html.twig', [
                     'form' => $form->createView()
@@ -51,11 +51,16 @@ class SecurityController extends AbstractController
 
             $token = sha1(uniqid($email));
             $passwordRecoveryService->updateTokenByEmail($email, $token);
-            $url = $this->generateUrl('app_password_recovery_confirm', [], UrlGeneratorInterface::ABSOLUTE_URL) . '?email=' . $email . '&token=' . $token;
+
+            $url = $this->generateUrl('app_password_recovery_confirm', [
+                'email' => $email,
+                'token' => $token
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+
             $body = $this->renderView('security/recovery_email_body.html.twig', [
                 'url' => $url
             ]);
-            $submitted = $mailerService->sendMessage('Восстановление пароля', $email, $body);
+            $submitted = $mailerService->sendMessage('Password Recovery', $email, $body);
         }
 
         return $this->render('security/password_recovery.html.twig', [
@@ -69,7 +74,7 @@ class SecurityController extends AbstractController
         $email = $request->query->get('email');
         $token = $request->query->get('token');
 
-        if (!$email && !$token) {
+        if (!$email || !$token) {
             throw $this->createNotFoundException();
         }
 
@@ -98,7 +103,7 @@ class SecurityController extends AbstractController
             $user->setPassword($newPassword);
             $userService->save($user);
 
-            $this->addFlash('success', 'Пароль был успешно изменен');
+            $this->addFlash('success', 'Password was successfully changed');
 
             return $this->redirectToRoute('app_login');
         }

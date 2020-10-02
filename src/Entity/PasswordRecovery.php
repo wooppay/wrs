@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 class PasswordRecovery
 {
-    private $id;
+    private int $id;
 
-    private $email;
+    private string $email;
 
-    private $token;
+    private string $token;
 
-    private $created;
+    private \DateTimeInterface $created;
 
     public function getId(): ?int
     {
