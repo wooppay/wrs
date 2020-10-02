@@ -112,7 +112,6 @@ class UserService
         ;
     }
 
-
     public function teamLeadByTask(Task $task) : ?User
     {
         return $this
@@ -122,6 +121,14 @@ class UserService
         ;
     }
 
+    public function save(User $user): bool
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return true;
+    }
+    
     //TODO: сделать через чистый SQL запрос ради производительности
     public function allForSelectByRole() : array
     {
