@@ -139,14 +139,16 @@ app_dashboard_task:
     controller: App\Controller\TaskController::main
 
 app_dashboard_task_create_ajax_team:
-    path: /dashboard/tasks/create/ajax/team/{project_id}
+    path: /dashboard/tasks/create/ajax/team
     controller: App\Controller\TaskController::teamByProject
-    requirements:
-        project_id: '\d+'
 
 app_dashboard_task_create:
     path: /dashboard/tasks/create
     controller: App\Controller\TaskController::create
+
+app_dashboard_task_update:
+    path: /dashboard/tasks/update
+    controller: App\Controller\TaskController::update
 
 app_dashboard_team:
     path: /dashboard/teams
@@ -201,4 +203,12 @@ app_dashboard_history_outcoming_detail:
     controller: App\Controller\MarkController::historyOutcomingDetail
     requirements:
         id: '\d+'
+
+app_dashboard_users_for_select:
+    path: /dashboard/user-report/users
+    controller: App\Controller\UserReportController::getUsers
+
+app_dashboard_report:
+    path: /dashboard/user-report/report
+    controller: App\Controller\UserReportController::getReport
 

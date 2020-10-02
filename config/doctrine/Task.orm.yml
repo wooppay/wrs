@@ -24,6 +24,10 @@ App\Entity\Task:
             nullable: false
             options:
                 default: 1
+        created_at:
+            type: datetime
+            options:
+                default: CURRENT_TIMESTAMP
     manyToOne:
         executor:
             targetEntity: App\Entity\User
