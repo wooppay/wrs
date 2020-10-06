@@ -42,6 +42,11 @@ class RateInfoService
                 case 'skill' :
                     $res[$skillId]['skill'] = $this->skillService->byId($item);
                     break;
+                case 'note' :
+                    $skill = $this->skillService->byId($skillId);
+                    $skill->setNote($item);
+                    $this->skillService->updateSoft($skill);
+                    break;
                 case 'user' :
                     $res[$skillId]['user'] = $this->userService->byId($item);
                     break;

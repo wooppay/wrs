@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -46,6 +47,12 @@ class CheckListType extends AbstractType
                     'data' => $skill->getId()
                 ])
             ;
+
+            if ($skill->getShowNote() == true) {
+                $builder->add($inputName . '_note', TextareaType::class, [
+                    'label' => 'Note'
+                ]);
+            }
 
             $permissions = $skill->getRole()->getPermissions();
 
