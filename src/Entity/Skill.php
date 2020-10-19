@@ -13,8 +13,6 @@ class Skill
     private $type;
 
     private $showNote;
-
-    private $note;
     
     private $status = 1;
 
@@ -81,17 +79,5 @@ class Skill
     public function getShowNote() : ?bool
     {
         return $this->showNote;
-    }
-    
-    public function setNote(string $note) : self
-    {
-        $this->note = $note;
-        
-        return $this;
-    }
-
-    public function getNote() : ?string
-    {
-        return $this->note;
     }
 }
