@@ -18,7 +18,7 @@
                     <div class="card card-item">
                         <div class="card-header  p-3">
                             <p>
-                                <a class="card-title  h6" href="#!">{{ item.name }}</a>
+                                <a class="card-title  h6" href="{{ path('app_dashboard_task_details', {id: item.id}) }}">{{ item.name }}</a>
                                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
                                     <a href="#" class="task-edit float-right">
                                         <i id="{{ item.id }}" class="far fa-edit fa-lg"></i>
