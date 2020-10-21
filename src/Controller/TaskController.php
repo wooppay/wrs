@@ -93,4 +93,23 @@ class TaskController extends AbstractController
             'name' => $team->getName(),
         ]);
     }
+
+    public function showDetails(int $id, Request $request, TaskService $taskService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_SEE_DETAIL_TASK, $this->getUser());
+
+        $task = $taskService->oneById($id);
+        $marked = false;
+
+        if (!$task) {
+            throw $this->createNotFoundException('The task does not exist');
+        }
+
+        $marked = $taskService->hasAlreadyMarkedByUserAndTask($this->getUser(), $task);
+
+        return $this->render('dashboard/task/detail.html.twig', [
+            'task' => $task,
+            'marked' => $marked
+        ]);
+    }
 }

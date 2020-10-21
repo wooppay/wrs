@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Details{% endblock %}
+{% block head_title %}
+    <h2>Details</h2>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/script.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h3>{{ task.name }}</h3>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('index') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ task.name }}</li>
+                </ol>
+            </nav>
+
+            <div class="buttons">
+                {% if marked %}
+                    <a href="#" class="btn btn-outline-dark"><i class="far fa-hand-paper"></i></a>
+                {% else %}
+                    <a href="#" class="btn btn-outline-dark"><i class="fas fa-plus"></i></a>
+                    <a href="#" class="btn btn-outline-dark"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="#" class="btn btn-outline-dark"><i class="fas fa-trash-alt"></i></i></a>
+                {% endif %}
+            </div>
+
+            <p class="text-break font-weight-normal mt-3">{{ task.description }}</p>
+
+            {% if marked %}
+                <h5 class="font-weight-bold mb-3">Result</h5>
+
+                <div class="rates-list">
+                    {% for rate in task.rates %}
+                        {% if app.user != rate.user %}
+                            <p class="rate-item">
+                                {{ rate.skill.content }}
+                                {% if rate.value == 1 %}
+                                    <i class="far fa-thumbs-up"></i>
+                                {% elseif rate.value == 0 %}
+                                    <i class="fa-thumbs-down"></i>
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <p class="text-break font-weight-normal mt-3">
+                    Don't agree with result? Open
+                    <a href="#">dispute <i class="far fa-hand-paper"></i></a>
+                </p>
+            {% endif %}
+
+            <div class="discuss-block mt-4">
+                <h5 class="font-weight-bold">Discussion</h5>
+                <p>You can discuss task in <a href="{{ "https://youtrack.wooppay.com/issue/" ~ task.description }}">Youtrack</a></p>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="task-info-board">
+                <table class="task-info-table">
+                    <tr>
+                        <td>Project:</td>
+                        <td><a href="#">{{ task.project.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Team:</td>
+                        <td><a href="#">{{ task.team.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Executor:</td>
+                        <td><a href="#">{{ task.executor.email }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Author:</td>
+                        <td><a href="#">{{ task.author.email }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td>
+                            {% if task.status is constant('App\\Enum\\TaskEnum::NEW') %}
+                                NEW
+                            {% elseif task.status is constant('App\\Enum\\TaskEnum::DONE') %}
+                                DONE
+                            {% elseif task.status is constant('App\\Enum\\TaskEnum::DELETED') %}
+                                DELETED
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
