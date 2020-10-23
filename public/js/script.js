@@ -42,3 +42,19 @@ $(document).on('click', '.task-edit', (e) => {
 		}
 	})
 });
+
+$(document).on('click', '.task-detail-edit', (e) => {
+	let taskId = e.target.id;
+
+	$.ajax({
+		url: routeTaskUpdate,
+		method: 'POST',
+		data: {
+			task_id: taskId
+		},
+		success: function(data) {
+			$('#taskUpdate').html(data);
+			$('#taskUpdate').modal();
+		}
+	})
+});

@@ -11,6 +11,7 @@ use App\Service\ProjectService;
 use App\Entity\Task;
 use App\Form\TaskType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TaskController extends AbstractController
 {
@@ -58,7 +59,14 @@ class TaskController extends AbstractController
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TASK, $this->getUser());
         $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
-        $taskId = $request->request->get('task_id');
+        $referer = $request->headers->get('referer');
+
+        if ($request->request->get('task_id')) {
+            $taskId = $request->request->get('task_id');
+        } else {
+            $taskId = $request->query->get('id');
+        }
+
         $task = $taskService->oneById($taskId);
 
         $form = $this->createForm(TaskType::class, $task, [
@@ -73,13 +81,28 @@ class TaskController extends AbstractController
             $taskService->create($task);
 
             $this->addFlash('success', 'Task was successfully updated');
-
-            return $this->redirectToRoute('app_dashboard');
+            
+            return new RedirectResponse($referer);
         }
 
         return $this->render('dashboard/task/modal/update.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function delete(int $id, Request $request, TaskService $taskService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_TASK, $this->getUser());
+        $task = $taskService->oneById($id);
+
+        if (!$task) {
+            throw $this->createNotFoundException('The task does not exist');
+        }
+
+        $taskService->delete($task);
+        $this->addFlash('success', 'Task was successfully deleted');
+        
+        return $this->redirectToRoute('app_dashboard');
     }
     
     public function teamByProject(Request $request, ProjectService $projectService)
@@ -94,7 +117,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    public function showDetails(int $id, Request $request, TaskService $taskService)
+    public function showDetails(int $id, Request $request, TaskService $taskService, UserService $userService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_SEE_DETAIL_TASK, $this->getUser());
 
@@ -105,11 +128,18 @@ class TaskController extends AbstractController
             throw $this->createNotFoundException('The task does not exist');
         }
 
+        $tasksUsers = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
+
+        $taskCreateForm = $this->createForm(TaskType::class, new Task(), [
+            'users' => $tasksUsers,
+        ]);
+
         $marked = $taskService->hasAlreadyMarkedByUserAndTask($this->getUser(), $task);
 
         return $this->render('dashboard/task/detail.html.twig', [
             'task' => $task,
-            'marked' => $marked
+            'marked' => $marked,
+            'taskCreateForm' => $taskCreateForm->createView()
         ]);
     }
 }

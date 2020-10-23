@@ -150,6 +150,10 @@ app_dashboard_task_update:
     path: /dashboard/tasks/update
     controller: App\Controller\TaskController::update
 
+app_dashboard_task_delete:
+    path: /dashboard/tasks/delete/{id}
+    controller: App\Controller\TaskController::delete
+
 app_dashboard_task_details:
     path: /dashboard/task/{id}
     controller: App\Controller\TaskController::showDetails

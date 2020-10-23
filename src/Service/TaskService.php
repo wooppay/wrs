@@ -41,6 +41,14 @@ class TaskService
         
         return $task;
     }
+
+    public function delete(Task $task): Task
+    {
+        $this->entityManager->remove($task);
+        $this->entityManager->flush();
+
+        return $task;
+    }
     
     public function allTasksInAllTeamWhereUserParticipate(User $user) : array
     {

@@ -61,3 +61,4 @@ App\Entity\Task:
         rates:
             targetEntity: App\Entity\RateInfo
             mappedBy: task
+            cascade: [remove]

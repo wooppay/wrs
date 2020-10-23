@@ -14,6 +14,8 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
+            {% include 'parts/flash_message.html.twig' %}
+            
             <h3>{{ task.name }}</h3>
 
             <nav aria-label="breadcrumb">
@@ -25,11 +27,16 @@
 
             <div class="buttons">
                 {% if marked %}
-                    <a href="#" class="btn btn-outline-dark"><i class="far fa-hand-paper"></i></a>
-                {% else %}
-                    <a href="#" class="btn btn-outline-dark"><i class="fas fa-plus"></i></a>
-                    <a href="#" class="btn btn-outline-dark"><i class="fas fa-pencil-alt"></i></a>
-                    <a href="#" class="btn btn-outline-dark"><i class="fas fa-trash-alt"></i></i></a>
+                    <button href="#" class="btn btn-outline-dark far fa-hand-paper"></button>
+                {% endif %}
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_TASK'), app.user) %}
+                    <button href="#" class="btn btn-outline-dark fas fa-plus" data-toggle="modal" data-target="#taskCreate"></button>
+                {% endif %}
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
+                    <button href="#" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></button>
+                {% endif %}
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
+                    <button href="#" class="btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskDelete"></button>
                 {% endif %}
             </div>
 
@@ -46,7 +53,7 @@
                                 {% if rate.value == 1 %}
                                     <i class="far fa-thumbs-up"></i>
                                 {% elseif rate.value == 0 %}
-                                    <i class="fa-thumbs-down"></i>
+                                    <i class="far fa-thumbs-down"></i>
                                 {% endif %}
                             </p>
                         {% endif %}
@@ -61,7 +68,7 @@
 
             <div class="discuss-block mt-4">
                 <h5 class="font-weight-bold">Discussion</h5>
-                <p>You can discuss task in <a href="{{ "https://youtrack.wooppay.com/issue/" ~ task.description }}">Youtrack</a></p>
+                <p>You can discuss task in <a href="#">Youtrack</a></p>
             </div>
         </div>
 
@@ -103,6 +110,9 @@
     </div>
 </div>
 
+<div id="taskUpdate" class="modal fade" role="dialog"></div>
 
+{% include 'dashboard/task/modal/create.html.twig' with {'form': taskCreateForm} %}
+{% include 'dashboard/task/modal/delete.html.twig' with {'task': task} %}
 
 {% endblock %}
