@@ -128,18 +128,11 @@ class TaskController extends AbstractController
             throw $this->createNotFoundException('The task does not exist');
         }
 
-        $tasksUsers = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
-
-        $taskCreateForm = $this->createForm(TaskType::class, new Task(), [
-            'users' => $tasksUsers,
-        ]);
-
         $marked = $taskService->hasAlreadyMarkedByUserAndTask($this->getUser(), $task);
 
         return $this->render('dashboard/task/detail.html.twig', [
             'task' => $task,
-            'marked' => $marked,
-            'taskCreateForm' => $taskCreateForm->createView()
+            'marked' => $marked
         ]);
     }
 }

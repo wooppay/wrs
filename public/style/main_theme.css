@@ -171,3 +171,16 @@ a {
   border: 1px solid gray;
   font-size: 16px;
 }
+
+.buttons {
+  height: 30px;
+}
+
+.buttons > a {
+  height: 100%;
+  width: 40px;
+}
+
+.check-list-link {
+  padding: 0;
+}

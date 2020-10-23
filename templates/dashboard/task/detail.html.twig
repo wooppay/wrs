@@ -27,16 +27,16 @@
 
             <div class="buttons">
                 {% if marked %}
-                    <button href="#" class="btn btn-outline-dark far fa-hand-paper"></button>
+                    <a title="Dispute" class="btn btn-outline-dark far fa-hand-paper"></a>
                 {% endif %}
-                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_TASK'), app.user) %}
-                    <button href="#" class="btn btn-outline-dark fas fa-plus" data-toggle="modal" data-target="#taskCreate"></button>
+                {% if not marked %}
+                    <a title="Mark" href="{{ path('app_dashboard_check_list', {id: task.id}) }}" class="check-list-link btn btn-outline-dark"><img src="/img/plus-one.svg" alt="plus-one"></a>
                 {% endif %}
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
-                    <button href="#" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></button>
+                    <a title="Update" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></a>
                 {% endif %}
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
-                    <button href="#" class="btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskDelete"></button>
+                    <a title="Delete" class="btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskDelete"></a>
                 {% endif %}
             </div>
 
@@ -112,7 +112,6 @@
 
 <div id="taskUpdate" class="modal fade" role="dialog"></div>
 
-{% include 'dashboard/task/modal/create.html.twig' with {'form': taskCreateForm} %}
 {% include 'dashboard/task/modal/delete.html.twig' with {'task': task} %}
 
 {% endblock %}
