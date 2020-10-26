@@ -34,3 +34,8 @@ form[name=check_list] #check_list fieldset > div .form-check {
     float: left;
     margin-right: 15px;
 }
+
+form[name=check_list] #check_list fieldset > div.choice_with_note {
+    width: 100%;
+    padding: 0 10px;
+}
