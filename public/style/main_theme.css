@@ -186,6 +186,7 @@ a {
 .buttons > a {
   height: 100%;
   width: 40px;
+  cursor: pointer;
 }
 
 .check-list-link {
