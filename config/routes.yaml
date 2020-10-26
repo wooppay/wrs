@@ -196,3 +196,11 @@ app_dashboard_history_outcoming_detail:
     requirements:
         id: '\d+'
 
+app_dashboard_users_for_select:
+    path: /dashboard/user-report/users
+    controller: App\Controller\UserReportController::getUsers
+
+app_dashboard_report:
+    path: /dashboard/user-report/report
+    controller: App\Controller\UserReportController::getReport
+

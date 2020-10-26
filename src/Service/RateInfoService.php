@@ -200,5 +200,13 @@ class RateInfoService
         ;
     }
 
+    public function allRatesByParams(User $user, int $value, string $type) : ?array
+    {
+	    return $this
+		    ->entityManager
+		    ->getRepository(RateInfo::class)
+		    ->allRatesByParams($user, $value, $type)
+		    ;
+    }
 }
 

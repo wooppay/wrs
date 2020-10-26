@@ -74,6 +74,9 @@
                     {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
                         <a class="nav-item nav-link" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="false">Teams</a>
                     {% endif %}
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_GENERATE_MARK_REPORT'), app.user) %}
+                        <a class="nav-item nav-link" id="nav-report-tab" data-toggle="tab" href="#nav-report" role="tab" aria-controls="nav-report" aria-selected="false" onclick="getUsersForSelect()">Report</a>
+                    {% endif %}
 
                 </div>
 
@@ -83,6 +86,11 @@
                 
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
                     {% include 'dashboard/team/tab/list_preview.html.twig' %}
+                {% endif %}
+
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_GENERATE_MARK_REPORT'), app.user) %}
+                    {% include '/dashboard/report/tab/report-form.html.twig' with {'form': userReportForm} %}
+                    {% include '/dashboard/report/modal/report-modal.html.twig' %}
                 {% endif %}
 
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}

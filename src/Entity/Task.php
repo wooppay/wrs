@@ -26,6 +26,8 @@ class Task
 
     private $rates;
 
+    private $created_at;
+
     public function __construct()
     {
         $this->rates = new ArrayCollection();
@@ -123,5 +125,42 @@ class Task
     public function getAuthor(): User
     {
         return $this->author;
+    }
+
+    public function setCreatedAt(\DateTime $created_at): self
+    {
+       $this->created_at = $created_at;
+
+       return $this;
+    }
+
+    public function getCreatedAt() : string
+    {
+        return $this->created_at->format('Y-m-d H:i');
+    }
+
+    public function toArrayForReport(User $user) : array
+    {
+    	$task = [
+    		'name' => $this->getName(),
+		    'author' => $this->getAuthor()->getUsername(),
+		    'created_at' => $this->getCreatedAt(),
+		    'rates' => []
+	    ];
+
+	    /**
+	     * @var RateInfo $rate
+	     */
+    	foreach ($this->getRates() as $rate) {
+    		if ($rate->getUser()->getId() === $user->getId()) {
+			    $skill = $rate->getSkill();
+			    $task['rates'][] = [
+				    'value' => $rate->getValue(),
+				    'question' => $skill->getContent(),
+			    ];
+		    }
+	    }
+
+    	return $task;
     }
 }

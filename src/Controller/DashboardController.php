@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserReportType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\TaskService;
 use App\Service\UserService;
@@ -38,6 +40,8 @@ class DashboardController extends AbstractController
 
         $teamForm = $this->createForm(TeamType::class, (new Team()));
 
+	    $userReportForm = $this->createForm(UserReportType::class);
+
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
             'teamForm' => $teamForm->createView(),
@@ -45,7 +49,9 @@ class DashboardController extends AbstractController
             'authorMarks' => $authorMarks,
             'taskForm' => $taskForm->createView(),
             'projectForm' => $projectForm->createView(),
+	        'userReportForm' => $userReportForm->createView()
         ]);
     }
+
 }
 
