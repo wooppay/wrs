@@ -56,5 +56,37 @@ $(document).on('click', '.task-detail-edit', (e) => {
 			$('#taskUpdate').html(data);
 			$('#taskUpdate').modal();
 		}
+	});
+});
+
+$(document).on('click', '.task-archive', (e) => {
+	var taskId = e.target.id;
+
+	$('#task-archive-confirm').attr('data', taskId);
+	$('#taskArchive').modal('show');
+});
+
+$(document).on('click', '.task-detail-archive', (e) => {
+	var taskId = e.target.id;
+
+	$('#task-archive-confirm').attr('data', taskId);
+	$('#taskArchive').modal('show');
+});
+
+$(document).on('click', '#task-archive-confirm', (e) => {
+	let taskId = e.target.getAttribute('data');
+
+	$.ajax({
+		url: routeTaskArchive,
+		method: 'POST',
+		data: {
+			task_id: taskId
+		},
+		success: function (data) {
+			location.href = dashboardUrl;
+		},
+		error: function (data) {
+			location.href = dashboardUrl;
+		}
 	})
 });

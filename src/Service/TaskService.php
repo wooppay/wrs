@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use App\Enum\TaskEnum;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
@@ -26,7 +27,7 @@ class TaskService
         ->findAll();
     }
     
-    public function oneById(int $id) : Task
+    public function oneById(int $id) : ?Task
     {
         return $this->entityManager
         ->getRepository(Task::class)
@@ -42,11 +43,11 @@ class TaskService
         return $task;
     }
 
-    public function delete(Task $task): Task
+    public function update(Task $task) : Task
     {
-        $this->entityManager->remove($task);
+        $this->entityManager->persist($task);
         $this->entityManager->flush();
-
+        
         return $task;
     }
     
@@ -131,6 +132,17 @@ class TaskService
     public function hasAlreadyMarkedByUserAndTask(User $user, Task $task) : bool
     {
         return $this->rateInfoService->allByUserAndTask($user, $task)->count() > 0;
+    }
+
+    public function archivedTasks(User $user)
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Task::class)
+            ->findBy([
+                'author' => $user,
+                'status' => TaskEnum::DELETED
+            ]);
     }
 
 }

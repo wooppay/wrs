@@ -78,8 +78,9 @@ class TaskRepository extends ServiceEntityRepository
         $res = [];
 
         foreach ($tasks as $task) {
-            if (!$this->taskService->hasAlreadyMarkedByUserAndTask($user, $task)) {
-                $res[] = $task;
+            if ($task->getStatus() != TaskEnum::DELETED
+                && !$this->taskService->hasAlreadyMarkedByUserAndTask($user, $task)) {
+                    $res[] = $task;
             }
         }
 

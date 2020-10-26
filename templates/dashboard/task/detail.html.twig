@@ -25,20 +25,22 @@
                 </ol>
             </nav>
 
-            <div class="buttons">
-                {% if marked %}
-                    <a title="Dispute" class="btn btn-outline-dark far fa-hand-paper"></a>
-                {% endif %}
-                {% if not marked %}
-                    <a title="Mark" href="{{ path('app_dashboard_check_list', {id: task.id}) }}" class="check-list-link btn btn-outline-dark"><img src="/img/plus-one.svg" alt="plus-one"></a>
-                {% endif %}
-                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
-                    <a title="Update" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></a>
-                {% endif %}
-                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
-                    <a title="Delete" class="btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskDelete"></a>
-                {% endif %}
-            </div>
+            {% if task.status != constant('App\\Enum\\TaskEnum::DELETED') %}
+                <div class="buttons">
+                    {% if marked %}
+                        <a title="Dispute" class="btn btn-outline-dark far fa-hand-paper"></a>
+                    {% endif %}
+                    {% if not marked %}
+                        <a title="Mark" href="{{ path('app_dashboard_check_list', {id: task.id}) }}" class="check-list-link btn btn-outline-dark"><img src="/img/plus-one.svg" alt="plus-one"></a>
+                    {% endif %}
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
+                        <a title="Update" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></a>
+                    {% endif %}
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
+                        <a title="Archive" id="{{ task.id }}" class="task-detail-archive btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskArchive"></a>
+                    {% endif %}
+                </div>
+            {% endif %}
 
             <p class="text-break font-weight-normal mt-3">{{ task.description }}</p>
 
@@ -60,10 +62,12 @@
                     {% endfor %}
                 </div>
 
-                <p class="text-break font-weight-normal mt-3">
-                    Don't agree with result? Open
-                    <a href="#">dispute <i class="far fa-hand-paper"></i></a>
-                </p>
+                {% if task.status != constant('App\\Enum\\TaskEnum::DELETED') %}
+                    <p class="text-break font-weight-normal mt-3">
+                        Don't agree with result? Open
+                        <a href="#">dispute <i class="far fa-hand-paper"></i></a>
+                    </p>
+                {% endif %}
             {% endif %}
 
             <div class="discuss-block mt-4">
@@ -112,6 +116,6 @@
 
 <div id="taskUpdate" class="modal fade" role="dialog"></div>
 
-{% include 'dashboard/task/modal/delete.html.twig' with {'task': task} %}
+{% include 'dashboard/task/modal/archive.html.twig' %}
 
 {% endblock %}

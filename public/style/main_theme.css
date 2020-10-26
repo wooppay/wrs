@@ -128,11 +128,18 @@ a {
         margin: 0 -10px;
 }
 
-.task-edit {
+.task-edit, .task-archive {
   display: none;
+  height: 100%;
+  width: auto;
+  margin-left: 5px;
 }
 
 .card-item:hover .task-edit {
+  display: block;
+}
+
+.card-item:hover .task-archive {
   display: block;
 }
 
