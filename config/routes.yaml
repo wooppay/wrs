@@ -150,6 +150,10 @@ app_dashboard_task_update:
     path: /dashboard/tasks/update
     controller: App\Controller\TaskController::update
 
+app_dashboard_task_archive:
+    path: /dashboard/tasks/archive/
+    controller: App\Controller\TaskController::archive
+
 app_dashboard_team:
     path: /dashboard/teams
     controller: App\Controller\TeamController::main

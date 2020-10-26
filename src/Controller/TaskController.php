@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\TaskService;
 use Symfony\Component\HttpFoundation\Request;
 use App\Enum\PermissionEnum;
+use App\Enum\TaskEnum;
 use App\Service\UserService;
 use App\Service\TeamService;
 use App\Service\ProjectService;
@@ -81,7 +82,33 @@ class TaskController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    
+
+    public function archive(Request $request, UserService $userService, TaskService $taskService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_TASK, $this->getUser());
+        $taskId = (int) $request->request->get('task_id');
+        $task = $taskService->oneById($taskId);
+
+        if (!$task) {
+            throw $this->createNotFoundException('Task does not exist!');
+        }
+
+        try {
+            $task->setStatus(TaskEnum::DELETED);
+            $taskService->update($task);
+            $this->addFlash('success', 'Task was successfully archived');
+        } catch (\Exception $e) {
+            $this->addFlash('danger', 'Oops, some error has occurred');
+            return new JsonResponse([
+                'status' => false
+            ]);
+        }
+        
+        return new JsonResponse([
+            'status' => true
+        ]);
+    }
+
     public function teamByProject(Request $request, ProjectService $projectService)
     {
         $projectId = $request->request->get('project_id');
