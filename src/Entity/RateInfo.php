@@ -16,6 +16,8 @@ class RateInfo
 
     private $author;
 
+    private $note;
+
     public function setValue(int $value): self
     {
         $this->value = $value;
@@ -79,6 +81,18 @@ class RateInfo
     public function getAuthor() : ?User
     {
         return $this->author;
+    }
+
+    public function setNote(string $note) : self
+    {
+        $this->note = $note;
+        
+        return $this;
+    }
+
+    public function getNote() : ?string
+    {
+        return $this->note;
     }
 
     /*public function toArrayForReport() : array
