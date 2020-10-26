@@ -18,6 +18,9 @@ App\Entity\Skill:
             length: 20
             nullable: false
             unique: false
+        showNote:
+            type: boolean
+            nullable: true
         status:
             type: integer
             length: 20

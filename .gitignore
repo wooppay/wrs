@@ -17,7 +17,7 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 /.idea
-/.vscode
+/.vscode/
 tags
 *.swp
 

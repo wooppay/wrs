@@ -12,6 +12,10 @@ App\Entity\RateInfo:
             type: integer
             length: 2
             nullable: false
+        note:
+            type: string
+            length: 255
+            nullable: true
     manyToOne:
         user:
             targetEntity: App\Entity\User
