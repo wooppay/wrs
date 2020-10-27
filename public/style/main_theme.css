@@ -139,7 +139,6 @@ a {
   display: block;
 }
 
-<<<<<<< HEAD
 .card-item:hover .task-archive {
   display: block;
 }
@@ -192,8 +191,8 @@ a {
 
 .check-list-link {
   padding: 0;
-=======
+}
+
 .rate-detail-note {
   margin: 5px;
->>>>>>> 012877db721412c6b9d3e0fd029dc422ab58785b
 }
