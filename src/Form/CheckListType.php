@@ -4,6 +4,8 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -28,24 +30,56 @@ class CheckListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $task = $options['task'];
+        $questionWithChoiceIterator = 1;
 
         foreach ($options['skills'] as $skill) {
             $inputName = 'option_' . $skill->getId();
 
-            $builder
-                ->add($inputName . '_value', ChoiceType::class, [
-                    'choices' => [
-                        'Yes' => 1,
-                        'No' => 0,
-                    ],
-                    'label' => $skill->getContent(),
-                    'expanded' => true,
-                    'multiple' => false,
-                ])
-                ->add($inputName . '_skill', HiddenType::class, [
-                    'data' => $skill->getId()
-                ])
-            ;
+            if ($skill->getShowNote() == true) {
+                $builder
+                    ->add(
+                        $builder->create('question_with_note_' . $questionWithChoiceIterator, FormType::class, [
+                            'by_reference' => true,
+                            'attr' => [
+                                'class' => 'choice_with_note'
+                            ]
+                        ])
+                        ->add($inputName . '_value', ChoiceType::class, [
+                            'choices' => [
+                                'Yes' => 1,
+                                'No' => 0,
+                            ],
+                            'label' => $skill->getContent(),
+                            'expanded' => true,
+                            'multiple' => false,
+                        ])
+                        ->add($inputName . '_note', TextareaType::class, [
+                            'label' => 'Note',
+                            'required' => false
+                        ])
+                    )
+                    ->add($inputName . '_skill', HiddenType::class, [
+                        'data' => $skill->getId()
+                    ])
+                ;
+
+                $questionWithChoiceIterator++;
+            } else {
+                $builder
+                    ->add($inputName . '_value', ChoiceType::class, [
+                        'choices' => [
+                            'Yes' => 1,
+                            'No' => 0,
+                        ],
+                        'label' => $skill->getContent(),
+                        'expanded' => true,
+                        'multiple' => false,
+                    ])
+                    ->add($inputName . '_skill', HiddenType::class, [
+                        'data' => $skill->getId()
+                    ])
+                ;
+            }
 
             $permissions = $skill->getRole()->getPermissions();
 

@@ -11,6 +11,8 @@ class Skill
     private $role;
     
     private $type;
+
+    private $showNote;
     
     private $status = 1;
 
@@ -65,5 +67,17 @@ class Skill
     public function getStatus() : ?int
     {
         return $this->status;
+    }
+
+    public function setShowNote(bool $showNote) : self
+    {
+        $this->showNote = $showNote;
+        
+        return $this;
+    }
+    
+    public function getShowNote() : ?bool
+    {
+        return $this->showNote;
     }
 }

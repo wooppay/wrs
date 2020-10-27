@@ -160,4 +160,14 @@ class UserRepository extends ServiceEntityRepository
         return new ArrayCollection($array);
     }
 
+    public function findByRoleName(array $roles) : ?array
+    {
+	    return $this->createQueryBuilder('u')
+		    ->andWhere('r.name IN (:role_name)')
+		    ->leftJoin('u.roles', 'r')
+		    ->setParameter('role_name', $roles)
+		    ->getQuery()
+		    ->getResult();
+    }
+
 }

@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
-use App\Service\RateInfoService;
+use Symfony\Component\Security\Core\Security;
 
 class TaskService
 {
@@ -110,14 +110,9 @@ class TaskService
     }
 
 
-    public function tasksForDashboardByUser(User $user) : array
+    public function tasksForDashboardByUser(User $user) : ?array
     {
-        return $this
-            ->entityManager
-            ->getRepository(Task::class)
-            ->tasksForDashboardByUser($user)
-        ;
-
+	    return $this->entityManager->getRepository(Task::class)->tasksForDashboardByUser($user);
     }
 
     public function hasAlreadyMarkedByUserAndTask(User $user, Task $task) : bool
