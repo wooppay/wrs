@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\RateInfo;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Enum\TaskEnum;
@@ -73,6 +74,16 @@ class TaskRepository extends ServiceEntityRepository
 	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
 		    $query->orWhere('t.team IN (:teams)')->setParameter('teams', $user->getTeams());
 	    }
+
+	    $exceptList = $this->createQueryBuilder('r')
+		    ->from(RateInfo::class, 'rates')
+		    ->leftJoin('rates.task', 'task')
+		    ->andWhere('rates.author IN (:user_id)')
+		    ->setParameter('user_id', $user->getId())
+		    ->select('task.id')
+		    ->distinct()->getQuery()->getResult();
+
+	    $exceptList ? $query->andWhere('t.id NOT IN (:exceptList)')->setParameter('exceptList', $exceptList) : null;
 
 	    return $query
             ->leftJoin('t.rates', 'rates')
