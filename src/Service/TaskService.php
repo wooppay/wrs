@@ -140,5 +140,10 @@ class TaskService
             ]);
     }
 
+    public function isAuthor(User $user, Task $task) : bool
+    {
+        return $this->userCreatedTasks($user)->contains($task);
+    }
+
 }
 

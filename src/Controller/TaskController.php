@@ -97,11 +97,16 @@ class TaskController extends AbstractController
     public function archive(Request $request, UserService $userService, TaskService $taskService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_TASK, $this->getUser());
-        $taskId = (int) $request->request->get('task_id');
+        $taskId = (int) $request->query->get('task_id');
         $task = $taskService->oneById($taskId);
 
         if (!$task) {
             throw $this->createNotFoundException('Task does not exist!');
+        }
+
+        if (!$taskService->isAuthor($this->getUser(), $task))
+        {
+            throw $this->createNotFoundException('You are not the author of this task');
         }
 
         if ($task->getStatus() == TaskEnum::DELETED) {
