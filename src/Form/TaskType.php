@@ -6,6 +6,7 @@ use App\Entity\Task;
 use App\Entity\Team;
 use App\Entity\Project;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,6 +18,7 @@ use Symfony\Component\Form\FormEvent;
 use App\Service\TeamService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TaskType extends AbstractType
 {
@@ -39,23 +41,33 @@ class TaskType extends AbstractType
 
         if ($options['formAction'] == 'update') {
             $formAction = $this->router->generate('app_dashboard_task_update', [
-                'id' => $builder->getData()->getId()
+                'task_id' => $builder->getData()->getId()
             ]);
             $projectDisabled = true;
         }
+
+	    $optionsForChoiceField = [
+		    'choice_value' => 'id',
+		    'choice_label' => 'email',
+		    'label' => 'User',
+		    'required' => true,
+		    'constraints' => [new NotBlank()],
+	    ];
+
+	    if (isset($options['userService'])) {
+		    $optionsForChoiceField['choice_loader'] = new CallbackChoiceLoader(function () use ($options) {
+			    return $options['userService']->allApprovedExceptAdminAndOwnerAndCustomer();
+		    });
+	    }
+
 
         $builder
             ->setAction($formAction)
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('executor')
-            ->add('executor', ChoiceType::class, [
-                'choices' => $options['users'],
-                'choice_label' => function($user) {
-                    return $user->getEmail();
-                },
-                'choice_value' => 'id',
-            ])
+            ->add('executor', ChoiceType::class,
+	            $optionsForChoiceField
+            )
             ->add('project', EntityType::class, [
                 'class' => Project::class,
                 'placeholder' => 'Choose project',
@@ -122,7 +134,7 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Task::class,
-            'users' => [],
+            'userService' => null,
             'formAction' => 'create'
         ]);
 
