@@ -112,6 +112,11 @@ class UserService
         ;
     }
 
+    public function allByRole(array $roles) : ?array
+    {
+	    return $this->entityManager->getRepository(User::class)->findByRoleName($roles);
+    }
+
 
     public function teamLeadByTask(Task $task) : ?User
     {
@@ -123,10 +128,9 @@ class UserService
     }
 
     //TODO: сделать через чистый SQL запрос ради производительности
-    public function allForSelectByRole() : array
+    public function allForSelectByEntities(array $usersEntities) : ?array
     {
 	    $usersForSelect = [];
-    	$usersEntities = $this->allExceptAdmin();
 		array_map(function($value) use (&$usersForSelect) {
 			/** @var User $value **/
 			$usersForSelect[] = ['id' => $value->getId(), 'email' => $value->getEmail()];

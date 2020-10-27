@@ -75,7 +75,7 @@
                         <a class="nav-item nav-link" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="false">Teams</a>
                     {% endif %}
                     {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_GENERATE_MARK_REPORT'), app.user) %}
-                        <a class="nav-item nav-link" id="nav-report-tab" data-toggle="tab" href="#nav-report" role="tab" aria-controls="nav-report" aria-selected="false" onclick="getUsersForSelect()">Report</a>
+                        <a class="nav-item nav-link" id="nav-report-tab" data-toggle="tab" href="#nav-report" role="tab" aria-controls="nav-report" aria-selected="false" onclick="getUsersForSelect(this, '#user_report_user')">Report</a>
                     {% endif %}
 
                 </div>

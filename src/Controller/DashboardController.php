@@ -5,7 +5,6 @@ use App\Entity\User;
 use App\Form\UserReportType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\TaskService;
-use App\Service\UserService;
 use App\Service\TeamService;
 use App\Entity\Task;
 use App\Entity\Project;
@@ -13,11 +12,10 @@ use App\Entity\Team;
 use App\Form\TaskType;
 use App\Form\ProjectType;
 use App\Form\TeamType;
-use App\Service\RoleService;
 
 class DashboardController extends AbstractController
 {
-    public function main(RoleService $roleService, TaskService $taskService, UserService $userService, TeamService $teamService)
+    public function main(TaskService $taskService, TeamService $teamService)
     {
         $user = $this->getUser();
 
@@ -26,16 +24,12 @@ class DashboardController extends AbstractController
         $receiveMarks = $user->getRates()->count();
         $authorMarks = $user->getAuthorRates()->count();
 
-        $tasksUsers = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
-        $taskForm = $this->createForm(TaskType::class, (new Task()), [
-            'users' => $tasksUsers,
-        ]);
+        $taskForm = $this->createForm(TaskType::class, (new Task()));
 
-        $projectCustomers = $userService->allByRoleName($roleService->getRoleCustomer()->getName());
         $teams = $teamService->all();
+
         $projectForm = $this->createForm(ProjectType::class, (new Project()), [
             'teams' => $teams,
-            'customers' => $projectCustomers,
         ]);
 
         $teamForm = $this->createForm(TeamType::class, (new Team()));

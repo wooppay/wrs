@@ -37,12 +37,17 @@ $(function(){
         }
     });
 });
-function getUsersForSelect() {
-    let selectList = $('#user_report_user');
-    document.getElementById('nav-report-tab').removeAttribute('onclick');
+function getUsersForSelect(obj, selectListId, role) {
+    let selectList = $(selectListId);
+
+    obj.removeAttribute('onclick');
+
     $.ajax({
         url: routeGetUsers,
-        method: 'GET',
+        method: 'POST',
+        data: {
+            role: role
+        },
         success: function (data) {
             $.each(data, function (key, value) {
                 selectList.append('<option value="' + value['id'] + '">' + value['email'] + '</option>');

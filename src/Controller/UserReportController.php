@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Enum\PermissionEnum;
-use App\Enum\RoleEnum;
 use App\Form\UserReportType;
 use App\Service\UserService;
 use App\Service\ValidationErrorService;
@@ -15,9 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserReportController extends AbstractController
 {
-	public function getUsers(UserService $userService)
+	public function getUsers(UserService $userService, Request $request)
 	{
-		$users = $userService->allForSelectByRole();
+		$role = $request->get('role');
+
+		if ($role) {
+			$usersEntities = $userService->allByRole([$role]);
+		} else {
+			$usersEntities = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
+		}
+
+		$users = $userService->allForSelectByEntities($usersEntities);
 
 		return new JsonResponse($users);
 	}
