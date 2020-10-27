@@ -68,6 +68,10 @@ class TaskController extends AbstractController
         if (!$task) {
             throw $this->createNotFoundException('Task does not exist!');
         }
+        
+        if ($taskService->isTaskMarked($task)) {
+            throw $this->createNotFoundException('This task has already marked');
+        }
 
         if ($task->getStatus() == TaskEnum::DELETED) {
             throw $this->createNotFoundException('Task was archived');
@@ -102,6 +106,10 @@ class TaskController extends AbstractController
 
         if (!$task) {
             throw $this->createNotFoundException('Task does not exist!');
+        }
+
+        if ($taskService->isTaskMarked($task)) {
+            throw $this->createNotFoundException('This task has already marked');
         }
 
         if ($task->getStatus() == TaskEnum::DELETED) {

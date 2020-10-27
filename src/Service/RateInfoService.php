@@ -225,6 +225,15 @@ class RateInfoService
         ;
     }
 
+    public function allByTask(Task $task) : ?Collection
+    {
+        return $this
+            ->entityManager
+            ->getRepository(RateInfo::class)
+            ->allByTask($task)
+        ;
+    }
+
     public function allRatesByParams(User $user, int $value, string $type) : ?array
     {
 	    return $this
