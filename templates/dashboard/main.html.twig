@@ -81,7 +81,9 @@
                         <a class="nav-item nav-link" id="nav-report-tab" data-toggle="tab" href="#nav-report" role="tab" aria-controls="nav-report" aria-selected="false" onclick="getUsersForSelect()">Report</a>
                     {% endif %}
                     
-                    <a class="nav-item nav-link" id="nav-archived-tab" data-toggle="tab" href="#nav-archived" role="tab" aria-controls="nav-archived" aria-selected="false">Archive</a>
+                    {% if archivedTasks is not empty %}
+                        <a class="nav-item nav-link" id="nav-archived-tab" data-toggle="tab" href="#nav-archived" role="tab" aria-controls="nav-archived" aria-selected="false">Archive</a>
+                    {% endif %}
                 </div>
 
             </nav>
