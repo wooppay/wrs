@@ -86,9 +86,13 @@ class TaskRepository extends ServiceEntityRepository
 	    $exceptList ? $query->andWhere('t.id NOT IN (:exceptList)')->setParameter('exceptList', $exceptList) : null;
 
 	    return $query
-		    ->orderBy('t.id', 'DESC')
+            ->leftJoin('t.rates', 'rates')
+            ->andWhere('t.status != :deleted')
+		    ->andWhere('rates.id IS NULL')
+            ->orderBy('t.id', 'DESC')
+            ->setParameter('deleted', TaskEnum::DELETED)
 		    ->getQuery()
-		    ->getResult();
+            ->getResult();
     }
 
     //TODO: Сделать изменение статуса задачи при выполнении, затем получать только выполненные задачи

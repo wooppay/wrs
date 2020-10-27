@@ -20,10 +20,11 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         $tasks = $taskService->tasksForDashboardByUser($user);
+        $archivedTasks = $taskService->archivedTasks($user);
 
         $receiveMarks = $user->getRates()->count();
         $authorMarks = $user->getAuthorRates()->count();
-
+        
         $taskForm = $this->createForm(TaskType::class, (new Task()));
 
         $teams = $teamService->all();
@@ -38,6 +39,7 @@ class DashboardController extends AbstractController
 
         return $this->render('dashboard/main.html.twig', [
             'tasks' => $tasks,
+            'archivedTasks' => $archivedTasks,
             'teamForm' => $teamForm->createView(),
             'receiveMarks' => $receiveMarks,
             'authorMarks' => $authorMarks,
