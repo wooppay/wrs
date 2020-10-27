@@ -33,10 +33,14 @@
                     {% if not marked %}
                         <a title="Mark" href="{{ path('app_dashboard_check_list', {id: task.id}) }}" class="check-list-link btn btn-outline-dark"><img src="/img/plus-one.svg" alt="plus-one"></a>
                     {% endif %}
-                    {% if not marked and is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
+                    {% if not marked
+                        and is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user)
+                        and task.author == app.user %}
                         <a title="Update" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></a>
                     {% endif %}
-                    {% if not marked and is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
+                    {% if not marked
+                        and is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user)
+                        and task.author == app.user %}
                         <a title="Archive" id="{{ task.id }}" class="task-detail-archive btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskArchive"></a>
                     {% endif %}
                 </div>
