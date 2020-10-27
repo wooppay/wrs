@@ -135,3 +135,7 @@ a {
 .card-item:hover .task-edit {
   display: block;
 }
+
+.rate-detail-note {
+  margin: 5px;
+}
