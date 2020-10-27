@@ -61,11 +61,7 @@ class TaskController extends AbstractController
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TASK, $this->getUser());
         $referer = $request->headers->get('referer');
 
-        if ($request->request->get('task_id')) {
-            $taskId = $request->request->get('task_id');
-        } else {
-            $taskId = $request->query->get('id');
-        }
+        ($request->request->get('task_id')) ? $taskId = $request->request->get('task_id') : $taskId = $request->query->get('task_id');
 
         $task = $taskService->oneById($taskId);
 
