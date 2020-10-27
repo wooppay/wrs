@@ -61,6 +61,21 @@ class TaskController extends AbstractController
         $taskId = $request->get('task_id');
         $task = $taskService->oneById($taskId);
 
+<<<<<<< Updated upstream
+=======
+        if (!$task) {
+            throw $this->createNotFoundException('Task does not exist!');
+        }
+
+        if ($taskService->isTaskMarked($task)) {
+            throw $this->createNotFoundException('This task has already marked');
+        }
+
+        if ($task->getStatus() == TaskEnum::DELETED) {
+            throw $this->createNotFoundException('Task was archived');
+        }
+
+>>>>>>> Stashed changes
         $form = $this->createForm(TaskType::class, $task, [
             'userService' => $userService,
             'formAction' => 'update'
@@ -82,6 +97,40 @@ class TaskController extends AbstractController
         ]);
     }
     
+    public function archive(Request $request, UserService $userService, TaskService $taskService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_DELETE_TASK, $this->getUser());
+        $taskId = (int) $request->request->get('task_id');
+        $task = $taskService->oneById($taskId);
+
+        if (!$task) {
+            throw $this->createNotFoundException('Task does not exist!');
+        }
+
+        if ($taskService->isTaskMarked($task)) {
+            throw $this->createNotFoundException('This task has already marked');
+        }
+
+        if ($task->getStatus() == TaskEnum::DELETED) {
+            throw $this->createNotFoundException('Task was archived');
+        }
+
+        try {
+            $task->setStatus(TaskEnum::DELETED);
+            $taskService->update($task);
+            $this->addFlash('success', 'Task was successfully archived');
+        } catch (\Exception $e) {
+            $this->addFlash('danger', 'Oops, some error has occurred');
+            return new JsonResponse([
+                'status' => false
+            ]);
+        }
+        
+        return new JsonResponse([
+            'status' => true
+        ]);
+    }
+
     public function teamByProject(Request $request, ProjectService $projectService)
     {
         $projectId = $request->request->get('project_id');

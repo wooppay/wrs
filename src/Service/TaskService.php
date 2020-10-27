@@ -120,5 +120,21 @@ class TaskService
         return $this->rateInfoService->allByUserAndTask($user, $task)->count() > 0;
     }
 
+    public function isTaskMarked(Task $task) : bool
+    {
+        return $this->rateInfoService->allByTask($task)->count() > 0;
+    }
+
+    public function archivedTasks(User $user)
+    {
+        return $this
+            ->entityManager
+            ->getRepository(Task::class)
+            ->findBy([
+                'author' => $user,
+                'status' => TaskEnum::DELETED
+            ]);
+    }
+
 }
 

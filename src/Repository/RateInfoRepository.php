@@ -57,6 +57,15 @@ class RateInfoRepository extends ServiceEntityRepository
         return new ArrayCollection($res);
     }
 
+    public function allByTask(Task $task): ?Collection
+    {
+        $res = $this->findBy([
+            'task' => $task
+        ]);
+
+        return new ArrayCollection($res);
+    }
+
 	public function allRatesByParams(User $user, int $value, string $type, array $tasksIds) : ?array
 	{
 		return $this->createQueryBuilder('r')
