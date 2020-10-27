@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\RateInfo;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Enum\TaskEnum;
@@ -74,12 +75,24 @@ class TaskRepository extends ServiceEntityRepository
 		    $query->orWhere('t.team IN (:teams)')->setParameter('teams', $user->getTeams());
 	    }
 
+	    $exceptList = $this->createQueryBuilder('r')
+		    ->from(RateInfo::class, 'rates')
+		    ->leftJoin('rates.task', 'task')
+		    ->andWhere('rates.author IN (:user_id)')
+		    ->setParameter('user_id', $user->getId())
+		    ->select('task.id')
+		    ->distinct()->getQuery()->getResult();
+
+	    $exceptList ? $query->andWhere('t.id NOT IN (:exceptList)')->setParameter('exceptList', $exceptList) : null;
+
 	    return $query
-		    ->leftJoin('t.rates', 'rates')
+            ->leftJoin('t.rates', 'rates')
+            ->andWhere('t.status != :deleted')
 		    ->andWhere('rates.id IS NULL')
-		    ->orderBy('t.id', 'DESC')
+            ->orderBy('t.id', 'DESC')
+            ->setParameter('deleted', TaskEnum::DELETED)
 		    ->getQuery()
-		    ->getResult();
+            ->getResult();
     }
 
     //TODO: Сделать изменение статуса задачи при выполнении, затем получать только выполненные задачи

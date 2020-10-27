@@ -22,7 +22,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header">
-                        {{ item.task_name }}
+                        <a href="{{ path('app_dashboard_task_details', {id: item.task_id}) }}">{{ item.task_name }}</a>
                     </div>
                     
                     <div class="card-body text-center">

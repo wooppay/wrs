@@ -53,8 +53,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
         <script>
+            const dashboardUrl = "{{ path('app_dashboard')|escape('js') }}";
             const routeTeamByProject = "{{ path('app_dashboard_task_create_ajax_team')|escape('js') }}";
             const routeTaskUpdate = "{{ path('app_dashboard_task_update')|escape('js') }}";
+            const routeTaskArchive = "{{ path('app_dashboard_task_archive')|escape('js') }}";
             const routeGetUsers = "{{ path('app_dashboard_users_for_select')|escape('js') }}";
             const routeGetReport = "{{ path('app_dashboard_report')|escape('js') }}";
 	    </script>

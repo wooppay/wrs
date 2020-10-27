@@ -18,12 +18,21 @@
                     <div class="card card-item">
                         <div class="card-header  p-3">
                             <p>
-                                <a class="card-title  h6" href="#!">{{ item.name }}</a>
+                                <a class="card-title  h6" href="{{ path('app_dashboard_task_details', {id: item.id}) }}">{{ item.name }}</a>
+                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
+                                    <a title="Archive" href="#" class="task-archive float-right" data-toggle="modal" data-target="#taskArchive">
+                                        <i id="{{ item.id }}" class="fas fa-trash-alt fa-lg"></i>
+                                    </a>
+                                {% endif %}
                                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
-                                    <a href="#" class="task-edit float-right" onclick="getUsersForSelect(this, '#task_executor_update')">
+                                    <a title="Update" href="#" class="task-edit float-right" onclick="getUsersForSelect(this, '#task_executor_update')">
                                         <i id="{{ item.id }}" class="far fa-edit fa-lg"></i>
                                     </a>
                                 {% endif %}
+                            </p>
+                            <p class="card-subtitle  h7  mb-3">
+                                Author:
+                                <a href="#!">{{ item.author.email }}</a>
                             </p>
                             <p class="card-subtitle  h7  mb-3">
                                 Executor:
