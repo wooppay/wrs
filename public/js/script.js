@@ -1,7 +1,4 @@
 $(document).ready(function() {
-	var projectId = $("#task_project").val();
-	
-    taskByProject(projectId);
 
 	$('#task_project').change(function() {
 		var projectId = $("#task_project").val();

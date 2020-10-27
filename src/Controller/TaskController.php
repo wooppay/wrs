@@ -37,11 +37,11 @@ class TaskController extends AbstractController
     public function create(Request $request, UserService $userService, TeamService $teamService, ProjectService $projectService, TaskService $taskService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_TASK, $this->getUser()); 
-        $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
+
         $task = new Task();
 
         $form = $this->createForm(TaskType::class, $task, [
-            'users' => $users,
+            'userService' => $userService,
         ]);
         
         $form->handleRequest($request);
@@ -59,7 +59,6 @@ class TaskController extends AbstractController
     public function update(Request $request, UserService $userService, TaskService $taskService)
     {
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_TASK, $this->getUser());
-        $users = $userService->allApprovedExceptAdminAndOwnerAndCustomer();
         $referer = $request->headers->get('referer');
 
         if ($request->request->get('task_id')) {
@@ -79,7 +78,7 @@ class TaskController extends AbstractController
         }
 
         $form = $this->createForm(TaskType::class, $task, [
-            'users' => $users,
+            'userService' => $userService,
             'formAction' => 'update'
         ]);
 

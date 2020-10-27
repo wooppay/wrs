@@ -54,37 +54,34 @@ class TaskRepository extends ServiceEntityRepository
         return $tasks;
     }
 
-    public function tasksForDashboardByUser(User $user) : array
+    public function tasksForDashboardByUser(User $user) : ?array
     {
-        $tasks = [];
-        
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_MAY_CREATED_TASKS, $user)) {
-            $tasks = array_merge($tasks, $this->taskService->userCreatedTasks($user)->toArray());
-        }
+	    $query = $this->createQueryBuilder('t');
 
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
-            $tasks = array_merge($tasks, $this->taskService->allProjectTaskByUser($user));
-        }
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_MAY_CREATED_TASKS, $user)) {
+	        $query->orWhere('t.author = :user_id')->setParameter('user_id', $user->getId());
+	    }
 
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
-            $tasks = array_merge($tasks, $user->getTasks()->toArray());
-        }
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
+		    $query->orWhere('t.executor = :user_id')->setParameter('user_id', $user->getId());
+	    }
 
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
-            $tasks = array_merge($tasks, $this->taskService->teamMembersTasksWhereUserParticipated($user));
-        }
-        
-        $tasks = array_unique($tasks, SORT_REGULAR);
-        $res = [];
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
+	       $query->orWhere('t.project IN (:projects)')->setParameter('projects', $user->getProjects());
+	    }
 
-        foreach ($tasks as $task) {
-            if ($task->getStatus() != TaskEnum::DELETED
-                && !$this->taskService->hasAlreadyMarkedByUserAndTask($user, $task)) {
-                    $res[] = $task;
-            }
-        }
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
+		    $query->orWhere('t.team IN (:teams)')->setParameter('teams', $user->getTeams());
+	    }
 
-        return $res;
+	    return $query
+            ->leftJoin('t.rates', 'rates')
+            ->andWhere('t.status != :deleted')
+		    ->andWhere('rates.id IS NULL')
+            ->orderBy('t.id', 'DESC')
+            ->setParameter('deleted', TaskEnum::DELETED)
+		    ->getQuery()
+            ->getResult();
     }
 
     //TODO: Сделать изменение статуса задачи при выполнении, затем получать только выполненные задачи

@@ -54,7 +54,8 @@ class CheckListType extends AbstractType
                             'multiple' => false,
                         ])
                         ->add($inputName . '_note', TextareaType::class, [
-                            'label' => 'Note'
+                            'label' => 'Note',
+                            'required' => false
                         ])
                     )
                     ->add($inputName . '_skill', HiddenType::class, [

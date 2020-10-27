@@ -29,7 +29,6 @@ class ProjectController extends Controller
         $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_PROJECT, $this->getUser());
         
         $teams = $teamService->all();
-        $customers = $userService->allByRoleName(RoleEnum::CUSTOMER);
         
         $project = (new Project())
             ->setOwner($this->getUser())
@@ -37,7 +36,7 @@ class ProjectController extends Controller
 
         $form = $this->createForm(ProjectType::class, $project, [
             'teams' => $teams,
-            'customers' => $customers,
+            'userService' => $userService,
         ]);
         $form->handleRequest($request);
         
