@@ -112,6 +112,7 @@ class UserService
         ;
     }
 
+
     public function allByRole(array $roles) : ?array
     {
 	    return $this->entityManager->getRepository(User::class)->findByRoleName($roles);
@@ -127,6 +128,14 @@ class UserService
         ;
     }
 
+    public function save(User $user): bool
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return true;
+    }
+    
     //TODO: сделать через чистый SQL запрос ради производительности
     public function allForSelectByEntities(array $usersEntities) : ?array
     {
