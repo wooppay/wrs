@@ -42,6 +42,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_BE_PRODUCT_OWNER,
         PermissionEnum::CAN_UPDATE_TASK,
         PermissionEnum::CAN_DELETE_TASK,
+        PermissionEnum::CAN_SEE_DETAIL_TASK,
         PermissionEnum::CAN_SEE_MAY_CREATED_TASKS,
 	    PermissionEnum::CAN_GENERATE_MARK_REPORT,
         PermissionMarkEnum::CAN_MARK_TEAM_LEAD,
@@ -53,6 +54,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS_EXCEPT_ME,
         PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS,
         PermissionEnum::CAN_BE_CUSTOMER,
+        PermissionEnum::CAN_SEE_DETAIL_TASK,
         PermissionMarkEnum::CAN_MARK_TEAM_LEAD,
         PermissionMarkEnum::CAN_MARK_DEVELOPER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
@@ -67,6 +69,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_DEVELOPER,
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
+        PermissionEnum::CAN_SEE_DETAIL_TASK,
     ];
 
     private $devPermissions = [
@@ -75,6 +78,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_TEAM_LEAD,
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
+        PermissionEnum::CAN_SEE_DETAIL_TASK,
     ];
     
     public function __construct(SecurityService $securityService, RoleService $roleService, PermissionService $permissionService)

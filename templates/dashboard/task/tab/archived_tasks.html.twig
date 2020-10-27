@@ -1,0 +1,35 @@
+<div class="tab-pane" id="nav-archived" role="tabpanel" aria-labelledby="nav-archived-tab">
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="slider">
+
+                {% for item in archivedTasks %}
+                    <div class="card card-item">
+                        <div class="card-header  p-3">
+                            <p>
+                                <a class="card-title  h6" href="{{ path('app_dashboard_task_details', {id: item.id}) }}">{{ item.name }}</a>
+                            </p>
+                            <p class="card-subtitle  h7  mb-3">
+                                Executor:
+                                <a href="#!">{{ item.executor.email }}</a>
+                            </p>
+                            <p class="card-subtitle  h7 mb-3">
+                                Team:
+                                <a href="#!">{{ item.team.name }}</a>
+                            </p>
+                            <p class="card-subtitle  h7">
+                                Project:
+                                <a href="#!">{{ item.project.name }}</a>
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text h7">{{ item.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>      
+</div>
