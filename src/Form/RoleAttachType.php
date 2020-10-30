@@ -37,7 +37,7 @@ class RoleAttachType extends AbstractType
         ->add('role_id', ChoiceType::class, [
             'choices' => $roles,
             'choice_label' => function($role) {
-                return $role->getName();
+                return $role;
             },
             'choice_value' => 'id',
         ])

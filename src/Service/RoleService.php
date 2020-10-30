@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Entity\User;
 use App\Entity\Role;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -47,6 +48,27 @@ class RoleService
         return $this->entityManager
         ->getRepository(Role::class)
         ->find($id);
+    }
+
+    public function allByUser(User $user): ?array
+    {
+        $ids = array_flip($user->getRoles());
+
+        return $this->entityManager
+            ->getRepository(Role::class)
+            ->findBy(['id' => $ids]);
+    }
+
+    public function allTitlesByUser(User $user): ?array
+    {
+        $roles = $this->allByUser($user);
+        $titles = [];
+
+        foreach ($roles as $role) {
+            $titles[] = $role->getTitle();
+        }
+
+        return $titles;
     }
 
     public function byName(string $name) : Role
