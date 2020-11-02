@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Details{% endblock %}
+{% block head_title %}
+    <h2>Details</h2>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/script.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            {% include 'parts/flash_message.html.twig' %}
+            
+            <h3>{{ task.name }}</h3>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('index') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ task.name }}</li>
+                </ol>
+            </nav>
+
+            {% if task.status != constant('App\\Enum\\TaskEnum::DELETED') %}
+                <div class="buttons">
+                    {% if marked %}
+                        <a title="Dispute" class="btn btn-outline-dark far fa-hand-paper"></a>
+                    {% endif %}
+                    {% if not marked %}
+                        <a title="Mark" href="{{ path('app_dashboard_check_list', {id: task.id}) }}" class="check-list-link btn btn-outline-dark"><img src="/img/plus-one.svg" alt="plus-one"></a>
+                    {% endif %}
+                    {% if not marked
+                        and is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user)
+                        and task.author == app.user %}
+                        <a title="Update" id="{{ task.id }}" class="task-detail-edit btn btn-outline-dark fas fa-pencil-alt"></a>
+                    {% endif %}
+                    {% if not marked
+                        and is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user)
+                        and task.author == app.user %}
+                        <a title="Archive" id="{{ task.id }}" class="task-detail-archive btn btn-outline-dark fas fa-trash-alt" data-toggle="modal" data-target="#taskArchive"></a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <p class="text-break font-weight-normal mt-3">{{ task.description }}</p>
+
+            {% if marked %}
+                <h5 class="font-weight-bold mb-3">Result</h5>
+
+                <div class="rates-list">
+                    {% for rate in task.rates %}
+                        {% if app.user != rate.user %}
+                            <p class="rate-item">
+                                {{ rate.skill.content }}
+                                {% if rate.value == 1 %}
+                                    <i class="far fa-thumbs-up"></i>
+                                {% elseif rate.value == 0 %}
+                                    <i class="far fa-thumbs-down"></i>
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if task.status != constant('App\\Enum\\TaskEnum::DELETED') %}
+                    <p class="text-break font-weight-normal mt-3">
+                        Don't agree with result? Open
+                        <a href="#">dispute <i class="far fa-hand-paper"></i></a>
+                    </p>
+                {% endif %}
+            {% endif %}
+
+            <div class="discuss-block mt-4">
+                <h5 class="font-weight-bold">Discussion</h5>
+                <p>You can discuss task in <a href="#">Youtrack</a></p>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="task-info-board">
+                <table class="task-info-table">
+                    <tr>
+                        <td>Project:</td>
+                        <td><a href="#">{{ task.project.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Team:</td>
+                        <td><a href="#">{{ task.team.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Executor:</td>
+                        <td><a href="#">{{ task.executor.email }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Author:</td>
+                        <td><a href="#">{{ task.author.email }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td>
+                            {% if task.status is constant('App\\Enum\\TaskEnum::NEW') %}
+                                NEW
+                            {% elseif task.status is constant('App\\Enum\\TaskEnum::DONE') %}
+                                DONE
+                            {% elseif task.status is constant('App\\Enum\\TaskEnum::DELETED') %}
+                                DELETED
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="taskUpdate" class="modal fade" role="dialog"></div>
+
+{% include 'dashboard/task/modal/archive.html.twig' %}
+
+{% endblock %}

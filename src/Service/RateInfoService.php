@@ -32,27 +32,48 @@ class RateInfoService
         foreach ($pack as $key => $item) {
             $parts = explode('_', $key);
 
-            $skillId = (int) $parts[1];
-            $sigment = $parts[2];
+            if ($parts[2] == 'note') {
+                foreach ($item as $questionWithNoteKey => $questionWithNoteValue) {
+                    $parts = explode('_', $questionWithNoteKey);
+                    $skillId = (int) $parts[1];
+                    $sigment = $parts[2];
+                    $item = $questionWithNoteValue;
 
-            switch ($sigment) {
-                case 'value' :
-                    $res[$skillId]['value'] = $item;
-                    break;
-                case 'skill' :
-                    $res[$skillId]['skill'] = $this->skillService->byId($item);
-                    break;
-                case 'user' :
-                    $res[$skillId]['user'] = $this->userService->byId($item);
-                    break;
+                    $res = $this->handleData($res, $skillId, $sigment, $item, $task, $author);
+                }
+            } else {
+                $skillId = (int) $parts[1];
+                $sigment = $parts[2];
+
+                $res = $this->handleData($res, $skillId, $sigment, $item, $task, $author);
             }
-
-            $res[$skillId]['task'] = $task;
-            $res[$skillId]['author'] = $author;
-
         }
 
         sort($res);
+
+        return $res;
+    }
+
+    private function handleData(array $res, int $skillId, string $sigment, $item, Task $task, User $author) : array
+    {
+        switch ($sigment) {
+            case 'value' :
+                $res[$skillId]['value'] = $item;
+                break;
+            case 'skill' :
+                $skill = $this->skillService->byId((int) $item);
+                $res[$skillId]['skill'] = $skill;
+                break;
+            case 'note' :
+                $res[$skillId]['note'] = $item;
+                break;
+            case 'user' :
+                $res[$skillId]['user'] = $this->userService->byId($item);
+                break;
+        }
+
+        $res[$skillId]['task'] = $task;
+        $res[$skillId]['author'] = $author;
 
         return $res;
     }
@@ -67,6 +88,10 @@ class RateInfoService
                 ->setTask($item['task'])
                 ->setAuthor($item['author'])
             ;
+
+            if (isset($item['note'])) {
+                $rateInfo->setNote($item['note']);
+            }
             
             // todo transaction
             $this->create($rateInfo);
@@ -200,5 +225,22 @@ class RateInfoService
         ;
     }
 
+    public function allByTask(Task $task) : ?Collection
+    {
+        return $this
+            ->entityManager
+            ->getRepository(RateInfo::class)
+            ->allByTask($task)
+        ;
+    }
+
+    public function allRatesByParams(User $user, int $value, string $type) : ?array
+    {
+	    return $this
+		    ->entityManager
+		    ->getRepository(RateInfo::class)
+		    ->allRatesByParams($user, $value, $type)
+		    ;
+    }
 }
 

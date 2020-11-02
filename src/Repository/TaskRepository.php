@@ -2,12 +2,15 @@
 
 namespace App\Repository;
 
+use App\Entity\RateInfo;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Enum\TaskEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use App\Service\TaskService;
 use App\Enum\PermissionEnum;
+use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -52,37 +55,63 @@ class TaskRepository extends ServiceEntityRepository
         return $tasks;
     }
 
-    public function tasksForDashboardByUser(User $user) : array
+    public function tasksForDashboardByUser(User $user) : ?array
     {
-        $tasks = [];
-        
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_MAY_CREATED_TASKS, $user)) {
-            $tasks = array_merge($tasks, $this->taskService->userCreatedTasks($user)->toArray());
-        }
+	    $query = $this->createQueryBuilder('t');
 
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
-            $tasks = array_merge($tasks, $this->taskService->allProjectTaskByUser($user));
-        }
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_MAY_CREATED_TASKS, $user)) {
+	        $query->orWhere('t.author = :user_id')->setParameter('user_id', $user->getId());
+	    }
 
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
-            $tasks = array_merge($tasks, $user->getTasks()->toArray());
-        }
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_TASKS_ASSIGNED_TO_ME, $user)) {
+		    $query->orWhere('t.executor = :user_id')->setParameter('user_id', $user->getId());
+	    }
 
-        if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
-            $tasks = array_merge($tasks, $this->taskService->teamMembersTasksWhereUserParticipated($user));
-        }
-        
-        $tasks = array_unique($tasks, SORT_REGULAR);
-        $res = [];
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MY_PROJECT_TASKS, $user)) {
+	       $query->orWhere('t.project IN (:projects)')->setParameter('projects', $user->getProjects());
+	    }
 
-        foreach ($tasks as $task) {
-            if (!$this->taskService->hasAlreadyMarkedByUserAndTask($user, $task)) {
-                $res[] = $task;
-            }
-        }
+	    if ($this->security->isGranted(PermissionEnum::CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED, $user)) {
+		    $query->orWhere('t.team IN (:teams)')->setParameter('teams', $user->getTeams());
+	    }
 
-        return $res;
+	    $exceptList = $this->createQueryBuilder('r')
+		    ->from(RateInfo::class, 'rates')
+		    ->leftJoin('rates.task', 'task')
+		    ->andWhere('rates.author IN (:user_id)')
+		    ->setParameter('user_id', $user->getId())
+		    ->select('task.id')
+		    ->distinct()->getQuery()->getResult();
+
+	    $exceptList ? $query->andWhere('t.id NOT IN (:exceptList)')->setParameter('exceptList', $exceptList) : null;
+
+	    return $query
+            ->leftJoin('t.rates', 'rates')
+            ->andWhere('t.status != :deleted')
+		    ->andWhere('rates.id IS NULL')
+            ->orderBy('t.id', 'DESC')
+            ->setParameter('deleted', TaskEnum::DELETED)
+		    ->getQuery()
+            ->getResult();
     }
+
+    //TODO: Сделать изменение статуса задачи при выполнении, затем получать только выполненные задачи
+	public function byUserAndTime(User $user, string $dateFrom, string $dateTo) : ?array
+	{
+
+		return $this->createQueryBuilder('t')
+			->where('t.executor = :user')
+			->andWhere('t.created_at >= :dateFrom')
+			->andWhere('t.created_at <= :dateTo')
+			//->andWhere('t.status = :status')
+			->setParameter('user', $user)
+			->setParameter('dateFrom', $dateFrom)
+			->setParameter('dateTo', (new \DateTime($dateTo))->modify('1 day'))
+			//->setParameter('status', TaskEnum::DONE)
+			->orderBy('t.id', 'ASC')
+			->getQuery()
+			->getResult();
+	}
 
     // /**
     //  * @return Task[] Returns an array of Task objects

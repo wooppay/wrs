@@ -28,6 +28,8 @@ class PermissionEnum
     public const CAN_SEE_MANAGE_TASK = 'can_see_manage_task';
     
     public const CAN_CREATE_TASK = 'can_create_task';
+
+    public const CAN_SEE_DETAIL_TASK = 'can_see_detail_task';
     
     public const CAN_SEE_MANAGE_TEAM = 'can_see_manage_team';
 
@@ -60,5 +62,7 @@ class PermissionEnum
     public const CAN_SEE_MAY_CREATED_TASKS = 'can_see_my_created_tasks';
 
     public const CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED = 'can_see_all_members_tasks_from_teams_where_i_participated';
+
+    public const CAN_GENERATE_MARK_REPORT = 'can_generate_mark_report';
 }
 

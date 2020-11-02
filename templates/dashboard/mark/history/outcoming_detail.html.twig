@@ -35,6 +35,9 @@
                                     <div class="skill-item">
                                         <span>{{ rate.skill.content }}</span>
                                         <a href="#"><i>({{ rate.user.email }})</i></a>
+                                        {% if rate.note is not empty %}
+                                            <p class="rate-detail-note">Note: {{ rate.note }}</p>
+                                        {% endif %}
                                     </div>
                                 {% endfor %}
                             </div>
@@ -45,14 +48,14 @@
                                 {% for rate in item.negative %}
                                     <div class="skill-item">
                                         <span>{{ rate.skill.content }}</span>
-                                        <a href=#"><i>({{ rate.user.email }})</i></a>
+                                        <a href="#"><i>({{ rate.user.email }})</i></a>
+                                        {% if rate.note is not empty %}
+                                            <p class="rate-detail-note">Note: {{ rate.note }}</p>
+                                        {% endif %}
                                     </div>
                                 {% endfor %}
                             </div>
                         </div>
-                        
-                        <br>
-                 
                     {% endfor %}
 
                 </div>

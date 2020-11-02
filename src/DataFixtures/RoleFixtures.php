@@ -31,9 +31,11 @@ class RoleFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $roles = (new \ReflectionClass(self::class))->getConstants();
+        $titles = (new RoleTitleFixtures())->getConstants();
         
         foreach ($roles as $role) {
             $entity = (new Role())->setName($role);
+            $entity->setTitle($titles[$role]);
             $this->roleService->create($entity);
         }
     }

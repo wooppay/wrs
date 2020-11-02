@@ -8,7 +8,6 @@
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
       </ol>
     </nav>
@@ -29,7 +28,7 @@
 
             <div class="d-flex  flex-column">
                 <span class="mb-2  h5  font-weight-bold  user__name">{{ app.user.email }}</span>
-                <span class="mb-2  h6">{{ app.user.roles|join(', ')}}</span>
+                <span class="mb-2  h6">{{ roleTitles|join(', ') }}</span>
                 <a href="mailto:{{ app.user.email }}">{{ app.user.email }}</a>
             </div>
         </div>
@@ -68,13 +67,22 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Tasks</a>
+                    
                     {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}
                         <a class="nav-item nav-link" id="nav-projects-tab" data-toggle="tab" href="#nav-projects" role="tab" aria-controls="nav-projects" aria-selected="false">Projects</a>
                     {% endif %}
+                    
                     {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_TEAM'), app.user) %}
                         <a class="nav-item nav-link" id="nav-team-tab" data-toggle="tab" href="#nav-team" role="tab" aria-controls="nav-team" aria-selected="false">Teams</a>
                     {% endif %}
-
+                    
+                    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_GENERATE_MARK_REPORT'), app.user) %}
+                        <a class="nav-item nav-link" id="nav-report-tab" data-toggle="tab" href="#nav-report" role="tab" aria-controls="nav-report" aria-selected="false" onclick="getUsersForSelect(this, '#user_report_user')">Report</a>
+                    {% endif %}
+                    
+                    {% if archivedTasks is not empty %}
+                        <a class="nav-item nav-link" id="nav-archived-tab" data-toggle="tab" href="#nav-archived" role="tab" aria-controls="nav-archived" aria-selected="false">Archive</a>
+                    {% endif %}
                 </div>
 
             </nav>
@@ -85,11 +93,16 @@
                     {% include 'dashboard/team/tab/list_preview.html.twig' %}
                 {% endif %}
 
+                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_GENERATE_MARK_REPORT'), app.user) %}
+                    {% include '/dashboard/report/tab/report-form.html.twig' with {'form': userReportForm} %}
+                    {% include '/dashboard/report/modal/report-modal.html.twig' %}
+                {% endif %}
+
                 {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_MANAGE_PROJECT'), app.user) %}
                     {% include 'dashboard/project/tab/list_preview.html.twig' %}
                 {% endif %}
 
-
+                {% include 'dashboard/task/tab/archived_tasks.html.twig' %}
             </div>
 
         </div>
@@ -98,6 +111,7 @@
     <div id="taskUpdate" class="modal fade" role="dialog"></div>
 
     {% include 'dashboard/task/modal/create.html.twig' with {'form': taskForm} %}
+    {% include 'dashboard/task/modal/archive.html.twig' %}
     {% include 'dashboard/project/modal/create.html.twig' with {'form': projectForm} %}
     {% include 'dashboard/team/modal/create.html.twig' with {'form': teamForm} %}
 

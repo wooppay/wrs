@@ -128,10 +128,71 @@ a {
         margin: 0 -10px;
 }
 
-.task-edit {
+.task-edit, .task-archive {
   display: none;
+  height: 100%;
+  width: auto;
+  margin-left: 5px;
 }
 
 .card-item:hover .task-edit {
   display: block;
+}
+
+.card-item:hover .task-archive {
+  display: block;
+}
+
+.task-info-board {
+  height: auto;
+  margin-top: 35px;
+  padding: 15px;
+  padding-left: 20px;
+  box-shadow: 0 2px 8px gray;
+}
+
+.task-info-table {
+  width: 100%;
+  font-size: 15px;
+}
+
+.task-info-table > tbody > tr {
+  height: 30px;
+}
+
+.rates-list {
+  padding: 15px;
+  height: 200px;
+  overflow-y: scroll;
+  border: 2px solid #D7D7D7;
+  border-radius: 5px;
+}
+
+.rate-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 0;
+  padding: 15px;
+  border: 1px solid gray;
+  font-size: 16px;
+}
+
+.buttons {
+  height: 30px;
+}
+
+.buttons > a {
+  height: 100%;
+  width: 40px;
+  cursor: pointer;
+}
+
+.check-list-link {
+  padding: 0;
+}
+
+.rate-detail-note {
+  margin: 5px;
 }

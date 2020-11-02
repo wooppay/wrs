@@ -7,6 +7,8 @@
         <div class="col col-sm-3"></div>
 
         <div class="col col-md-6">
+
+        {% include 'parts/flash_message.html.twig' %}
         
             <div class="card text-center">
                 <h5 class="card-header">Please sign in</h5>
@@ -27,6 +29,9 @@
                         <br>
                         <p>
                             <small>If you haven't have account yet, <a href="{{ path('app_register') }}">sign up</a></small>
+                        </p>
+                        <p>
+                            <small><a href="{{ path('app_password_recovery') }}">Forgot password?</a></small>
                         </p>
                         
                         <button class="btn btn-primary" type="submit">
