@@ -28,7 +28,7 @@
 
             <div class="d-flex  flex-column">
                 <span class="mb-2  h5  font-weight-bold  user__name">{{ app.user.email }}</span>
-                <span class="mb-2  h6">{{ app.user.roles|join(', ')}}</span>
+                <span class="mb-2  h6">{{ roleTitles|join(', ') }}</span>
                 <a href="mailto:{{ app.user.email }}">{{ app.user.email }}</a>
             </div>
         </div>

@@ -6,6 +6,7 @@ use App\Form\UserReportType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\TaskService;
 use App\Service\TeamService;
+use App\Service\RoleService;
 use App\Entity\Task;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -15,9 +16,10 @@ use App\Form\TeamType;
 
 class DashboardController extends AbstractController
 {
-    public function main(TaskService $taskService, TeamService $teamService)
+    public function main(TaskService $taskService, TeamService $teamService, RoleService $roleService)
     {
         $user = $this->getUser();
+        $roleTitles = $roleService->allTitlesByUser($user);
 
         $tasks = $taskService->tasksForDashboardByUser($user);
         $archivedTasks = $taskService->archivedTasks($user);
@@ -38,6 +40,7 @@ class DashboardController extends AbstractController
 	    $userReportForm = $this->createForm(UserReportType::class);
 
         return $this->render('dashboard/main.html.twig', [
+            'roleTitles' => $roleTitles,
             'tasks' => $tasks,
             'archivedTasks' => $archivedTasks,
             'teamForm' => $teamForm->createView(),

@@ -147,12 +147,14 @@ class AdminController extends AbstractController
         ]);
     }
     
-    public function userManage(Request $request, UserService $userService)
+    public function userManage(Request $request, UserService $userService, RoleService $roleService)
     {
         $user = $userService->byId((int) $request->get('id'));
+        $roles = $roleService->allByUser($user);
         
         return $this->render('admin/user_manage.html.twig', [
             'user' => $user,
+            'roles' => $roles
         ]);
     }
     
