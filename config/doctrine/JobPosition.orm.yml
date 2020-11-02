@@ -1,0 +1,18 @@
+App\Entity\JobPosition:
+    type: entity
+    repositoryClass: App\Repository\JobPositionRepository
+    table: job_position
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+        deleted:
+            type: boolean
+            nullable: false

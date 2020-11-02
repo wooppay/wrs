@@ -26,7 +26,9 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_UPDATE_TECHNICAL_SKILL,
         PermissionEnum::CAN_UPDATE_ROLE,
         PermissionEnum::CAN_BE_ADMIN,
-
+        PermissionEnum::CAN_CREATE_JOB_POSITION,
+        PermissionEnum::CAN_UPDATE_JOB_POSITION,
+        PermissionEnum::CAN_DELETE_JOB_POSITION,
     ];
 
     private $poPermissions = [
