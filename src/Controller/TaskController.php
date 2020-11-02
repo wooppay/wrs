@@ -68,6 +68,14 @@ class TaskController extends AbstractController
         if (!$task) {
             throw $this->createNotFoundException('Task does not exist!');
         }
+        
+        if (!$taskService->isAuthor($this->getUser(), $task)) {
+            throw $this->createNotFoundException('You are not the author of this task');
+        }
+        
+        if ($taskService->isTaskMarked($task)) {
+            throw $this->createNotFoundException('This task has already marked');
+        }
 
         if ($task->getStatus() == TaskEnum::DELETED) {
             throw $this->createNotFoundException('Task was archived');
@@ -102,6 +110,14 @@ class TaskController extends AbstractController
 
         if (!$task) {
             throw $this->createNotFoundException('Task does not exist!');
+        }
+
+	    if ($task->getAuthor() != $this->getUser()) {
+		    throw $this->createAccessDeniedException();
+	    }
+
+        if (!$taskService->isAuthor($this->getUser(), $task)) {
+            throw $this->createNotFoundException('You are not the author of this task');
         }
 
         if ($task->getStatus() == TaskEnum::DELETED) {

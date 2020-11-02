@@ -129,6 +129,11 @@ class TaskService
         return $this->rateInfoService->allByUserAndTask($user, $task)->count() > 0;
     }
 
+    public function isTaskMarked(Task $task) : bool
+    {
+        return $this->rateInfoService->allByTask($task)->count() > 0;
+    }
+
     public function archivedTasks(User $user)
     {
         return $this
@@ -138,6 +143,11 @@ class TaskService
                 'author' => $user,
                 'status' => TaskEnum::DELETED
             ]);
+    }
+
+    public function isAuthor(User $user, Task $task) : bool
+    {
+        return $this->userCreatedTasks($user)->contains($task);
     }
 
 }

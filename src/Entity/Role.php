@@ -11,6 +11,8 @@ class Role
 
     private $name;
 
+    private $title;
+
     private $users;
     
     private $permissions;
@@ -22,6 +24,11 @@ class Role
         $this->users = new ArrayCollection();
         $this->permissions = new ArrayCollection();
         $this->skills = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title . ' (' . $this->name . ')';
     }
 
     public function getId(): ?int
@@ -37,6 +44,18 @@ class Role
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

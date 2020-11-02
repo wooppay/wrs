@@ -12,6 +12,7 @@ class RoleFormType extends AbstractType
     {
         $builder
         ->add('name', TextType::class)
+        ->add('title', TextType::class)
         ->add('save', SubmitType::class);
     }
 }

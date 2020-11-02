@@ -34,9 +34,9 @@
             <li class="list-group-item">Status: {{ user.status }}</li>
             <li class="list-group-item">
                 Role:
-                {% for key, role in user.roles %}
+                {% for role in roles %}
                     <span class="badge badge-primary">
-                        {{ role }} <a href="{{ path('app_admin_security_user_manage_detach_role', {'userId':user.id, 'roleId': key }) }}" class="close">&times;</a>
+                        {{ role }} <a href="{{ path('app_admin_security_user_manage_detach_role', {'userId':user.id, 'roleId': role.id }) }}" class="close">&times;</a>
                     </span>
                 {% endfor %}
             </li>

@@ -19,12 +19,14 @@
                         <div class="card-header  p-3">
                             <p>
                                 <a class="card-title  h6" href="{{ path('app_dashboard_task_details', {id: item.id}) }}">{{ item.name }}</a>
-                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user) %}
+                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_DELETE_TASK'), app.user)
+                                    and item.author == app.user %}
                                     <a title="Archive" href="#" class="task-archive float-right" data-toggle="modal" data-target="#taskArchive">
                                         <i id="{{ item.id }}" class="fas fa-trash-alt fa-lg"></i>
                                     </a>
                                 {% endif %}
-                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user) %}
+                                {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_UPDATE_TASK'), app.user)
+                                    and item.author == app.user %}
                                     <a title="Update" href="#" class="task-edit float-right" onclick="getUsersForSelect(this, '#task_executor_update')">
                                         <i id="{{ item.id }}" class="far fa-edit fa-lg"></i>
                                     </a>
@@ -42,9 +44,14 @@
                                 Team:
                                 <a href="#!">{{ item.team.name }}</a>
                             </p>
-                            <p class="card-subtitle  h7">
+                            <p class="card-subtitle  h7 mb-3">
                                 Project:
                                 <a href="#!">{{ item.project.name }}</a>
+                            </p>
+
+                            <p class="card-subtitle h7">
+                                Status:
+                                {{ item.getStatus() | statusInfo | raw}}
                             </p>
                         </div>
                         <div class="card-body">
