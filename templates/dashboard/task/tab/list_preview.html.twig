@@ -44,9 +44,14 @@
                                 Team:
                                 <a href="#!">{{ item.team.name }}</a>
                             </p>
-                            <p class="card-subtitle  h7">
+                            <p class="card-subtitle  h7 mb-3">
                                 Project:
                                 <a href="#!">{{ item.project.name }}</a>
+                            </p>
+
+                            <p class="card-subtitle h7">
+                                Status:
+                                {{ item.getStatus() | statusInfo | raw}}
                             </p>
                         </div>
                         <div class="card-body">
