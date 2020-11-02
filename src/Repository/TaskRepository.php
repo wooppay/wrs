@@ -86,11 +86,9 @@ class TaskRepository extends ServiceEntityRepository
 	    $exceptList ? $query->andWhere('t.id NOT IN (:exceptList)')->setParameter('exceptList', $exceptList) : null;
 
 	    return $query
-            ->leftJoin('t.rates', 'rates')
             ->andWhere('t.status != :deleted')
-		    ->andWhere('rates.id IS NULL')
+		    ->setParameter('deleted', TaskEnum::DELETED)
             ->orderBy('t.id', 'DESC')
-            ->setParameter('deleted', TaskEnum::DELETED)
 		    ->getQuery()
             ->getResult();
     }
