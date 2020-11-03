@@ -70,5 +70,9 @@ class PermissionEnum
     public const CAN_UPDATE_JOB_POSITION = 'can_update_job_position';
 
     public const CAN_DELETE_JOB_POSITION = 'can_delete_job_position';
+
+    public const CAN_VIEW_MY_PROFILE = 'can_view_my_profile';
+
+    public const CAN_EDIT_MY_PROFILE = 'can_edit_my_profile';
 }
 

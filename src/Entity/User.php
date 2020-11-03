@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Enum\UserEnum;
+use App\Entity\ProfileInfo;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -36,6 +37,8 @@ class User implements UserInterface
     private $authorRates;
 
     private $myTeams;
+
+    private $profileInfo;
     
     public function __construct()
     {
@@ -179,5 +182,17 @@ class User implements UserInterface
     public function getMyTeams() : ?Collection
     {
         return $this->myTeams;
+    }
+
+    public function getProfileInfo(): ?ProfileInfo
+    {
+        return $this->profileInfo;
+    }
+
+    public function setProfileInfo(ProfileInfo $profileInfo): self
+    {
+        $this->profileInfo = $profileInfo;
+
+        return $this;
     }
 }

@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
+use App\Entity\ProfileInfo;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Service\SecurityService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -83,18 +84,23 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     private function createUser(ObjectManager $manager, ArrayCollection $roles, string $email)
     {
         $user = new User();
+        $profileInfo = new ProfileInfo();
 
         $user
-        ->setPassword($this->passwordEncoder->encodePassword(
-            $user,
-            self::PASS
-        ))
-        ->setRoles($roles)
-        ->setStatus(UserEnum::APPROVED)
-        ->setEmail($email);
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                self::PASS
+            ))
+            ->setRoles($roles)
+            ->setStatus(UserEnum::APPROVED)
+            ->setEmail($email)
+            ->setProfileInfo($profileInfo)
         ;
 
+        $profileInfo->setUser($user);
+
         $manager->persist($user);
+        $manager->persist($profileInfo);
         $manager->flush();
     }
 

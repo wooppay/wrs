@@ -1,0 +1,65 @@
+App\Entity\ProfileInfo:
+    type: entity
+    repositoryClass: App\Repository\ProfileInfoRepository
+    table: profile_info
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        firstname:
+            type: string
+            length: 255
+            nullable: true
+        surname:
+            type: string
+            length: 255
+            nullable: true
+        gender:
+            type: integer
+            length: 2
+            nullable: true
+        age:
+            type: integer
+            length: 200
+            nullable: true
+        country:
+            type: string
+            length: 255
+            nullable: true
+        city:
+            type: string
+            length: 255
+            nullable: true
+        githubLink:
+            type: string
+            length: 255
+            nullable: true
+        gitlabLink:
+            type: string
+            length: 255
+            nullable: true
+        telegramLink:
+            type: string
+            length: 255
+            nullable: true
+        skypeLink:
+            type: string
+            length: 255
+            nullable: true
+        personalLink:
+            type: string
+            length: 255
+            nullable: true
+    oneToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+        jobPosition:
+            targetEntity: JobPosition
+            joinColumn:
+                name: job_position_id
+                referencedColumnName: id
