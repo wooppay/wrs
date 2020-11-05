@@ -44,6 +44,10 @@ App\Entity\ProfileInfo:
             type: string
             length: 255
             nullable: true
+        avatar:
+            type: string
+            length: 255
+            nullable: true
     oneToOne:
         user:
             targetEntity: User

@@ -59,6 +59,10 @@
             const routeTaskArchive = "{{ path('app_dashboard_task_archive')|escape('js') }}";
             const routeGetUsers = "{{ path('app_dashboard_users_for_select')|escape('js') }}";
             const routeGetReport = "{{ path('app_dashboard_report')|escape('js') }}";
+            const routeChangeAvatar = "{{ path('app_dashboard_change_avatar') }}";
+            {% if app.user %}
+                const routeEditProfile = "{{ path('app_dashboard_edit_profile', {id: app.user.id}) }}";
+            {% endif %}
 	    </script>
         <script type="text/javascript" src="/js/main.js"></script>
             <script src="/daterangepicker-master/moment.min.js"></script>

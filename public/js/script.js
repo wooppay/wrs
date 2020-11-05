@@ -93,3 +93,20 @@ $(document).on('click', '#task-archive-confirm', (e) => {
 		}
 	})
 });
+
+$(document).on('change', '#avatar-id', (e) => {
+	let file = e.target.files[0];
+	var data = new FormData();
+	data.append('avatar', file, file.name);
+	
+	$.ajax({
+		url: routeChangeAvatar,
+		type: 'POST',
+		data: data,
+		processData: false,
+		contentType: false,
+		success: function() {
+			location.href = routeEditProfile;
+		}
+	})
+});

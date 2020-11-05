@@ -26,7 +26,20 @@
         <div class="container user">
             <div class="row">
                 <div class="col-sm-2">
-                    <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+                    <div class="avatar-block">
+                        {% if app.user.profileInfo.avatar is not empty %}
+                            <img class="rounded  user-avatar" src="{{ asset('/img/avatar/' ~ app.user.profileInfo.avatar) }}" alt="User avatar" width="120" height="150">
+                        {% else %}
+                            <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+                        {% endif %}
+                        
+                        <a class="avatar-link" href="#">
+                            <form id="avatar-form" action="#">
+                                <input class="avatar-input" id="avatar-id" type="file"/>
+                                <label class="avatar-label" for="avatar-id" title="Change cover">Change avatar</label>
+                            </form>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="col-sm-10">

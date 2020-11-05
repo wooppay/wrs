@@ -36,6 +36,8 @@ class ProfileInfo
 
     private $personalLink;
 
+    private $avatar;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -193,6 +195,18 @@ class ProfileInfo
     public function setPersonalLink(string $personalLink): self
     {
         $this->personalLink = $personalLink;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar)
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }
