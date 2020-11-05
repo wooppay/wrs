@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block head_title %}
+    <h2>Dashboard</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/script.js"></script>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'parts/flash_message.html.twig' %}
+
+    <div class="row  p-4  bg-light  rounded">
+        <div class="col-sm  d-flex  flex-wrap  user">
+            <div class="flex-shrink-0  mr-4">
+                <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+            </div>
+
+            <div class="d-flex  flex-column">
+                <span class="mb-2  h5  font-weight-bold  user__name">{{ user.email }}</span>
+                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+            </div>
+
+            <div>
+            <a href="{{ path('app_dashboard_edit_profile', {id: user.id}) }}">Редактировать личные данные</a>
+                {{user.profileInfo.firstname}}
+                {{user.profileInfo.surname}}
+            </div>
+        </div>
+
+        <div class="col-sm  rating">
+            <div>
+                <p class="h6">Сколько оценок поставил: {{ user.authorRates.count }}</p>
+                <p class="h6  mb-4">Сколько оценок получил: {{ user.rates.count }}</p>
+            </div>
+
+            <div class="list-group  list-group-horizontal">
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="/img/icon-github.svg" alt="github icon" width="24" height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="/img/icon-gitlab.svg" alt="gitlab icon" width="24" height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="/img/icon-telegram.svg" alt="telegram icon" width="24" height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="/img/icon-skype.svg" alt="skype icon" width="24"  height="24">
+                </a>
+                <a class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="#">
+                    <img src="/img/icon-personal.svg" alt="skype icon" width="24"  height="24">
+                </a>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="w-100  my-4  mx-3  separator"></div>
+ 
+    <br>
+
+{% endblock %}

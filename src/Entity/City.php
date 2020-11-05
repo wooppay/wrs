@@ -2,18 +2,15 @@
 
 namespace App\Entity;
 
-class JobPosition
+use Doctrine\ORM\Mapping as ORM;
+
+class City
 {
     private $id;
 
     private $name;
 
-    private $deleted = false;
-
-    public function __toString()
-    {
-        return $this->name;
-    }
+    private $country;
 
     public function getId(): ?int
     {
@@ -32,15 +29,15 @@ class JobPosition
         return $this;
     }
 
-    public function isDeleted(): ?bool
+    public function getCountry() : ?Country
     {
-        return $this->deleted;
+        return $this->country;
     }
-
-    public function setDeleted(bool $deleted): self
+    
+    public function setCountry(Country $country) : self
     {
-        $this->deleted = $deleted;
-
+        $this->country = $country;
+        
         return $this;
     }
 }

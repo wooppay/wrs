@@ -1,0 +1,23 @@
+App\Entity\City:
+    type: entity
+    repositoryClass: App\Repository\CityRepository
+    table: city
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+    manyToOne:
+        country:
+            targetEntity: App\Entity\Country
+            inversedBy: cities
+            joinColumn:
+                nullable: false
+                name: country_id
+                referencedColumnName: id

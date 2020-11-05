@@ -236,3 +236,10 @@ app_dashboard_report:
     path: /dashboard/user-report/report
     controller: App\Controller\UserReportController::getReport
 
+app_dashboard_show_profile:
+    path: /dashboard/user/{id}
+    controller: App\Controller\ProfileController::showProfile
+
+app_dashboard_edit_profile:
+    path: /dashboard/user/{id}/edit
+    controller: App\Controller\ProfileController::editProfile

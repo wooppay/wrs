@@ -24,6 +24,9 @@ final class Version20201103094448 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_7D41BEC3BEE8350F ON profile_info (job_position_id)');
         $this->addSql('ALTER TABLE profile_info ADD CONSTRAINT FK_7D41BEC3A76ED395 FOREIGN KEY (user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE profile_info ADD CONSTRAINT FK_7D41BEC3BEE8350F FOREIGN KEY (job_position_id) REFERENCES job_position (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE "user" ADD profile_info INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE "user" ADD CONSTRAINT FK_8D93D6497D41BEC3 FOREIGN KEY (profile_info) REFERENCES profile_info (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D6497D41BEC3 ON "user" (profile_info)');
 
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_view_my_profile\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_edit_my_profile\')');
@@ -34,6 +37,9 @@ final class Version20201103094448 extends AbstractMigration
         $this->addSql('DELETE FROM "permission" WHERE name = \'can_view_my_profile\';');
         $this->addSql('DELETE FROM "permission" WHERE name = \'can_edit_my_profile\';');
 
+        $this->addSql('ALTER TABLE "user" DROP CONSTRAINT FK_8D93D6497D41BEC3');
+        $this->addSql('DROP INDEX UNIQ_8D93D6497D41BEC3');
+        $this->addSql('ALTER TABLE "user" DROP profile_info');
         $this->addSql('DROP TABLE profile_info');
     }
 }

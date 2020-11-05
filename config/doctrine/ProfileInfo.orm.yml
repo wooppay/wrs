@@ -24,14 +24,6 @@ App\Entity\ProfileInfo:
             type: integer
             length: 200
             nullable: true
-        country:
-            type: string
-            length: 255
-            nullable: true
-        city:
-            type: string
-            length: 255
-            nullable: true
         githubLink:
             type: string
             length: 255
@@ -62,4 +54,14 @@ App\Entity\ProfileInfo:
             targetEntity: JobPosition
             joinColumn:
                 name: job_position_id
+                referencedColumnName: id
+        country:
+            targetEntity: Country
+            joinColumn:
+                name: country_id
+                referencedColumnName: id
+        city:
+            targetEntity: City
+            joinColumn:
+                name: city_id
                 referencedColumnName: id

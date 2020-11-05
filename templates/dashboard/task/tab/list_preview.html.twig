@@ -34,11 +34,19 @@
                             </p>
                             <p class="card-subtitle  h7  mb-3">
                                 Author:
-                                <a href="#!">{{ item.author.email }}</a>
+                                {% if item.author.id == app.user.id %}
+                                    {{ item.author.email }}
+                                {% else %}
+                                    <a href="{{ path('app_dashboard_show_profile', {id: item.author.id}) }}">{{ item.author.email }}</a>
+                                {% endif %}
                             </p>
                             <p class="card-subtitle  h7  mb-3">
                                 Executor:
-                                <a href="#!">{{ item.executor.email }}</a>
+                                {% if item.executor.id == app.user.id %}
+                                    {{ item.executor.email }}
+                                {% else %}
+                                    <a href="{{ path('app_dashboard_show_profile', {id: item.executor.id}) }}">{{ item.executor.email }}</a>
+                                {% endif %}
                             </p>
                             <p class="card-subtitle  h7 mb-3">
                                 Team:
