@@ -8,7 +8,9 @@
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard_show_profile', {id: app.user.id}) }}">{{ app.user.email }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
       </ol>
     </nav>
 {% endblock %}
@@ -19,6 +21,8 @@
 {% endblock %}
 
 {% block body %}
+
+    <div class="container"><h4 class="profile-title">Profile of "{{ app.user.email }}"</h4></div>
 
     {% include 'parts/flash_message.html.twig' %}
 
@@ -36,7 +40,7 @@
                         <a class="avatar-link" href="#">
                             <form id="avatar-form" action="#">
                                 <input class="avatar-input" id="avatar-id" type="file"/>
-                                <label class="avatar-label" for="avatar-id" title="Change cover">Change avatar</label>
+                                <label class="avatar-label" for="avatar-id" title="Change cover"><i class="fas fa-image"></i> Change</label>
                             </form>
                         </a>
                     </div>
@@ -59,7 +63,7 @@
                             {{form_row(form.skypeLink)}}
                             {{form_row(form.telegramLink)}}
                             {{form_row(form.personalLink)}}
-                            {{form_row(form.submit)}}
+                            {{form_row(form.save)}}
                         </div>
                     {{form_end(form)}}
                 </div>

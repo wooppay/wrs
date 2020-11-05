@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Service\UserService;
 use App\Service\ProfileInfoService;
 use App\Form\ProfileInfoType;
+use App\Enum\PermissionEnum;
 
 class ProfileController extends AbstractController
 {
@@ -23,7 +24,14 @@ class ProfileController extends AbstractController
 
     public function editProfile(int $id, Request $request, UserService $userService, ProfileInfoService $profileInfoService)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_EDIT_MY_PROFILE, $this->getUser());
+
         $user = $userService->byId($id);
+
+        if ($user->getId() != $this->getUser()->getId())
+        {
+            throw $this->createAccessDeniedException();
+        }
 
         $form = $this->createForm(ProfileInfoType::class, $user->getProfileInfo());
 

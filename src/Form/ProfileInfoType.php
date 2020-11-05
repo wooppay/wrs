@@ -102,7 +102,7 @@ class ProfileInfoType extends AbstractType
                     'placeholder' => 'Personal Link'
                 ]
             ])
-            ->add('submit', SubmitType::class)
+            ->add('save', SubmitType::class)
         ;
     }
 
