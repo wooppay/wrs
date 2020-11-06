@@ -23,7 +23,11 @@
     <div class="row  p-4  bg-light  rounded">
         <div class="col-sm  d-flex  flex-wrap  user">
             <div class="flex-shrink-0  mr-4">
-                <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+                {% if app.user.profileInfo.avatar is not empty %}
+                    <img class="rounded  user-avatar" src="{{ asset('/img/avatar/' ~ app.user.profileInfo.avatar) }}" alt="User avatar" width="120" height="150">
+                {% else %}
+                    <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+                {% endif %}
             </div>
 
             <div class="d-flex  flex-column">
