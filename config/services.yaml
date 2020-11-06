@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     email_send_from: "%env(EMAIL_SEND_FROM)%"
+    avatar_directory: '%kernel.project_dir%/public/img/avatar'
 
 services:
     # default configuration for services in *this* file
@@ -31,3 +32,7 @@ services:
     App\Service\MailerService:
         arguments:
             $emailSendFrom: "%email_send_from%"
+    
+    App\Service\ProfileInfoService:
+        arguments: 
+            $avatarDirectory: "%avatar_directory%"

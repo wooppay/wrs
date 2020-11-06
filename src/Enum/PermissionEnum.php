@@ -64,5 +64,15 @@ class PermissionEnum
     public const CAN_SEE_ALL_MEMBERS_TASKS_FROM_TEAMS_WHERE_I_PARTICIPATED = 'can_see_all_members_tasks_from_teams_where_i_participated';
 
     public const CAN_GENERATE_MARK_REPORT = 'can_generate_mark_report';
+
+    public const CAN_CREATE_JOB_POSITION = 'can_create_job_position';
+
+    public const CAN_UPDATE_JOB_POSITION = 'can_update_job_position';
+
+    public const CAN_DELETE_JOB_POSITION = 'can_delete_job_position';
+
+    public const CAN_VIEW_MY_PROFILE = 'can_view_my_profile';
+
+    public const CAN_EDIT_MY_PROFILE = 'can_edit_my_profile';
 }
 

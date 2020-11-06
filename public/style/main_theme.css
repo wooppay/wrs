@@ -38,7 +38,9 @@ a {
 
 .user-avatar {
   width: 120px;
-  height: 150px; }
+  height: 150px;
+  object-fit: cover;
+}
 
 .separator {
   border-bottom: 1px solid #aaaaaa; }
@@ -195,4 +197,39 @@ a {
 
 .rate-detail-note {
   margin: 5px;
+}
+
+.avatar-block {
+  position: relative;
+  width: 120px;
+}
+
+.avatar-link {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  text-decoration: none;
+}
+
+.avatar-input {
+  display: none;
+}
+
+.avatar-label {
+  display: none;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  border: 2px solid gray;
+  border-radius: 3px;
+  background-color: gainsboro;
+  font-weight: 700;
+}
+
+.avatar-block:hover .avatar-label {
+  display: block;
 }

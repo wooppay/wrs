@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block head_title %}
+    <h2>Dashboard</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ user.email }}</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/script.js"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container"><h4 class="profile-title">Profile of "{{ user.email }}"</h4></div>
+
+    {% include 'parts/flash_message.html.twig' %}
+
+    <div class="row  p-4  bg-light  rounded">
+        <div class="col-sm  d-flex  flex-wrap  user">
+            <div class="flex-shrink-0  mr-4">
+                {% if user.profileInfo.avatar is not empty %}
+                    <img class="rounded  user-avatar" src="{{ asset('/img/avatar/' ~ user.profileInfo.avatar) }}" alt="User avatar" width="120" height="150">
+                {% else %}
+                    <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+                {% endif %}
+            </div>
+
+            <div class="d-flex  flex-column">
+                <span class="mb-2  h5  font-weight-bold  user__name">
+                {% if user.profileInfo.firstname is not empty %}
+                    {{ user.profileInfo.firstname }}&nbsp
+                {% endif %}
+                {% if user.profileInfo.surname is not empty %}
+                    {{ user.profileInfo.surname }}
+                {% endif %}
+                </span>
+                <span>
+                    {% if user.profileInfo.jobPosition is not empty %}
+                        {{ user.profileInfo.jobPosition }}&nbsp
+                    {% endif %}
+                    {% if user.profileInfo.city is not empty %}
+                        from {{ user.profileInfo.city }},&nbsp
+                    {% endif %}
+                    {% if user.profileInfo.country is not empty %}
+                        {{ user.profileInfo.country }},&nbsp
+                    {% endif %}
+                    {% if user.profileInfo.age is not empty %}
+                        {{ user.profileInfo.age }} y.o.
+                    {% endif %}
+                </span>
+                {% if user.id == app.user.id %}
+                    <a href="{{ path('app_dashboard_edit_profile', {id: user.id}) }}">Редактировать личные данные</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-sm  rating">
+            <div>
+                <p class="h6">Сколько оценок поставил: {{ user.authorRates.count }}</p>
+                <p class="h6  mb-4">Сколько оценок получил: {{ user.rates.count }}</p>
+            </div>
+
+            <div class="list-group  list-group-horizontal">
+                {% if user.profileInfo.githubLink is not empty %}
+                    <a title="Github Link" class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="{{ user.profileInfo.githubLink }}">
+                        <img src="/img/icon-github.svg" alt="github icon" width="24" height="24">
+                    </a>
+                {% endif %}
+                {% if user.profileInfo.gitlabLink is not empty %}
+                    <a title="Gitlab Link" class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="{{ user.profileInfo.gitlabLink }}">
+                        <img src="/img/icon-gitlab.svg" alt="gitlab icon" width="24" height="24">
+                    </a>
+                {% endif %}
+                {% if user.profileInfo.telegramLink is not empty %}
+                    <a title="Telegram Link" class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="{{ user.profileInfo.telegramLink }}">
+                        <img src="/img/icon-telegram.svg" alt="telegram icon" width="24" height="24">
+                    </a>
+                {% endif %}
+                {% if user.profileInfo.skypeLink is not empty %}
+                    <a title="Skype Link" class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="{{ user.profileInfo.skypeLink }}">
+                        <img src="/img/icon-skype.svg" alt="skype icon" width="24" height="24">
+                    </a>
+                {% endif %}
+                {% if user.profileInfo.personalLink is not empty %}
+                    <a title="Personal Link" class="list-group-item  list-group-item-action  d-flex  align-items-center  justify-content-center  w-25  p-0  py-2 " href="{{ user.profileInfo.personalLink }}">
+                        <img src="/img/icon-personal.svg" alt="personal icon" width="24" height="24">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+ 
+    <div class="w-100  my-4  mx-3  separator"></div>
+ 
+    <br>
+
+{% endblock %}

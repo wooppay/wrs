@@ -1,0 +1,78 @@
+App\Entity\ProfileInfo:
+    type: entity
+    repositoryClass: App\Repository\ProfileInfoRepository
+    table: profile_info
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        firstname:
+            type: string
+            length: 255
+            nullable: true
+        surname:
+            type: string
+            length: 255
+            nullable: true
+        gender:
+            type: integer
+            length: 2
+            nullable: true
+        age:
+            type: integer
+            length: 200
+            nullable: true
+        githubLink:
+            type: string
+            length: 255
+            nullable: true
+        gitlabLink:
+            type: string
+            length: 255
+            nullable: true
+        telegramLink:
+            type: string
+            length: 255
+            nullable: true
+        skypeLink:
+            type: string
+            length: 255
+            nullable: true
+        personalLink:
+            type: string
+            length: 255
+            nullable: true
+        avatar:
+            type: string
+            length: 255
+            nullable: true
+    oneToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    manyToOne:
+        country:
+            targetEntity: App\Entity\Country
+            inversedBy: profileInfos
+            joinColumn:
+                nullable: true
+                name: country_id
+                referencedColumnName: id
+        city:
+            targetEntity: App\Entity\City
+            inversedBy: profileInfos
+            joinColumn:
+                nullable: true
+                name: city_id
+                referencedColumnName: id
+        jobPosition:
+            targetEntity: App\Entity\JobPosition
+            inversedBy: profileInfos
+            joinColumn:
+                nullable: true
+                name: job_position_id
+                referencedColumnName: id

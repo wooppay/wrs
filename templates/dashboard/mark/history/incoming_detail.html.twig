@@ -31,7 +31,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{ item.author.email }} marked you
+                                        <a href="{{ path('app_dashboard_show_profile', {id: item.author.id}) }}">{{ item.author.email }}</a> marked you
                                     </div>
                                 </div>
 

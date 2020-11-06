@@ -1,0 +1,22 @@
+App\Entity\Country:
+    type: entity
+    repositoryClass: App\Repository\CountryRepository
+    table: country
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+    oneToMany:
+        cities:
+            targetEntity: App\Entity\City
+            mappedBy: country
+        profileInfos:
+            targetEntity: App\Entity\ProfileInfo
+            mappedBy: country

@@ -35,3 +35,7 @@ App\Entity\Skill:
                 nullable: false
                 name: role_id
                 referencedColumnName: id
+    oneToMany:
+        rates:
+            targetEntity: App\Entity\RateInfo
+            mappedBy: skill

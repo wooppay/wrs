@@ -25,6 +25,13 @@ App\Entity\User:
             options:
                 default: 0
                 comment: user's status 
+    oneToOne:
+        profileInfo:
+            targetEntity: ProfileInfo
+            joinColumn:
+                name: profile_info
+                referencedColumnName: id
+                onDelete: SET NULL
     manyToMany:
         roles:
             targetEntity: App\Entity\Role
