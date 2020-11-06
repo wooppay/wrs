@@ -96,7 +96,7 @@ class Skill
         return $this->rates;
     }
     
-    public function addPermission(Rate $rate): self
+    public function addPermission(RateInfo $rate): self
     {
         if (!$this->rates->contains($rate)) {
             $this->rates[] = $rate;
