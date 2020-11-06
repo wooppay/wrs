@@ -30,7 +30,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         RoleFixtures::ROLE_DEVELOPER,
     ];
 
-    private const EMAIL_ADMIN = 'admin@example.com';
+    public const EMAIL_ADMIN = 'admin@example.com';
     
     public const EMAIL_PO = 'po@example.com';
     
@@ -53,38 +53,42 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $this->roleService->byName(RoleFixtures::ROLE_ADMIN)
             ]);
 
-            $this->createUser($manager, $roles, self::EMAIL_ADMIN);
+            $user = $this->createUser($manager, $roles, self::EMAIL_ADMIN);
+            $this->addReference(self::EMAIL_ADMIN, $user);
 
             $roles = new ArrayCollection([
                 $this->roleService->byName(RoleFixtures::ROLE_PRODUCT_OWNER)
             ]);
             
-            $this->createUser($manager, $roles, self::EMAIL_PO);
+            $user = $this->createUser($manager, $roles, self::EMAIL_PO);
+            $this->addReference(self::EMAIL_PO, $user);
 
             $roles = new ArrayCollection([
                 $this->roleService->byName(RoleFixtures::ROLE_CUSTOMER)
             ]);
             
-            $this->createUser($manager, $roles, self::EMAIL_CUSTOMER);
+            $user = $this->createUser($manager, $roles, self::EMAIL_CUSTOMER);
+            $this->addReference(self::EMAIL_CUSTOMER, $user);
 
             $roles = new ArrayCollection([
                 $this->roleService->byName(RoleFixtures::ROLE_TM),
                 $this->roleService->byName(RoleFixtures::ROLE_DEVELOPER),
             ]);
             
-            $this->createUser($manager, $roles, self::EMAIL_TM);
+            $user = $this->createUser($manager, $roles, self::EMAIL_TM);
+            $this->addReference(self::EMAIL_TM, $user);
 
             $roles = new ArrayCollection([
                 $this->roleService->byName(RoleFixtures::ROLE_DEVELOPER)
             ]);
             
-            $this->createUser($manager, $roles, self::EMAIL_DEV);
+            $user = $this->createUser($manager, $roles, self::EMAIL_DEV);
+            $this->addReference(self::EMAIL_DEV, $user);
     }
 
     private function createUser(ObjectManager $manager, ArrayCollection $roles, string $email)
     {
         $user = new User();
-        $profileInfo = new ProfileInfo();
 
         $user
             ->setPassword($this->passwordEncoder->encodePassword(
@@ -94,14 +98,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setRoles($roles)
             ->setStatus(UserEnum::APPROVED)
             ->setEmail($email)
-            ->setProfileInfo($profileInfo)
         ;
 
-        $profileInfo->setUser($user);
-
         $manager->persist($user);
-        $manager->persist($profileInfo);
         $manager->flush();
+
+        return $user;
     }
 
     public function getDependencies()

@@ -6,7 +6,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Enum\UserEnum;
-use App\Entity\ProfileInfo;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\Collection;
 

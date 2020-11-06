@@ -2,10 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use App\Entity\User;
-use App\Entity\JobPosition;
-
 class ProfileInfo
 {
     private $id;
@@ -115,24 +111,24 @@ class ProfileInfo
         return $this;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): ?Country
     {
         return $this->country;
     }
 
-    public function setCountry(string $country): self
+    public function setCountry(Country $country): self
     {
         $this->country = $country;
 
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    public function setCity(City $city): self
     {
         $this->city = $city;
 

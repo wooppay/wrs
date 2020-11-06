@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class JobPosition
 {
     private $id;
@@ -9,6 +12,13 @@ class JobPosition
     private $name;
 
     private $deleted = false;
+
+    private $profileInfos;
+
+    public function __construct()
+    {
+        $this->profileInfos = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -41,6 +51,29 @@ class JobPosition
     {
         $this->deleted = $deleted;
 
+        return $this;
+    }
+
+    public function getProfileInfos(): ?Collection
+    {
+        return $this->profileInfos;
+    }
+    
+    public function addProfileInfo(ProfileInfo $profileInfo): self
+    {
+        if (!$this->profileInfos->contains($profileInfo)) {
+            $this->profileInfos[] = $profileInfo;
+        }
+        
+        return $this;
+    }
+    
+    public function removeProfileInfo(ProfileInfo $profileInfo): self
+    {
+        if ($this->profileInfos->contains($profileInfo)) {
+            $this->profileInfos->removeElement($profileInfo);
+        }
+        
         return $this;
     }
 }

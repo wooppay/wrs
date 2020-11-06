@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ProfileInfo;
+use App\Enum\GenderEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,8 +31,8 @@ class ProfileInfoType extends AbstractType
                 'label' => false,
                 'choices' => [
                     'Gender' => null,
-                    'Male' => 0,
-                    'Female' => 1
+                    'Male' => GenderEnum::MALE,
+                    'Female' => GenderEnum::FEMALE
                 ],
                 'choice_attr' => function($choice, $key, $value) {
                     if ($choice === null) {

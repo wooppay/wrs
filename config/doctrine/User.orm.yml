@@ -31,6 +31,7 @@ App\Entity\User:
             joinColumn:
                 name: profile_info
                 referencedColumnName: id
+                onDelete: SET NULL
     manyToMany:
         roles:
             targetEntity: App\Entity\Role

@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class Country
 {
@@ -11,6 +12,19 @@ class Country
     private $name;
 
     private $cities;
+
+    private $profileInfos;
+
+    public function __construct()
+    {
+        $this->cities = new ArrayCollection();
+        $this->profileInfos = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -29,7 +43,7 @@ class Country
         return $this;
     }
 
-    public function getCities(): Collection
+    public function getCities(): ?Collection
     {
         return $this->cities;
     }
@@ -47,6 +61,29 @@ class Country
     {
         if ($this->cities->contains($city)) {
             $this->cities->removeElement($city);
+        }
+        
+        return $this;
+    }
+
+    public function getProfileInfos(): ?Collection
+    {
+        return $this->profileInfos;
+    }
+    
+    public function addProfileInfo(ProfileInfo $profileInfo): self
+    {
+        if (!$this->profileInfos->contains($profileInfo)) {
+            $this->profileInfos[] = $profileInfo;
+        }
+        
+        return $this;
+    }
+    
+    public function removeProfileInfo(ProfileInfo $profileInfo): self
+    {
+        if ($this->profileInfos->contains($profileInfo)) {
+            $this->profileInfos->removeElement($profileInfo);
         }
         
         return $this;

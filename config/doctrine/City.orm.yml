@@ -21,3 +21,7 @@ App\Entity\City:
                 nullable: false
                 name: country_id
                 referencedColumnName: id
+    oneToMany:
+        profileInfos:
+            targetEntity: App\Entity\ProfileInfo
+            mappedBy: city

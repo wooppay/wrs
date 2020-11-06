@@ -16,3 +16,7 @@ App\Entity\JobPosition:
         deleted:
             type: boolean
             nullable: false
+    oneToMany:
+        profileInfos:
+            targetEntity: App\Entity\ProfileInfo
+            mappedBy: jobPosition

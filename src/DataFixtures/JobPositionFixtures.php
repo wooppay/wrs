@@ -28,13 +28,34 @@ class JobPositionFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
-        $jobPositions = (new \ReflectionClass(self::class))->getConstants();
+        $entity = new JobPosition();
+        $entity->setName(self::TEAM_LEAD);
 
-        foreach ($jobPositions as $position) {
-            $entity = new JobPosition();
-            $entity->setName($position);
+        $jobPosition = $this->jobPositionService->flush($entity);
+        $this->addReference(self::TEAM_LEAD, $jobPosition);
 
-            $this->jobPositionService->flush($entity);
-        }
+        $entity = new JobPosition();
+        $entity->setName(self::DEVELOPER);
+
+        $jobPosition = $this->jobPositionService->flush($entity);
+        $this->addReference(self::DEVELOPER, $jobPosition);
+
+        $entity = new JobPosition();
+        $entity->setName(self::QUALITY_ASSURANCE);
+
+        $jobPosition = $this->jobPositionService->flush($entity);
+        $this->addReference(self::QUALITY_ASSURANCE, $jobPosition);
+
+        $entity = new JobPosition();
+        $entity->setName(self::PRODUCT_OWNER);
+
+        $jobPosition = $this->jobPositionService->flush($entity);
+        $this->addReference(self::PRODUCT_OWNER, $jobPosition);
+
+        $entity = new JobPosition();
+        $entity->setName(self::PROJECT_MANAGER);
+
+        $jobPosition = $this->jobPositionService->flush($entity);
+        $this->addReference(self::PROJECT_MANAGER, $jobPosition);
     }
 }

@@ -17,3 +17,6 @@ App\Entity\Country:
         cities:
             targetEntity: App\Entity\City
             mappedBy: country
+        profileInfos:
+            targetEntity: App\Entity\ProfileInfo
+            mappedBy: country
