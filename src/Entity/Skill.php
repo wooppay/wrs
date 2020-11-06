@@ -105,7 +105,7 @@ class Skill
         return $this;
     }
     
-    public function removePermission(Rate $rate): self
+    public function removePermission(RateInfo $rate): self
     {
         if ($this->rates->contains($rate)) {
             $this->rates->removeElement($rate);
