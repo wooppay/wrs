@@ -4,7 +4,6 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
-/public/img/avatar/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###

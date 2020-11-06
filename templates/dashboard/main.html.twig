@@ -32,10 +32,32 @@
 
             <div class="d-flex  flex-column">
                 <span class="mb-2  h5  font-weight-bold  user__name">
-                    <a href="{{ path('app_dashboard_show_profile', {id: app.user.id}) }}">{{ app.user.email }}</a>
+                {% if app.user.profileInfo.firstname is not empty or app.user.profileInfo.surname is not empty %}
+                    {% if app.user.profileInfo.firstname is not empty %}
+                        {{ app.user.profileInfo.firstname }}&nbsp
+                    {% endif %}
+                    {% if app.user.profileInfo.surname is not empty %}
+                        {{ app.user.profileInfo.surname }}
+                    {% endif %}
+                {% else %}
+                    {{ app.user.email }}
+                {% endif %}
                 </span>
-                <span class="mb-2  h6">{{ roleTitles|join(', ') }}</span>
-                <a href="mailto:{{ app.user.email }}">{{ app.user.email }}</a>
+                <span class="mb-2">
+                    {% if app.user.profileInfo.jobPosition is not empty %}
+                        {{ app.user.profileInfo.jobPosition }}&nbsp
+                    {% endif %}
+                    {% if app.user.profileInfo.city is not empty %}
+                        from {{ app.user.profileInfo.city }},&nbsp
+                    {% endif %}
+                    {% if app.user.profileInfo.country is not empty %}
+                        {{ app.user.profileInfo.country }},&nbsp
+                    {% endif %}
+                    {% if app.user.profileInfo.age is not empty %}
+                        {{ app.user.profileInfo.age }} y.o.
+                    {% endif %}
+                </span>
+                <a href="{{ path('app_dashboard_edit_profile', {id: app.user.id}) }}">Редактировать личные данные</a>
             </div>
         </div>
 

@@ -399,7 +399,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $jobPosition = $form->getData();
-            $jobPositionService->flush($jobPosition);
+            $jobPositionService->save($jobPosition);
 
             return $this->redirectToRoute('app_admin_job_position_list');
         }
@@ -424,7 +424,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $jobPosition = $form->getData();
-            $jobPositionService->flush($jobPosition);
+            $jobPositionService->save($jobPosition);
 
             return $this->redirectToRoute('app_admin_job_position_list');
         }

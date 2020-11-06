@@ -28,7 +28,7 @@ class JobPositionService
         ->find($id);
     }
     
-    public function flush(JobPosition $jobPosition) : JobPosition
+    public function save(JobPosition $jobPosition) : JobPosition
     {
         $this->entityManager->persist($jobPosition);
         $this->entityManager->flush();

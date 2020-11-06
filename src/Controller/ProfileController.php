@@ -40,7 +40,7 @@ class ProfileController extends AbstractController
             $profileInfo = $form->getData();
 
             try {
-                $profileInfoService->flush($profileInfo);
+                $profileInfoService->save($profileInfo);
                 $this->addFlash('success', 'Profile data was changed successfully');
             } catch (\Exception $e) {
                 $this->addFlash('danger', 'Something happened while updating your data');
@@ -55,19 +55,10 @@ class ProfileController extends AbstractController
     public function changeAvatar(Request $request, UserService $userService, ProfileInfoService $profileInfoService)
     {
         $user = $this->getUser();
-        $profileInfo = $user->getProfileInfo();
         $avatar = $request->files->get('avatar');
-        $avatarFilename = $user->getEmail().'-avatar.'.$avatar->guessExtension();
 
         try {
-            $avatar->move(
-                $this->getParameter('avatar_directory'),
-                $avatarFilename
-            );
-
-            $profileInfo->setAvatar($avatarFilename);
-            $profileInfoService->flush($profileInfo);
-
+            $profileInfoService->changeAvatar($user, $avatar);
             $this->addFlash('success', 'Avatar changed successfully');
         } catch (\Exception $e) {
             $this->addFlash('danger', 'Something happened while uploading avatar');
