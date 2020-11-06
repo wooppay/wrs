@@ -31,31 +31,31 @@ class JobPositionFixtures extends Fixture
         $entity = new JobPosition();
         $entity->setName(self::TEAM_LEAD);
 
-        $jobPosition = $this->jobPositionService->flush($entity);
+        $jobPosition = $this->jobPositionService->save($entity);
         $this->addReference(self::TEAM_LEAD, $jobPosition);
 
         $entity = new JobPosition();
         $entity->setName(self::DEVELOPER);
 
-        $jobPosition = $this->jobPositionService->flush($entity);
+        $jobPosition = $this->jobPositionService->save($entity);
         $this->addReference(self::DEVELOPER, $jobPosition);
 
         $entity = new JobPosition();
         $entity->setName(self::QUALITY_ASSURANCE);
 
-        $jobPosition = $this->jobPositionService->flush($entity);
+        $jobPosition = $this->jobPositionService->save($entity);
         $this->addReference(self::QUALITY_ASSURANCE, $jobPosition);
 
         $entity = new JobPosition();
         $entity->setName(self::PRODUCT_OWNER);
 
-        $jobPosition = $this->jobPositionService->flush($entity);
+        $jobPosition = $this->jobPositionService->save($entity);
         $this->addReference(self::PRODUCT_OWNER, $jobPosition);
 
         $entity = new JobPosition();
         $entity->setName(self::PROJECT_MANAGER);
 
-        $jobPosition = $this->jobPositionService->flush($entity);
+        $jobPosition = $this->jobPositionService->save($entity);
         $this->addReference(self::PROJECT_MANAGER, $jobPosition);
     }
 }
