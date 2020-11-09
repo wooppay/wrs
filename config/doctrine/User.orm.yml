@@ -27,11 +27,8 @@ App\Entity\User:
                 comment: user's status 
     oneToOne:
         profileInfo:
-            targetEntity: ProfileInfo
-            joinColumn:
-                name: profile_info
-                referencedColumnName: id
-                onDelete: SET NULL
+            targetEntity: App\Entity\ProfileInfo
+            mappedBy: user
     manyToMany:
         roles:
             targetEntity: App\Entity\Role

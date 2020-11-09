@@ -50,28 +50,26 @@ App\Entity\ProfileInfo:
             nullable: true
     oneToOne:
         user:
-            targetEntity: User
+            targetEntity: App\Entity\User
+            inversedBy: profileInfo
             joinColumn:
                 name: user_id
                 referencedColumnName: id
     manyToOne:
         country:
             targetEntity: App\Entity\Country
-            inversedBy: profileInfos
             joinColumn:
                 nullable: true
                 name: country_id
                 referencedColumnName: id
         city:
             targetEntity: App\Entity\City
-            inversedBy: profileInfos
             joinColumn:
                 nullable: true
                 name: city_id
                 referencedColumnName: id
         jobPosition:
             targetEntity: App\Entity\JobPosition
-            inversedBy: profileInfos
             joinColumn:
                 nullable: true
                 name: job_position_id
