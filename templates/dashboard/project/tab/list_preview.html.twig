@@ -23,7 +23,7 @@
                            </p>
                            <p class="card-subtitle  h7">
                                Customer:
-                               <a href="#!">{{ item.customer.email }}</a>
+                               <a href="{{ path('app_dashboard_show_profile', {id: item.customer.id}) }}">{{ item.customer.email }}</a>
                            </p>
                        </div>
                                     

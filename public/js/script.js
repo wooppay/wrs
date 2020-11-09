@@ -6,6 +6,12 @@ $(document).ready(function() {
 		taskByProject(projectId);
 	});
 
+	let jobPositionPlaceholder = $('#profile_info_jobPosition').attr('placeholder');
+	$('#profile_info_jobPosition option:first').html(jobPositionPlaceholder).prop('disabled', true);
+	let cityPlaceholder = $('#profile_info_city').attr('placeholder');
+	$('#profile_info_city option:first').html(cityPlaceholder).prop('disabled', true);
+	let countryPlaceholder = $('#profile_info_country').attr('placeholder');
+	$('#profile_info_country option:first').html(countryPlaceholder).prop('disabled', true);
 });
 
 function taskByProject(projectId) {
@@ -84,6 +90,23 @@ $(document).on('click', '#task-archive-confirm', (e) => {
 		},
 		error: function (data) {
 			location.href = dashboardUrl;
+		}
+	})
+});
+
+$(document).on('change', '#avatar-id', (e) => {
+	let file = e.target.files[0];
+	var data = new FormData();
+	data.append('avatar', file, file.name);
+	
+	$.ajax({
+		url: routeChangeAvatar,
+		type: 'POST',
+		data: data,
+		processData: false,
+		contentType: false,
+		success: function() {
+			location.href = routeEditProfile;
 		}
 	})
 });

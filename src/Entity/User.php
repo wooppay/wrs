@@ -36,6 +36,8 @@ class User implements UserInterface
     private $authorRates;
 
     private $myTeams;
+
+    private $profileInfo;
     
     public function __construct()
     {
@@ -47,6 +49,11 @@ class User implements UserInterface
         $this->rates = new ArrayCollection();
         $this->authorRates = new ArrayCollection();
         $this->myTeams = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     public function getId(): ?int
@@ -179,5 +186,17 @@ class User implements UserInterface
     public function getMyTeams() : ?Collection
     {
         return $this->myTeams;
+    }
+
+    public function getProfileInfo(): ?ProfileInfo
+    {
+        return $this->profileInfo;
+    }
+
+    public function setProfileInfo(ProfileInfo $profileInfo): self
+    {
+        $this->profileInfo = $profileInfo;
+
+        return $this;
     }
 }

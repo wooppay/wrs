@@ -25,6 +25,10 @@ App\Entity\User:
             options:
                 default: 0
                 comment: user's status 
+    oneToOne:
+        profileInfo:
+            targetEntity: App\Entity\ProfileInfo
+            mappedBy: user
     manyToMany:
         roles:
             targetEntity: App\Entity\Role
