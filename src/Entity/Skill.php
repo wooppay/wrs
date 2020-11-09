@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class Skill
 {
     private $id;
@@ -13,8 +16,15 @@ class Skill
     private $type;
 
     private $showNote;
+
+    private $rates;
     
     private $status = 1;
+
+    public function __construct()
+    {
+        $this->rates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,5 +89,28 @@ class Skill
     public function getShowNote() : ?bool
     {
         return $this->showNote;
+    }
+
+    public function getRates(): Collection
+    {
+        return $this->rates;
+    }
+    
+    public function addPermission(RateInfo $rate): self
+    {
+        if (!$this->rates->contains($rate)) {
+            $this->rates[] = $rate;
+        }
+        
+        return $this;
+    }
+    
+    public function removePermission(RateInfo $rate): self
+    {
+        if ($this->rates->contains($rate)) {
+            $this->rates->removeElement($rate);
+        }
+        
+        return $this;
     }
 }

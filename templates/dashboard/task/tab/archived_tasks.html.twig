@@ -13,7 +13,7 @@
                             </p>
                             <p class="card-subtitle  h7  mb-3">
                                 Executor:
-                                <a href="#!">{{ item.executor.email }}</a>
+                                <a href="{{ path('app_dashboard_show_profile', {id: item.executor.id}) }}">{{ item.executor.email }}</a>
                             </p>
                             <p class="card-subtitle  h7 mb-3">
                                 Team:

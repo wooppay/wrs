@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block head_title %}
+    <h2>Dashboard</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_dashboard_show_profile', {id: app.user.id}) }}">{{ app.user.email }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/script.js"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container"><h4 class="profile-title">Profile of "{{ app.user.email }}"</h4></div>
+
+    {% include 'parts/flash_message.html.twig' %}
+
+    <div class="row  p-4  bg-light  rounded">
+        <div class="container user">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="avatar-block">
+                        {% if app.user.profileInfo.avatar is not empty %}
+                            <img class="rounded  user-avatar" src="{{ asset('/img/avatar/' ~ app.user.profileInfo.avatar) }}" alt="User avatar" width="120" height="150">
+                        {% else %}
+                            <img class="rounded  user-avatar" src="https://placehold.it/120x150" alt="User avatar" width="120" height="150">
+                        {% endif %}
+                        
+                        <a class="avatar-link" href="#">
+                            <form id="avatar-form" action="#">
+                                <input class="avatar-input" id="avatar-id" type="file"/>
+                                <label class="avatar-label" for="avatar-id" title="Change cover"><i class="fas fa-image"></i> Change</label>
+                            </form>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-10">
+                    {{form_start(form)}}
+                        <div class="form-row">
+                            {{form_row(form.firstname)}}
+                            {{form_row(form.surname)}}
+                            {{form_row(form.gender)}}
+                            {{form_row(form.age)}}
+                            {{form_row(form.country)}}
+                            {{form_row(form.city)}}
+                            {{form_row(form.jobPosition)}}
+                        </div>
+                        <div class="form-row">
+                            {{form_row(form.githubLink)}}
+                            {{form_row(form.gitlabLink)}}
+                            {{form_row(form.skypeLink)}}
+                            {{form_row(form.telegramLink)}}
+                            {{form_row(form.personalLink)}}
+                            {{form_row(form.save)}}
+                        </div>
+                    {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="w-100  my-4  mx-3  separator"></div>
+ 
+    <br>
+
+{% endblock %}

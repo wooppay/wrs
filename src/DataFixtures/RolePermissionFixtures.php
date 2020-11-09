@@ -26,7 +26,11 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_UPDATE_TECHNICAL_SKILL,
         PermissionEnum::CAN_UPDATE_ROLE,
         PermissionEnum::CAN_BE_ADMIN,
-
+        PermissionEnum::CAN_CREATE_JOB_POSITION,
+        PermissionEnum::CAN_UPDATE_JOB_POSITION,
+        PermissionEnum::CAN_DELETE_JOB_POSITION,
+        PermissionEnum::CAN_VIEW_MY_PROFILE,
+        PermissionEnum::CAN_EDIT_MY_PROFILE,
     ];
 
     private $poPermissions = [
@@ -48,6 +52,8 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_TEAM_LEAD,
         PermissionMarkEnum::CAN_MARK_DEVELOPER,
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
+        PermissionEnum::CAN_VIEW_MY_PROFILE,
+        PermissionEnum::CAN_EDIT_MY_PROFILE,
     ];
 
     private $customerPermissions = [
@@ -58,6 +64,8 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_TEAM_LEAD,
         PermissionMarkEnum::CAN_MARK_DEVELOPER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
+        PermissionEnum::CAN_VIEW_MY_PROFILE,
+        PermissionEnum::CAN_EDIT_MY_PROFILE,
     ];
 
     private $tmPermissions = [
@@ -70,6 +78,8 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
         PermissionEnum::CAN_SEE_DETAIL_TASK,
+        PermissionEnum::CAN_VIEW_MY_PROFILE,
+        PermissionEnum::CAN_EDIT_MY_PROFILE,
     ];
 
     private $devPermissions = [
@@ -79,6 +89,8 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
         PermissionEnum::CAN_SEE_DETAIL_TASK,
+        PermissionEnum::CAN_VIEW_MY_PROFILE,
+        PermissionEnum::CAN_EDIT_MY_PROFILE,
     ];
     
     public function __construct(SecurityService $securityService, RoleService $roleService, PermissionService $permissionService)

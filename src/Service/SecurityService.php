@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Entity\Role;
+use App\Entity\ProfileInfo;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -59,9 +60,13 @@ class SecurityService
     
     public function register(UserInterface $user, string $plainPassword) : bool
     {
+        $profileInfo = new ProfileInfo();
+        $profileInfo->setUser($user);
+
         $user->setPassword(
             $this->passwordEncoder->encodePassword($user, $plainPassword)
         );
+        $user->setProfileInfo($profileInfo);
         
         $role = $this->entityManager
         ->getRepository(Role::class)
@@ -70,6 +75,7 @@ class SecurityService
         $this->entityManager->getConnection()->beginTransaction();
         
         $this->entityManager->persist($user);
+        $this->entityManager->persist($profileInfo);
         $this->entityManager->flush();
         
         if (!$this->setRoleToUser($user, $role)) {

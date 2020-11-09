@@ -130,6 +130,22 @@ app_admin_security_role_update:
     path: /admin/security/roles/{id}/edit
     controller: App\Controller\AdminController::roleUpdate
 
+app_admin_job_position_list:
+    path: /admin/job-position/list
+    controller: App\Controller\AdminController::jobPositionList
+
+app_admin_job_position_create:
+    path: /admin/job-position/create
+    controller: App\Controller\AdminController::jobPositionCreate
+
+app_admin_job_position_manage:
+    path: /admin/job-position/{id}/manage
+    controller: App\Controller\AdminController::jobPositionManage
+
+app_admin_job_position_delete:
+    path: /admin/job-position/{id}/delete
+    controller: App\Controller\AdminController::jobPositionDelete
+
 app_dashboard:
     path: /dashboard
     controller: App\Controller\DashboardController::main
@@ -220,3 +236,14 @@ app_dashboard_report:
     path: /dashboard/user-report/report
     controller: App\Controller\UserReportController::getReport
 
+app_dashboard_change_avatar:
+    path: /dashboard/user/change-avatar
+    controller: App\Controller\ProfileController::changeAvatar
+
+app_dashboard_edit_profile:
+    path: /dashboard/user/{id}/edit
+    controller: App\Controller\ProfileController::editProfile
+
+app_dashboard_show_profile:
+    path: /dashboard/user/{id}
+    controller: App\Controller\ProfileController::showProfile

@@ -9,6 +9,7 @@ use App\Enum\PermissionEnum;
 use App\Entity\Permission;
 use App\Form\PermissionFormType;
 use App\Form\PermissionAttachType;
+use App\Form\JobPositionType;
 use App\Service\SecurityService;
 use App\Entity\User;
 use App\Enum\UserEnum;
@@ -17,7 +18,9 @@ use App\Service\RoleService;
 use App\Service\PermissionService;
 use App\Service\UserService;
 use App\Service\SkillService;
+use App\Service\JobPositionService;
 use App\Entity\Skill;
+use App\Entity\JobPosition;
 use App\Form\SkillType;
 
 class AdminController extends AbstractController
@@ -375,6 +378,75 @@ class AdminController extends AbstractController
         return $this->render('admin/role_update.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    public function jobPositionList(JobPositionService $jobPositionService)
+    {
+        $jobPositions = $jobPositionService->all();
+
+        return $this->render('admin/job_position/job_position.html.twig', [
+            'jobPositions' => $jobPositions
+        ]);
+    }
+
+    public function jobPositionCreate(Request $request, JobPositionService $jobPositionService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_JOB_POSITION, $this->getUser());
+
+        $jobPosition = new JobPosition();
+        $form = $this->createForm(JobPositionType::class, $jobPosition);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $jobPosition = $form->getData();
+            $jobPositionService->save($jobPosition);
+
+            return $this->redirectToRoute('app_admin_job_position_list');
+        }
+
+        return $this->render('admin/job_position/job_position_create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function jobPositionManage(int $id, Request $request, JobPositionService $jobPositionService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_JOB_POSITION, $this->getUser());
+
+        $jobPosition = $jobPositionService->oneById($id);
+
+        if (!$jobPosition) {
+            return $this->createNotFoundException('Job position does not exist');
+        }
+
+        $form = $this->createForm(JobPositionType::class, $jobPosition);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $jobPosition = $form->getData();
+            $jobPositionService->save($jobPosition);
+
+            return $this->redirectToRoute('app_admin_job_position_list');
+        }
+
+        return $this->render('admin/job_position/job_position_create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function jobPositionDelete(int $id, Request $request, JobPositionService $jobPositionService)
+    {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_UPDATE_JOB_POSITION, $this->getUser());
+
+        $jobPosition = $jobPositionService->oneById($id);
+
+        if (!$jobPosition) {
+            return $this->createNotFoundException('Job position does not exist');
+        }
+
+        $jobPositionService->delete($jobPosition);
+
+        return $this->redirectToRoute('app_admin_job_position_list');
     }
 }
 
