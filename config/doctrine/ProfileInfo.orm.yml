@@ -55,6 +55,7 @@ App\Entity\ProfileInfo:
             joinColumn:
                 name: user_id
                 referencedColumnName: id
+                nullable: false
     manyToOne:
         country:
             targetEntity: App\Entity\Country
