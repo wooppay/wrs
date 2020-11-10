@@ -74,5 +74,11 @@ class PermissionEnum
     public const CAN_VIEW_MY_PROFILE = 'can_view_my_profile';
 
     public const CAN_EDIT_MY_PROFILE = 'can_edit_my_profile';
+
+    public const CAN_CREATE_OWN_GOAL = 'can_create_own_goal';
+
+    public const CAN_UPDATE_OWN_GOAL = 'can_update_own_goal';
+
+    public const CAN_DELETE_OWN_GOAL = 'can_delete_own_goal';
 }
 
