@@ -14,7 +14,15 @@
         </div>
         {% endfor %}
     </div>
+    {% else %}
+        <p>You don't have any goals yet. Try to create your first one!</p>
     {% endif %}
 
-    <a class="goal-create goal-link" href="#" data-toggle="modal" data-target="#goalCreate"><i class="fas fa-plus-circle fa-lg"></i>&nbsp;Make more</a>
+    <a class="goal-create goal-link" href="#" data-toggle="modal" data-target="#goalCreate"><i class="fas fa-plus-circle fa-lg"></i>&nbsp;
+    {% if goals is not empty %}
+        Make more
+    {% else %}
+        Try it!
+    {% endif %}
+    </a>
 </div>

@@ -243,7 +243,6 @@ a {
   flex-wrap: nowrap;
   margin: 20px 0;
   padding: 20px;
-  border: 1px solid black;
   overflow-x: scroll;
 }
 
