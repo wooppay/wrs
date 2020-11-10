@@ -247,3 +247,7 @@ app_dashboard_edit_profile:
 app_dashboard_show_profile:
     path: /dashboard/user/{id}
     controller: App\Controller\ProfileController::showProfile
+
+app_dashboard_goal_create:
+    path: /dashboard/goals/create
+    controller: App\Controller\GoalController::create
