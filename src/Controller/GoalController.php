@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use App\Enum\PermissionEnum;
 use App\Service\GoalService;
 use App\Form\GoalType;
 use App\Entity\Goal;
