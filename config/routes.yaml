@@ -257,3 +257,7 @@ app_dashboard_show_profile:
     controller: App\Controller\ProfileController::showProfile
     requirements:
         id: '\d+'
+
+app_dashboard_goal_create:
+    path: /dashboard/goals/create
+    controller: App\Controller\GoalController::create

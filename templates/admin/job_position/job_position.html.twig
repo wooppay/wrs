@@ -17,6 +17,8 @@
 
 {% block body %}
 
+    {% include 'parts/flash_message.html.twig' %}
+
     <div class="card">
         <div class="card-body">
             <a href="{{ path('app_admin_job_position_create') }}" class="btn btn-primary">Create job position</a>
@@ -35,15 +37,10 @@
         </thead>
         <tbody>
             {% for item in jobPositions %}
+                {% if item.deleted == false %}
                 <tr>
                     <td>{{ item.name }}</td>
-                    <td>
-                    {% if item.deleted == false %}
-                        <i class="fas fa-check"></i>
-                    {% else %}
-                        <i class="fas fa-times"></i>
-                    {% endif %}
-                    </td>
+                    <td><i class="fas fa-check"></i></td>
                     <td>
                         <a href="{{ path('app_admin_job_position_manage', {'id': item.id}) }}">
                             <i class="fas fa-pencil-alt"></i>
@@ -53,6 +50,7 @@
                         </a>
                     </td>
                 </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>

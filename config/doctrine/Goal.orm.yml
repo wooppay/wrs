@@ -1,0 +1,26 @@
+App\Entity\Goal:
+    type: entity
+    repositoryClass: App\Repository\GoalRepository
+    table: goal
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+        description:
+            type: text
+            nullable: false
+    manyToOne:
+        user:
+            targetEntity: App\Entity\User
+            inversedBy: goals
+            joinColumn:
+                nullable: false
+                name: user_id
+                referencedColumnName: id

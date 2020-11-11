@@ -93,11 +93,11 @@
                     </tr>
                     <tr>
                         <td>Executor:</td>
-                        <td><a href="#">{{ task.executor.email }}</a></td>
+                        <td><a href="{{ path('app_dashboard_show_profile', {id: task.executor.id}) }}">{{ task.executor.email }}</a></td>
                     </tr>
                     <tr>
                         <td>Author:</td>
-                        <td><a href="#">{{ task.author.email }}</a></td>
+                        <td><a href="{{ path('app_dashboard_show_profile', {id: task.author.id}) }}">{{ task.author.email }}</a></td>
                     </tr>
                     <tr>
                         <td>State:</td>
