@@ -37,6 +37,9 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_CREATE_CITY,
         PermissionEnum::CAN_UPDATE_CITY,
         PermissionEnum::CAN_DELETE_CITY,
+        PermissionEnum::CAN_CREATE_OWN_GOAL,
+        PermissionEnum::CAN_UPDATE_OWN_GOAL,
+        PermissionEnum::CAN_DELETE_OWN_GOAL,
     ];
 
     private $poPermissions = [
@@ -60,6 +63,9 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_CUSTOMER,
         PermissionEnum::CAN_VIEW_MY_PROFILE,
         PermissionEnum::CAN_EDIT_MY_PROFILE,
+        PermissionEnum::CAN_CREATE_OWN_GOAL,
+        PermissionEnum::CAN_UPDATE_OWN_GOAL,
+        PermissionEnum::CAN_DELETE_OWN_GOAL,
     ];
 
     private $customerPermissions = [
@@ -72,6 +78,9 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionMarkEnum::CAN_MARK_PRODUCT_OWNER,
         PermissionEnum::CAN_VIEW_MY_PROFILE,
         PermissionEnum::CAN_EDIT_MY_PROFILE,
+        PermissionEnum::CAN_CREATE_OWN_GOAL,
+        PermissionEnum::CAN_UPDATE_OWN_GOAL,
+        PermissionEnum::CAN_DELETE_OWN_GOAL,
     ];
 
     private $tmPermissions = [
@@ -86,6 +95,9 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_SEE_DETAIL_TASK,
         PermissionEnum::CAN_VIEW_MY_PROFILE,
         PermissionEnum::CAN_EDIT_MY_PROFILE,
+        PermissionEnum::CAN_CREATE_OWN_GOAL,
+        PermissionEnum::CAN_UPDATE_OWN_GOAL,
+        PermissionEnum::CAN_DELETE_OWN_GOAL,
     ];
 
     private $devPermissions = [
@@ -97,6 +109,9 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_SEE_DETAIL_TASK,
         PermissionEnum::CAN_VIEW_MY_PROFILE,
         PermissionEnum::CAN_EDIT_MY_PROFILE,
+        PermissionEnum::CAN_CREATE_OWN_GOAL,
+        PermissionEnum::CAN_UPDATE_OWN_GOAL,
+        PermissionEnum::CAN_DELETE_OWN_GOAL,
     ];
     
     public function __construct(SecurityService $securityService, RoleService $roleService, PermissionService $permissionService)

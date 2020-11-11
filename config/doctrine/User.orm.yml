@@ -76,3 +76,6 @@ App\Entity\User:
         myTeams:
             targetEntity: App\Entity\Team
             mappedBy: owner
+        goals:
+            targetEntity: App\Entity\Goal
+            mappedBy: user
