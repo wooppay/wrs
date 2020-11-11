@@ -13,6 +13,8 @@ class GoalController extends AbstractController
 {
     public function create(Request $request, GoalService $goalService)
     {
+        $this->denyAccessUnlessGranted(PermissionEnum::CAN_CREATE_OWN_GOAL, $this->getUser());
+
         $goal = new Goal();
         
         $form = $this->createForm(GoalType::class);
