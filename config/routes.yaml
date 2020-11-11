@@ -141,10 +141,14 @@ app_admin_job_position_create:
 app_admin_job_position_manage:
     path: /admin/job-position/{id}/manage
     controller: App\Controller\AdminController::jobPositionManage
+    requirements:
+        id: '\d+'
 
 app_admin_job_position_delete:
     path: /admin/job-position/{id}/delete
     controller: App\Controller\AdminController::jobPositionDelete
+    requirements:
+        id: '\d+'
 
 app_dashboard:
     path: /dashboard
@@ -169,6 +173,8 @@ app_dashboard_task_update:
 app_dashboard_task_details:
     path: /dashboard/task/{id}
     controller: App\Controller\TaskController::showDetails
+    requirements:
+        id: '\d+'
 
 app_dashboard_task_archive:
     path: /dashboard/tasks/archive/
@@ -243,7 +249,11 @@ app_dashboard_change_avatar:
 app_dashboard_edit_profile:
     path: /dashboard/user/{id}/edit
     controller: App\Controller\ProfileController::editProfile
+    requirements:
+        id: '\d+'
 
 app_dashboard_show_profile:
     path: /dashboard/user/{id}
     controller: App\Controller\ProfileController::showProfile
+    requirements:
+        id: '\d+'

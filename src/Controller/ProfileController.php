@@ -17,6 +17,10 @@ class ProfileController extends AbstractController
     {
         $user = $userService->byId($id);
 
+        if (!$user) {
+            throw $this->createNotFoundException('The user does not exist');
+        }
+
         return $this->render('dashboard/profile/show_profile.html.twig', [
             'user' => $user
         ]);
@@ -28,8 +32,11 @@ class ProfileController extends AbstractController
 
         $user = $userService->byId($id);
 
-        if ($user->getId() != $this->getUser()->getId())
-        {
+        if (!$user) {
+            throw $this->createNotFoundException('The user does not exist');
+        }
+
+        if ($user->getId() != $this->getUser()->getId()) {
             throw $this->createAccessDeniedException();
         }
 
