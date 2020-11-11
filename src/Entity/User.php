@@ -38,6 +38,8 @@ class User implements UserInterface
     private $myTeams;
 
     private $profileInfo;
+
+    private $goals;
     
     public function __construct()
     {
@@ -49,6 +51,7 @@ class User implements UserInterface
         $this->rates = new ArrayCollection();
         $this->authorRates = new ArrayCollection();
         $this->myTeams = new ArrayCollection();
+        $this->goals = new ArrayCollection();
     }
 
     public function __toString()
@@ -197,6 +200,29 @@ class User implements UserInterface
     {
         $this->profileInfo = $profileInfo;
 
+        return $this;
+    }
+
+    public function getGoals(): ?Collection
+    {
+        return $this->goals;
+    }
+
+    public function addGoal(Goal $goal): self
+    {
+        if (!$this->goals->contains($goal)) {
+            $this->goals->add($goal);
+        }
+        
+        return $this;
+    }
+
+    public function removeGoal(Goal $goal): self
+    {
+        if ($this->goals->contains($goal)) {
+            $this->goals->removeElement($goal);
+        }
+        
         return $this;
     }
 }
