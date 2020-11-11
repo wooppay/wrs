@@ -74,5 +74,17 @@ class PermissionEnum
     public const CAN_VIEW_MY_PROFILE = 'can_view_my_profile';
 
     public const CAN_EDIT_MY_PROFILE = 'can_edit_my_profile';
+
+    public const CAN_CREATE_COUNTRY = 'can_create_country';
+
+    public const CAN_UPDATE_COUNTRY = 'can_update_country';
+
+    public const CAN_DELETE_COUNTRY = 'can_delete_country';
+
+    public const CAN_CREATE_CITY = 'can_create_city';
+
+    public const CAN_UPDATE_CITY = 'can_update_city';
+
+    public const CAN_DELETE_CITY = 'can_delete_city';
 }
 

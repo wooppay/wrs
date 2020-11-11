@@ -13,6 +13,9 @@ App\Entity\Country:
             length: 255
             nullable: false
             unique: true
+        deleted:
+            type: boolean
+            nullable: false
     oneToMany:
         cities:
             targetEntity: App\Entity\City

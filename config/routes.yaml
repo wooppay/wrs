@@ -146,6 +146,42 @@ app_admin_job_position_delete:
     path: /admin/job-position/{id}/delete
     controller: App\Controller\AdminController::jobPositionDelete
 
+app_admin_geo_location:
+    path: /admin/geo-location
+    controller: App\Controller\AdminController::geoLocation
+
+app_admin_country_list:
+    path: /admin/country/list
+    controller: App\Controller\CountryController::list
+
+app_admin_country_create:
+    path: /admin/country/create
+    controller: App\Controller\CountryController::create
+
+app_admin_country_manage:
+    path: /admin/country/{id}/manage
+    controller: App\Controller\CountryController::manage
+
+app_admin_country_delete:
+    path: /admin/country/{id}/delete
+    controller: App\Controller\CountryController::delete
+
+app_admin_city_list:
+    path: /admin/city/list
+    controller: App\Controller\CityController::list
+
+app_admin_city_create:
+    path: /admin/city/create
+    controller: App\Controller\CityController::create
+
+app_admin_city_manage:
+    path: /admin/city/{id}/manage
+    controller: App\Controller\CityController::manage
+
+app_admin_city_delete:
+    path: /admin/city/{id}/delete
+    controller: App\Controller\CityController::delete
+
 app_dashboard:
     path: /dashboard
     controller: App\Controller\DashboardController::main
