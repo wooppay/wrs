@@ -2,18 +2,31 @@
 
 namespace App\Form;
 
+use App\Entity\JobPosition;
 use App\Entity\ProfileInfo;
 use App\Enum\GenderEnum;
+use App\Service\JobPositionService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProfileInfoType extends AbstractType
 {
+    private $jobPositionService;
+
+    public function __construct(JobPositionService $jobPositionService)
+    {
+        $this->jobPositionService = $jobPositionService;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $jobPositions = $this->jobPositionService->getAllActiveJobPositions();
+        array_unshift($jobPositions, null);
+
         $builder
             ->add('firstname', null, [
                 'label' => false,
@@ -67,7 +80,9 @@ class ProfileInfoType extends AbstractType
                     'placeholder' => 'City'
                 ]
             ])
-            ->add('jobPosition', null, [
+            ->add('jobPosition', EntityType::class, [
+                'class' => JobPosition::class,
+                'choices' => $jobPositions,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Job Position'
