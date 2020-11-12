@@ -86,5 +86,12 @@ class PermissionEnum
     public const CAN_UPDATE_CITY = 'can_update_city';
 
     public const CAN_DELETE_CITY = 'can_delete_city';
+
+    public const CAN_CREATE_OWN_GOAL = 'can_create_own_goal';
+
+    public const CAN_UPDATE_OWN_GOAL = 'can_update_own_goal';
+
+    public const CAN_DELETE_OWN_GOAL = 'can_delete_own_goal';
+
 }
 

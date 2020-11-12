@@ -444,6 +444,11 @@ class AdminController extends AbstractController
             return $this->createNotFoundException('Job position does not exist');
         }
 
+        if ($jobPositionService->isPositionUsed($jobPosition)) {
+            $this->addFlash('danger', 'This job position is already used by some user. Please re-change this job position to another and then delete.');
+            return $this->redirectToRoute('app_admin_job_position_list');
+        }
+
         $jobPositionService->delete($jobPosition);
 
         return $this->redirectToRoute('app_admin_job_position_list');

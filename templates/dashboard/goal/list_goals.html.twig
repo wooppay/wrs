@@ -1,0 +1,30 @@
+<div class="goal-wrapper container">
+    <h5 class="goal-header">Your Goals</h5>
+
+    {% if goals is not empty %}
+    <div class="goal-list">
+        {% for goal in goals %}
+        <div class="goal-item">
+            <h6 class="goal-title">{{ goal.name }}</h6>
+            <p class="goal-description">{{ goal.description }}</p>
+            <div class="goal-progress">
+                <div class="goal-triangle"></div>
+                <span>0% DONE</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>You don't have any goals yet. Try to create your first one!</p>
+    {% endif %}
+
+    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_CREATE_OWN_GOAL'), app.user) %}
+        <a class="goal-create goal-link" href="#" data-toggle="modal" data-target="#goalCreate"><i class="fas fa-plus-circle fa-lg"></i>&nbsp;
+        {% if goals is not empty %}
+            Make more
+        {% else %}
+            Try it!
+        {% endif %}
+        </a>
+    {% endif %}
+</div>

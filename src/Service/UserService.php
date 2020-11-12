@@ -35,7 +35,7 @@ class UserService
         ->findAll();
     }
     
-    public function byId(int $id) : User
+    public function byId(int $id) : ?User
     {
         return $this->entityManager
         ->getRepository(User::class)

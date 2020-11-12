@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\JobPosition;
+use App\Entity\ProfileInfo;
 
 class JobPositionService
 {
@@ -44,5 +45,23 @@ class JobPositionService
         $this->entityManager->flush();
         
         return $jobPosition;
+    }
+
+    public function getAllActiveJobPositions(): array
+    {
+        return $this->entityManager
+            ->getRepository(JobPosition::class)
+            ->findBy(['deleted' => false])
+        ;
+    }
+
+    public function isPositionUsed(JobPosition $jobPosition): bool
+    {
+        $profiles = $this->entityManager
+            ->getRepository(ProfileInfo::class)
+            ->findBy(['jobPosition' => $jobPosition])
+        ;
+
+        return !empty($profiles);
     }
 }
