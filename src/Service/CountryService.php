@@ -50,6 +50,6 @@ class CountryService
 
     public function hasCities(Country $country) : bool
     {
-        return !$country->getCities()->isEmpty();
+        return !$country->getActiveCities()->isEmpty();
     }
 }
