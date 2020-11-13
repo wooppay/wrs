@@ -93,5 +93,6 @@ class PermissionEnum
 
     public const CAN_DELETE_OWN_GOAL = 'can_delete_own_goal';
 
+    public const CAN_SEE_OTHER_GOALS_IN_PROFILES = 'can_see_other_goals_in_profiles';
 }
 

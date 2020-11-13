@@ -21,8 +21,11 @@ class ProfileController extends AbstractController
             throw $this->createNotFoundException('The user does not exist');
         }
 
+        $goals = $user->getGoals();
+
         return $this->render('dashboard/profile/show_profile.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'goals' => $goals
         ]);
     }
 
