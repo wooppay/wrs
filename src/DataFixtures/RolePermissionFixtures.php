@@ -34,6 +34,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_CREATE_OWN_GOAL,
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
+        PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
     ];
 
     private $poPermissions = [
@@ -60,6 +61,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_CREATE_OWN_GOAL,
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
+        PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
     ];
 
     private $customerPermissions = [
@@ -75,6 +77,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_CREATE_OWN_GOAL,
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
+        PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
     ];
 
     private $tmPermissions = [
@@ -92,6 +95,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_CREATE_OWN_GOAL,
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
+        PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
     ];
 
     private $devPermissions = [
@@ -106,6 +110,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_CREATE_OWN_GOAL,
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
+        PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
     ];
     
     public function __construct(SecurityService $securityService, RoleService $roleService, PermissionService $permissionService)
