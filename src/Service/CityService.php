@@ -47,4 +47,9 @@ class CityService
         
         return $city;
     }
+
+    public function hasRelatedProfiles(City $city): bool
+    {
+        return !$city->getProfileInfos()->isEmpty();
+    }
 }

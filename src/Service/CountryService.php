@@ -52,4 +52,9 @@ class CountryService
     {
         return !$country->getActiveCities()->isEmpty();
     }
+
+    public function hasRelatedProfiles(Country $country): bool
+    {
+        return !$country->getProfileInfos()->isEmpty();
+    }
 }

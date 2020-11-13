@@ -84,6 +84,10 @@ class CityController extends AbstractController
             throw $this->createNotFoundException('The city does not exist');
         }
 
+        if ($cityService->hasRelatedProfiles($city)) {
+            throw $this->createAccessDeniedException('This city related to some profiles. Please remove them before deleting');
+        }
+
         try {
             $cityService->delete($city);
             $this->addFlash('success', 'City has been deleted successfully');
