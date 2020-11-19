@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Geo Location{% endblock %}
+{% block head_title %}
+    <h2>Geo Location</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Geo Location</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col col-sm-12">
+            <div class="list-group">
+                <a href="{{ path('app_admin_country_list') }}" class="list-group-item list-group-item-action">Country</a>
+                <a href="{{ path('app_admin_city_list') }}" class="list-group-item list-group-item-action">City</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

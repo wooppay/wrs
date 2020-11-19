@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel | City{% endblock %}
+{% block head_title %}
+    <h2>City</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_geo_location') }}">Geo Location</a></li>
+        <li class="breadcrumb-item active" aria-current="page">City</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'parts/flash_message.html.twig' %}
+
+    <div class="card">
+        <div class="card-body">
+            <a href="{{ path('app_admin_city_create') }}" class="btn btn-primary">Create city</a>
+        </div>
+    </div>
+    
+    <br>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Country</th>
+              <th scope="col">Tools</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cities %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.country }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_city_manage', {'id': item.id}) }}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="{{ path('app_admin_city_delete', {'id': item.id}) }}">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

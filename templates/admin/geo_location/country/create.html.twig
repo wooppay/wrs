@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel | Create Country{% endblock %}
+{% block head_title %}
+    <h2>Create Country</h2>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('index') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin') }}">Admin Panel</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_geo_location') }}">Geo Location</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_admin_country_list') }}">Country</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create</li>
+      </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    {{ form(form) }}
+
+{% endblock %}
