@@ -1,0 +1,18 @@
+{% if goals is not empty %}
+<div class="goal-wrapper container">
+    <h5 class="goal-header">User's Goals</h5>
+
+    <div class="goal-list">
+        {% for goal in goals %}
+        <div class="goal-item">
+            <h6 class="goal-title">{{ goal.name }}</h6>
+            <p class="goal-description">{{ goal.description }}</p>
+            <div class="goal-progress">
+                <div class="goal-triangle"></div>
+                <span>0% DONE</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

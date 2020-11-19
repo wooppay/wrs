@@ -101,6 +101,10 @@
     </div>
  
     <div class="w-100  my-4  mx-3  separator"></div>
+
+    {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES'), app.user) %}
+        {% include 'dashboard/goal/list_other_goals.html.twig' %}
+    {% endif %}
  
     <br>
 
