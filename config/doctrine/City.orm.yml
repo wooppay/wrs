@@ -16,6 +16,8 @@ App\Entity\City:
         deleted:
             type: boolean
             nullable: false
+            options:
+                default: false
     manyToOne:
         country:
             targetEntity: App\Entity\Country
