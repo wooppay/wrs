@@ -85,7 +85,8 @@ class CityController extends AbstractController
         }
 
         if ($cityService->hasRelatedProfiles($city)) {
-            throw $this->createAccessDeniedException('This city related to some profiles. Please remove them before deleting');
+            $this->addFlash('danger', 'This city related to some profiles. Please remove them before deleting');
+            return $this->redirectToRoute('app_admin_city_list');
         }
 
         try {

@@ -84,12 +84,14 @@ class CountryController extends AbstractController
             throw $this->createNotFoundException('The country does not exist');
         }
 
-        if ($countryService->hasRelatedProfiles($country)) {
-            throw $this->createAccessDeniedException('This country related to some profiles. Please remove them before deleting');
+        if ($countryService->hasCities($country)) {
+            $this->addFlash('danger', 'This country including cities. Please remove them before deleting');
+            return $this->redirectToRoute('app_admin_country_list');
         }
 
-        if ($countryService->hasCities($country)) {
-            throw $this->createAccessDeniedException('This country including cities. Please remove them before deleting');
+        if ($countryService->hasRelatedProfiles($country)) {
+            $this->addFlash('danger', 'This country related to some profiles. Please change them before deleting');
+            return $this->redirectToRoute('app_admin_country_list');
         }
 
         try {
