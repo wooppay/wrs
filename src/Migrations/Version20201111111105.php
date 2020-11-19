@@ -19,8 +19,8 @@ final class Version20201111111105 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $this->addSql('ALTER TABLE country ADD deleted BOOLEAN NOT NULL');
-        $this->addSql('ALTER TABLE city ADD deleted BOOLEAN NOT NULL');
+        $this->addSql('ALTER TABLE country ADD deleted BOOLEAN NOT NULL DEFAULT \'false\'');
+        $this->addSql('ALTER TABLE city ADD deleted BOOLEAN NOT NULL DEFAULT \'false\'');
         
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_create_country\')');
         $this->addSql('INSERT INTO "permission" (name) VALUES (\'can_update_country\')');
