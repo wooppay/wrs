@@ -1,0 +1,34 @@
+.container ul{
+    padding-left: 0;
+    position: relative;
+    list-style-type: none;
+    left: 0.5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.activity .container li {
+    display: flex;
+    margin-bottom: 5%;
+}
+.activity .container::before {
+    content: "";
+    position: absolute;
+    top: 5%;
+    left: 7.8%;
+    bottom: 5%;
+    border: 3px solid lightgrey;
+}
+.activity .container {
+    position: relative;
+    width: 45%;
+}
+.activity .container .card {
+    border: dashed 2px lightgrey;
+}
+.activity .container img {
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid grey;
+    padding: 10px;
+}

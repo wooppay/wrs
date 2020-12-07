@@ -13,8 +13,14 @@
     </nav>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/style/activity_feed.css">
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
+    <script src="/js/chart.js"></script>
     <script src="/js/script.js"></script>
 {% endblock %}
 
@@ -76,7 +82,43 @@
     {% include 'dashboard/goal/list_own_goals.html.twig' %}
 
     <div class="w-100  my-4  mx-3  separator"></div>
-    
+
+    <div class="activity container w-100 d-inline-flex">
+        {% if is_granted(constant('App\\Enum\\PermissionEnum::CAN_SEE_ACTIVITY_IN_DASHBOARD'), app.user) %}
+            <div class="card" style="width: 55%;">
+                <div class="card-body">{{ render_chart()|raw }}</div>
+            </div>
+        <div class="card ml-3" style="position: relative; width: 45%;">
+            <h5 class="ml-3 mt-3">Activity Feed</h5>
+            {% if activities %}
+            <div class="container pt-3 pb-2" style="width: 100%; min-height: 80%;">
+
+                <ul id="activity" style="max-height:400px; overflow-y: auto;">
+                    {% for activity in activities %}
+                        {{ activity | activity | raw}}
+                    {% endfor %}
+                </ul>
+            </div>
+                {% if moreRecordsExist %}
+                <div class="text-center ml-auto mr-auto w-25 mb-3">
+                    <a href="#" id="showMoreBtn" onclick="showMore(5)">Show more</a>
+                </div>
+                {% endif %}
+            {% else %}
+                <h5 class="text-center" style="margin-top: 25%;">Activity not found.</h5>
+            {% endif %}
+        </div>
+        {% else %}
+
+                <div class="card" style="width: 100%">
+                    <div class="card-body">{{ render_chart()|raw }}</div>
+                </div>
+
+        {% endif %}
+    </div>
+
+    <div class="w-100  my-4  mx-3  separator"></div>
+
     <div class="row">
         <div class="col col-sm-12">
             <nav>

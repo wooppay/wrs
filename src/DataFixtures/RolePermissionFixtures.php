@@ -31,16 +31,11 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_DELETE_JOB_POSITION,
         PermissionEnum::CAN_VIEW_MY_PROFILE,
         PermissionEnum::CAN_EDIT_MY_PROFILE,
-        PermissionEnum::CAN_CREATE_COUNTRY,
-        PermissionEnum::CAN_UPDATE_COUNTRY,
-        PermissionEnum::CAN_DELETE_COUNTRY,
-        PermissionEnum::CAN_CREATE_CITY,
-        PermissionEnum::CAN_UPDATE_CITY,
-        PermissionEnum::CAN_DELETE_CITY,
         PermissionEnum::CAN_CREATE_OWN_GOAL,
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
         PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
+	    PermissionEnum::CAN_SEE_ACTIVITY_IN_DASHBOARD
     ];
 
     private $poPermissions = [
@@ -68,6 +63,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
         PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
+	    PermissionEnum::CAN_SEE_ACTIVITY_IN_DASHBOARD
     ];
 
     private $customerPermissions = [
@@ -84,6 +80,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
         PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
+	    PermissionEnum::CAN_SEE_ACTIVITY_IN_DASHBOARD
     ];
 
     private $tmPermissions = [
@@ -102,6 +99,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
         PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
+	    PermissionEnum::CAN_SEE_ACTIVITY_IN_DASHBOARD
     ];
 
     private $devPermissions = [
@@ -117,6 +115,7 @@ class RolePermissionFixtures extends Fixture implements DependentFixtureInterfac
         PermissionEnum::CAN_UPDATE_OWN_GOAL,
         PermissionEnum::CAN_DELETE_OWN_GOAL,
         PermissionEnum::CAN_SEE_OTHER_GOALS_IN_PROFILES,
+	    PermissionEnum::CAN_SEE_ACTIVITY_IN_DASHBOARD,
     ];
     
     public function __construct(SecurityService $securityService, RoleService $roleService, PermissionService $permissionService)

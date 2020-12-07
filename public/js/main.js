@@ -141,3 +141,17 @@ function getReportTableHtml(tasks)
 
     return reportTableHtml;
 }
+
+function showMore(offset)
+{
+    event.preventDefault();
+    $.ajax({
+        url: routeGetUserActivity + '/' + offset,
+        type: 'GET',
+        success: function(data) {
+            $('#activity').append(data['activitiesHtml']);
+            let showBtn = $('#showMoreBtn');
+            data['isMoreRecordExist'] ? showBtn.attr('onclick', 'showMore(' + (offset + 5) + ')') : showBtn.attr('style', 'display:none');
+        }
+    })
+}

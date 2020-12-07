@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Enum\ActivityEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Permission;
 use Doctrine\Common\Collections\Collection;
@@ -9,20 +10,25 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Enum\RateInfoEnum;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Expr\Comparison;
 
 class RateInfoService
 {
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    private $skillService;
+    private SkillService $skillService;
 
-    private $userService;
+    private UserService $userService;
+
+    private ActivityService $activityService;
     
-    public function __construct(EntityManagerInterface $manager, SkillService $skillService, UserService $userService)
+    public function __construct(EntityManagerInterface $manager, SkillService $skillService, UserService $userService, ActivityService $activityService)
     {
         $this->entityManager = $manager;
         $this->skillService = $skillService;
         $this->userService = $userService;
+        $this->activityService = $activityService;
     }
 
     public function prepareData(array $pack, Task $task, User $author) : array
@@ -80,22 +86,30 @@ class RateInfoService
 
     public function createByCheckList(array $data) : void
     {
-        foreach ($data as $item) {
-            $rateInfo = (new RateInfo())
-                ->setValue($item['value'])
-                ->setSkill($item['skill'])
-                ->setUser($item['user'])
-                ->setTask($item['task'])
-                ->setAuthor($item['author'])
-            ;
+	    $markedUsers = [];
 
-            if (isset($item['note'])) {
-                $rateInfo->setNote($item['note']);
-            }
-            
-            // todo transaction
-            $this->create($rateInfo);
-        }
+	    foreach ($data as $item) {
+		    $rateInfo = (new RateInfo())
+			    ->setValue($item['value'])
+			    ->setSkill($item['skill'])
+			    ->setUser($item['user'])
+			    ->setTask($item['task'])
+			    ->setAuthor($item['author'])
+		    ;
+
+		    if (isset($item['note'])) {
+			    $rateInfo->setNote($item['note']);
+		    }
+
+		    // todo transaction
+		    $this->create($rateInfo);
+
+		    in_array($item['user'], $markedUsers, true) ? : $markedUsers[] = $item['user'];
+	    }
+
+	    foreach ($markedUsers as $user) {
+		    $this->activityService->dispatchActivity(ActivityEnum::TASK_MARKED, $user, $data[0]['task'], $data[0]['author']);
+	    }
     }
     
     public function create(RateInfo $rateInfo) : RateInfo
@@ -118,6 +132,68 @@ class RateInfoService
         $collection = $user->getAuthorRates();
         
         return $this->groupByTaskByCollection($collection);
+    }
+
+    public function allIncomingByUserFilteredByDate(User $user, ?\DateTime $startDate = null, ?\DateTime $endDate = null): ?Collection
+    {
+        if (is_null($startDate) && is_null($endDate)) {
+            return $this->groupByTaskByCollection($user->getRates());
+        }
+        
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $collection = $this->entityManager->getRepository(RateInfo::class)->allIncomingByUserBetweenDate($user, $startDate, $endDate);
+        } else {
+            if (!is_null($startDate)) {
+                $collection = $this->entityManager->getRepository(RateInfo::class)->allIncomingByUserAfterDate($user, $startDate);
+            }
+    
+            if (!is_null($endDate)) {
+                $collection = $this->entityManager->getRepository(RateInfo::class)->allIncomingByUserBeforeDate($user, $endDate);
+            }
+        }
+
+        return $this->groupByTaskByCollection(new ArrayCollection($collection));
+    }
+
+    public function allOutcomingByUserFilteredByDate(User $user, ?\DateTime $startDate = null, ?\DateTime $endDate = null): ?Collection
+    {
+        if (is_null($startDate) && is_null($endDate)) {
+            return $this->groupByTaskByCollection($user->getAuthorRates());
+        }
+        
+        if (!is_null($startDate) && !is_null($endDate)) {
+            $collection = $this->entityManager->getRepository(RateInfo::class)->allOutcomingByUserBetweenDate($user, $startDate, $endDate);
+        } else {
+            if (!is_null($startDate)) {
+                $collection = $this->entityManager->getRepository(RateInfo::class)->allOutcomingByUserAfterDate($user, $startDate);
+            }
+    
+            if (!is_null($endDate)) {
+                $collection = $this->entityManager->getRepository(RateInfo::class)->allOutcomingByUserBeforeDate($user, $endDate);
+            }
+        }
+
+        return $this->groupByTaskByCollection(new ArrayCollection($collection));
+    }
+    
+    public function allIncomingPositiveByUserLastFiveDays(User $user): ?Collection
+    {
+        $rates = $this->entityManager
+            ->getRepository(RateInfo::class)
+            ->allIncomingPositiveByUserLastFiveDays($user)
+        ;
+
+        return new ArrayCollection($rates);
+    }
+
+    public function allIncomingNegativeByUserLastFiveDays(User $user): ?Collection
+    {
+        $rates = $this->entityManager
+            ->getRepository(RateInfo::class)
+            ->allIncomingNegativeByUserLastFiveDays($user)
+        ;
+
+        return new ArrayCollection($rates);
     }
 
     protected function groupByTaskByCollection(Collection $collection) : Collection
@@ -223,6 +299,15 @@ class RateInfoService
             ->getRepository(RateInfo::class)
             ->allByUserAndTask($user, $task)
         ;
+    }
+
+    public function allByUserTaskAndAuthor(User $user, Task $task, User $author) : Collection
+    {
+	    return $this
+		    ->entityManager
+		    ->getRepository(RateInfo::class)
+		    ->allByUserTaskAndAuthor($user, $task, $author)
+		    ;
     }
 
     public function allByTask(Task $task) : ?Collection

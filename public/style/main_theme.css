@@ -295,3 +295,28 @@ a {
   font-size: 16px;
   font-weight: 600;
 }
+
+.date-filter {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.date-filter > .form-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.rates-not-found-block {
+  margin: auto;
+}
+
+.chart-choice-block {
+  max-width: 200px;
+}

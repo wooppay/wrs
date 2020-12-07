@@ -15,8 +15,6 @@ class Country
 
     private $profileInfos;
 
-    private $deleted = false;
-
     public function __construct()
     {
         $this->cities = new ArrayCollection();
@@ -48,19 +46,6 @@ class Country
     public function getCities(): ?Collection
     {
         return $this->cities;
-    }
-
-    public function getActiveCities(): ?Collection
-    {
-        $cities = new ArrayCollection();
-
-        foreach ($this->cities as $city) {
-            if (!$city->isDeleted()) {
-                $cities->add($city);
-            }
-        }
-
-        return $cities;
     }
     
     public function addCity(City $city): self
@@ -101,18 +86,6 @@ class Country
             $this->profileInfos->removeElement($profileInfo);
         }
         
-        return $this;
-    }
-
-    public function isDeleted(): ?bool
-    {
-        return $this->deleted;
-    }
-
-    public function setDeleted(bool $deleted): self
-    {
-        $this->deleted = $deleted;
-
         return $this;
     }
 }

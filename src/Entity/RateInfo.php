@@ -18,6 +18,8 @@ class RateInfo
 
     private $note;
 
+    private $activity;
+
     public function setValue(int $value): self
     {
         $this->value = $value;
@@ -46,17 +48,17 @@ class RateInfo
         return $this;
     }
 
-    public function getValue() : ?int 
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
-    public function getUser() : ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function getTask() : ?Task
+    public function getTask(): ?Task
     {
         return $this->task;
     }
@@ -86,7 +88,7 @@ class RateInfo
     public function setNote(string $note) : self
     {
         $this->note = $note;
-        
+
         return $this;
     }
 
@@ -95,8 +97,14 @@ class RateInfo
         return $this->note;
     }
 
-    /*public function toArrayForReport() : array
+    public function setActivity(Activity $activity): self
     {
-    	return ['value' => $this->getValue(), 'skill' => $this->getSk]
-    }*/
+        $this->activity = $activity;
+        return $this;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
 }

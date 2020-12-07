@@ -139,6 +139,11 @@ class Task
         return $this->created_at->format('Y-m-d H:i');
     }
 
+    public function getCreatedAtWithoutFormat(): ?\DateTime
+    {
+        return $this->created_at;
+    } 
+
     public function toArrayForReport(User $user) : array
     {
     	$task = [

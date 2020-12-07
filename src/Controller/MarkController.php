@@ -2,13 +2,16 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Service\TaskService;
 use App\Service\SkillService;
 use App\Enum\PermissionEnum;
 use App\Enum\PermissionMarkEnum;
 use App\Service\SecurityService;
 use App\Form\CheckListType;
+use App\Form\RateFilterType;
 use App\Service\RateInfoService;
 
 class MarkController extends Controller
@@ -56,21 +59,55 @@ class MarkController extends Controller
         ]);
     }
 
-    public function historyIncoming(RateInfoService $rateInfoService)
+    public function historyIncoming(Request $request, SessionInterface $session, RateInfoService $rateInfoService, PaginatorInterface $paginator)
     {
-        $previews = $rateInfoService->incomingByUserGroupByTask($this->getUser());
+        $previews = $rateInfoService->allIncomingByUserFilteredByDate($this->getUser());
+
+        $form = $this->createForm(RateFilterType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $startDate = $form->get('start_date')->getData();
+            $endDate = $form->get('end_date')->getData();
+
+            $previews = $rateInfoService->allIncomingByUserFilteredByDate($this->getUser(), $startDate, $endDate);
+        }
+
+        $previews = $paginator->paginate(
+            $previews,
+            $request->query->getInt('page', 1),
+            $this->getParameter('per_page')
+        );
         
         return $this->render('dashboard/mark/history/main.html.twig', [
             'previews' => $previews,
+            'form' => $form->createView()
         ]);
     }
 
-    public function historyOutcoming(RateInfoService $rateInfoService)
+    public function historyOutcoming(Request $request, SessionInterface $session, RateInfoService $rateInfoService, PaginatorInterface $paginator)
     {
-        $previews = $rateInfoService->outcomingByUserGroupByTask($this->getUser());
-        
+        $previews = $rateInfoService->allOutcomingByUserFilteredByDate($this->getUser());
+
+        $form = $this->createForm(RateFilterType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $startDate = $form->get('start_date')->getData();
+            $endDate = $form->get('end_date')->getData();
+
+            $previews = $rateInfoService->allOutcomingByUserFilteredByDate($this->getUser(), $startDate, $endDate);
+        }
+
+        $previews = $paginator->paginate(
+            $previews,
+            $request->query->getInt('page', 1),
+            $this->getParameter('per_page')
+        );
+
         return $this->render('dashboard/mark/history/outcoming_main.html.twig', [
             'previews' => $previews,
+            'form' => $form->createView()
         ]);
     }
 

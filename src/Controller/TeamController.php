@@ -93,7 +93,7 @@ class TeamController extends Controller
             $em->getConnection()->beginTransaction();
 
             try{
-                if (!$service->addMemberToTeam($user, $team)) {
+                if (!$service->addMemberToTeam($user, $team, $this->getUser())) {
                     throw new \Exception();
                 }
 
@@ -134,7 +134,7 @@ class TeamController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->getConnection()->beginTransaction();
         try{
-            if (!$product->deleteTeamMember($team, $member)) {
+            if (!$product->deleteTeamMember($team, $member, $this->getUser())) {
                 throw new \Exception();
             }
 

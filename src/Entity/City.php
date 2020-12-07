@@ -15,8 +15,6 @@ class City
 
     private $profileInfos;
 
-    private $deleted = false;
-
     public function __construct()
     {
         $this->profileInfos = new ArrayCollection();
@@ -76,18 +74,6 @@ class City
             $this->profileInfos->removeElement($profileInfo);
         }
         
-        return $this;
-    }
-
-    public function isDeleted(): ?bool
-    {
-        return $this->deleted;
-    }
-
-    public function setDeleted(bool $deleted): self
-    {
-        $this->deleted = $deleted;
-
         return $this;
     }
 }

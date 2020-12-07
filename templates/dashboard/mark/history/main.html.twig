@@ -17,40 +17,46 @@
         </div>
     </div>
 
+    {% include 'dashboard/mark/history/date_filter_form.html.twig' with {'form': form} %}
+
     <div class="row">
-        {% for item in previews %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <a href="{{ path('app_dashboard_task_details', {id: item.task_id}) }}">{{ item.task_name }}</a>
-                    </div>
-                    
-                    <div class="card-body text-center">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <span>Positives</span>
-                                <span class="badge badge-pill badge-success">{{ item.positive|length }}</span>
-                            </div>
-
-                            <div class="col-md-6">
-                                <span>Negatives</span>
-                                <span class="badge badge-pill badge-danger">{{ item.negative|length }}</span>
-                            </div>
+        {% if previews is empty %}
+            <div class="rates-not-found-block">Not found rates by this criteria<div>
+        {% else %}
+            {% for item in previews %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="{{ path('app_dashboard_task_details', {id: item.task_id}) }}">{{ item.task_name }}</a>
                         </div>
+                        
+                        <div class="card-body text-center">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span>Positives</span>
+                                    <span class="badge badge-pill badge-success">{{ item.positive|length }}</span>
+                                </div>
 
-                        <br>
+                                <div class="col-md-6">
+                                    <span>Negatives</span>
+                                    <span class="badge badge-pill badge-danger">{{ item.negative|length }}</span>
+                                </div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a href="{{ path('app_dashboard_history_incoming_detail', {'id': item.task_id}) }}">read more</a>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{ path('app_dashboard_history_incoming_detail', {'id': item.task_id}) }}">read more</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-            
-        
+            {% endfor %}
+        {% endif %}
     </div>
+
+    {{ knp_pagination_render(previews) }}
 
 {% endblock %}

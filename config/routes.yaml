@@ -150,42 +150,6 @@ app_admin_job_position_delete:
     requirements:
         id: '\d+'
 
-app_admin_geo_location:
-    path: /admin/geo-location
-    controller: App\Controller\AdminController::geoLocation
-
-app_admin_country_list:
-    path: /admin/geo-location/country/list
-    controller: App\Controller\CountryController::list
-
-app_admin_country_create:
-    path: /admin/geo-location/country/create
-    controller: App\Controller\CountryController::create
-
-app_admin_country_manage:
-    path: /admin/geo-location/country/{id}/manage
-    controller: App\Controller\CountryController::manage
-
-app_admin_country_delete:
-    path: /admin/geo-location/country/{id}/delete
-    controller: App\Controller\CountryController::delete
-
-app_admin_city_list:
-    path: /admin/geo-location/city/list
-    controller: App\Controller\CityController::list
-
-app_admin_city_create:
-    path: /admin/geo-location/city/create
-    controller: App\Controller\CityController::create
-
-app_admin_city_manage:
-    path: /admin/geo-location/city/{id}/manage
-    controller: App\Controller\CityController::manage
-
-app_admin_city_delete:
-    path: /admin/geo-location/city/{id}/delete
-    controller: App\Controller\CityController::delete
-
 app_dashboard:
     path: /dashboard
     controller: App\Controller\DashboardController::main
@@ -297,3 +261,10 @@ app_dashboard_show_profile:
 app_dashboard_goal_create:
     path: /dashboard/goals/create
     controller: App\Controller\GoalController::create
+
+app_dashboard_get_activity:
+    path: /dashboard/activity/{offset}
+    controller: App\Controller\DashboardController::userActivity
+    defaults:  { offset: 0 }
+    requirements:
+        offset: '\d+'

@@ -453,10 +453,5 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('app_admin_job_position_list');
     }
-
-    public function geoLocation()
-    {
-        return $this->render('admin/geo_location/geo_location.html.twig');
-    }
 }
 

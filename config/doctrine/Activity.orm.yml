@@ -1,0 +1,56 @@
+App\Entity\Activity:
+  type: entity
+  repositoryClass: App\Repository\ActivityRepository
+  table: activity
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    type:
+      type: integer
+      nullable: false
+    message:
+      type: text
+      nullable: true
+    date:
+      type: datetime
+      options:
+        default: CURRENT_TIMESTAMP
+  manyToOne:
+    user:
+      targetEntity: App\Entity\User
+      inversedBy: activities
+      joinColumn:
+        nullable: true
+        name: user_id
+        referencedColumnName: id
+    initiator:
+      targetEntity: App\Entity\User
+      inversedBy: initiateActivities
+      joinColumn:
+        nullable: true
+        name: initiator_id
+        referencedColumnName: id
+    task:
+      targetEntity: App\Entity\Task
+      inversedBy: activities
+      joinColumn:
+        nullable: true
+        name: task_id
+        referencedColumnName: id
+    team:
+      targetEntity: App\Entity\Team
+      inversedBy: activities
+      joinColumn:
+        nullable: true
+        name: team_id
+        referencedColumnName: id
+    jobPosition:
+      targetEntity: App\Entity\JobPosition
+      inversedBy: activities
+      joinColumn:
+        nullable: true
+        name: job_position_id
+        referencedColumnName: id

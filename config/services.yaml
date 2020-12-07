@@ -7,6 +7,7 @@ parameters:
     locale: 'en'
     email_send_from: "%env(EMAIL_SEND_FROM)%"
     avatar_directory: '%kernel.project_dir%/public/img/avatar'
+    per_page: '%env(PER_PAGE)%'
 
 services:
     # default configuration for services in *this* file
@@ -36,3 +37,8 @@ services:
     App\Service\ProfileInfoService:
         arguments: 
             $avatarDirectory: "%avatar_directory%"
+    App\EventListener\ActivityEventListener:
+        tags:
+            - { name: kernel.event_listener, event: 'App\Event\ActivityCreate', method: 'onActivityCreate' }
+    App\Service\ActivityService:
+        lazy: true
